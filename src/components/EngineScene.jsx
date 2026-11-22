@@ -14,30 +14,36 @@ function useMetalMaterial(color, active = false, roughness = 0.42, metalness = 0
   }), [color, active, roughness, metalness]);
 }
 
-// [032] Builds the block casting with four real openings cut through the deck instead of painted-on circles.
+// [032] Builds a generic modern inline-four aluminum block with a rounded cast perimeter and four true cylinder bores.
 function createBlockGeometry() {
   const shape = new THREE.Shape();
-  const w = 3.58, d = 1.38, r = 0.09;
-  shape.moveTo(-w / 2 + r, -d / 2);
-  shape.lineTo(w / 2 - r, -d / 2);
-  shape.quadraticCurveTo(w / 2, -d / 2, w / 2, -d / 2 + r);
-  shape.lineTo(w / 2, d / 2 - r);
-  shape.quadraticCurveTo(w / 2, d / 2, w / 2 - r, d / 2);
-  shape.lineTo(-w / 2 + r, d / 2);
-  shape.quadraticCurveTo(-w / 2, d / 2, -w / 2, d / 2 - r);
-  shape.lineTo(-w / 2, -d / 2 + r);
-  shape.quadraticCurveTo(-w / 2, -d / 2, -w / 2 + r, -d / 2);
 
-  // [033] Cuts four cylinder bores into the block geometry so pistons can visibly sit inside the cylinders.
+  // [032A] The side-to-side profile has rounded shoulders and a slightly wider lower skirt.
+  shape.moveTo(-1.68, -0.69);
+  shape.lineTo(1.68, -0.69);
+  shape.quadraticCurveTo(1.80, -0.69, 1.80, -0.55);
+  shape.lineTo(1.80, 0.43);
+  shape.quadraticCurveTo(1.80, 0.64, 1.63, 0.69);
+  shape.lineTo(-1.63, 0.69);
+  shape.quadraticCurveTo(-1.80, 0.64, -1.80, 0.43);
+  shape.lineTo(-1.80, -0.55);
+  shape.quadraticCurveTo(-1.80, -0.69, -1.68, -0.69);
+
+  // [032B] Four accurately spaced cylinder openings are cut all the way through the deck.
   [-1.2, -0.4, 0.4, 1.2].forEach((x) => {
-    const hole = new THREE.Path();
-    hole.absarc(x, 0, 0.29, 0, Math.PI * 2, true);
-    shape.holes.push(hole);
+    const bore = new THREE.Path();
+    bore.absarc(x, 0, 0.29, 0, Math.PI * 2, true);
+    shape.holes.push(bore);
   });
 
   const geometry = new THREE.ExtrudeGeometry(shape, {
-    depth: 1.7, bevelEnabled: true, bevelSegments: 5,
-    steps: 1, bevelSize: 0.045, bevelThickness: 0.04, curveSegments: 48
+    depth: 1.7,
+    bevelEnabled: true,
+    bevelSegments: 7,
+    steps: 1,
+    bevelSize: 0.045,
+    bevelThickness: 0.045,
+    curveSegments: 56
   });
   geometry.rotateX(-Math.PI / 2);
   geometry.translate(0, -0.75, 0);
@@ -95,7 +101,7 @@ function CylinderDeck() {
   </group>;
 }
 
-// [036] Creates a Toyota-inspired modern aluminum inline-four casting with rounded water-jacket bulges and curved ribs.
+// [036] Creates a generic modern aluminum inline-four casting with rounded water-jacket bulges and curved ribs.
 function BlockSideDetails() {
   const castMat = new THREE.MeshStandardMaterial({ color: '#929da3', metalness: 0.66, roughness: 0.58 });
   const highlightMat = new THREE.MeshStandardMaterial({ color: '#aab3b8', metalness: 0.78, roughness: 0.42 });
@@ -231,7 +237,8 @@ function EngineBlock({ selected, hovered, onSelect, onHover }) {
     {[-0.28, 0.28].map((y) => <HexBolt key={`end-fastener-${y}`} position={[1.87, y, 0.22]} rotation={[0, 0, Math.PI / 2]} scale={0.78} />)}
     {/* [041] Adds a subtle wireframe halo when the engine block is active. */}
     {active && <mesh position={[0, 0.1, 0]} scale={[1.012, 1.012, 1.012]}>
-      <boxGeometry args={[3.68, 1.78, 1.48]} /><meshBasicMaterial color="#4da9e8" wireframe transparent opacity={0.10} />
+      <boxGeometry args={[3.66, 1.76, 1.46]} />
+      <meshBasicMaterial color="#4da9e8" wireframe transparent opacity={0.075} />
     </mesh>}
   </group>;
 }
