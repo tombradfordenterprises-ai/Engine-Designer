@@ -1,5 +1,5 @@
 // [020] Imports React state, the 3D engine scene, and the persistent bottom toolbar.
-import { useState } from 'react';
+import React, { useState } from 'react';
 import EngineScene from './components/EngineScene.jsx';
 import Toolbar from './components/Toolbar.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
