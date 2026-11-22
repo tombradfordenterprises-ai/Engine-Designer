@@ -1,4 +1,5 @@
 // [040] Imports the icon library used by the fixed six-button game toolbar.
+import React from 'react';
 import { Rotate3D, Wrench, Package, BookOpen, Undo2, ArrowLeft } from 'lucide-react';
 
 // [041] Renders persistent controls for view changes, installation, parts, explanations, undo, and back navigation.
