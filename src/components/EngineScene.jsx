@@ -76,40 +76,107 @@ function CylinderDeck() {
         <mesh position={[0, 0.012, 0]}><torusGeometry args={[0.036, 0.006, 8, 24]} /><meshStandardMaterial color="#c5cdd1" metalness={0.9} roughness={0.25} /></mesh>
       </group>
     ))}
+    {/* [035A] Smaller coolant and oil passages are machined around the cylinder bores. */}
+    {[-1.55, -0.82, -0.02, 0.78, 1.55].flatMap((x, i) => [-0.57, 0.57].map((z, j) =>
+      <mesh key={`deck-passage-${i}-${j}`} position={[x, 0.966, z]}>
+        <cylinderGeometry args={[0.055, 0.055, 0.014, 24]} />
+        <meshStandardMaterial color="#38434a" metalness={0.62} roughness={0.36} />
+      </mesh>
+    ))}
   </group>;
 }
 
-// [036] Adds side casting ribs, freeze plugs, and machined mounting bosses.
+// [036] Adds cast side walls, recessed panels, structural ribs, core plugs, bosses, and fasteners.
 function BlockSideDetails() {
+  const ribMaterial = '#77848c';
+  const castMaterial = '#87949c';
+  const brightMetal = '#b5bec3';
   return <group>
-    {Array.from({ length: 9 }, (_, i) => <mesh key={`rib-front-${i}`} position={[-1.55 + i * 0.39, 0.08, 0.755]} castShadow>
-      <boxGeometry args={[0.075, 0.92 - (i % 3) * 0.08, 0.07]} /><meshStandardMaterial color="#737f87" metalness={0.72} roughness={0.42} />
+    {/* [036A] Raised side skirt rails and broad cast reinforcement panels. */}
+    {[0.43, -0.34].map((y) => <mesh key={`side-rail-${y}`} position={[0, y, 0.765]} castShadow>
+      <boxGeometry args={[3.48, 0.12, 0.095]} />
+      <meshStandardMaterial color="#66737b" metalness={0.76} roughness={0.48} />
     </mesh>)}
-    {Array.from({ length: 7 }, (_, i) => <mesh key={`rib-rear-${i}`} position={[-1.35 + i * 0.45, 0.02, -0.755]} castShadow>
-      <boxGeometry args={[0.065, 0.82, 0.065]} /><meshStandardMaterial color="#75818a" metalness={0.7} roughness={0.44} />
-    </mesh>)}
-    {[-1.25, -0.42, 0.42, 1.25].map((x) => <group key={`freeze-plug-${x}`} position={[x, 0.24, 0.79]} rotation={[Math.PI / 2, 0, 0]}>
-      <mesh castShadow><cylinderGeometry args={[0.17, 0.17, 0.055, 40]} /><meshStandardMaterial color="#aeb8bd" metalness={0.86} roughness={0.26} /></mesh>
-      <mesh position={[0, 0.03, 0]}><cylinderGeometry args={[0.125, 0.125, 0.012, 40]} /><meshStandardMaterial color="#737e85" metalness={0.82} roughness={0.34} /></mesh>
+    {[-1.12, -0.38, 0.38, 1.12].map((x, i) => <group key={`cast-panel-${x}`}>
+      <mesh position={[x, 0.05, 0.765]} castShadow>
+        <boxGeometry args={[0.66, 0.56, 0.055]} />
+        <meshStandardMaterial color={i % 2 ? '#7c8991' : castMaterial} metalness={0.68} roughness={0.52} />
+      </mesh>
+      <mesh position={[x, 0.05, 0.798]}>
+        <boxGeometry args={[0.53, 0.43, 0.018]} />
+        <meshStandardMaterial color="#69767e" metalness={0.65} roughness={0.56} />
+      </mesh>
     </group>)}
-    <mesh position={[1.88, 0.12, 0.22]} rotation={[0, 0, Math.PI / 2]} castShadow><cylinderGeometry args={[0.19, 0.22, 0.18, 40]} /><meshStandardMaterial color="#89969e" metalness={0.75} roughness={0.4} /></mesh>
-    <mesh position={[-1.88, 0.12, -0.18]} rotation={[0, 0, Math.PI / 2]} castShadow><cylinderGeometry args={[0.15, 0.18, 0.18, 40]} /><meshStandardMaterial color="#89969e" metalness={0.75} roughness={0.4} /></mesh>
-    {[-1.65, -0.55, 0.55, 1.65].map((x) => <mesh key={`boss-${x}`} position={[x, -0.52, 0.78]} castShadow>
-      <cylinderGeometry args={[0.095, 0.095, 0.08, 24]} /><meshStandardMaterial color="#9da8ae" metalness={0.8} roughness={0.3} />
+
+    {/* [036B] Angled cast ribs reinforce the cylinder walls and give the block a ribbed foundry-casting profile. */}
+    {Array.from({ length: 10 }, (_, i) => {
+      const x = -1.62 + i * 0.36;
+      return <group key={`front-rib-${i}`} position={[x, 0.02, 0.82]} rotation={[0, 0, (i % 2 ? -1 : 1) * 0.12]}>
+        <mesh castShadow>
+          <boxGeometry args={[0.075, 0.84 - (i % 3) * 0.07, 0.075]} />
+          <meshStandardMaterial color={ribMaterial} metalness={0.73} roughness={0.43} />
+        </mesh>
+      </group>;
+    })}
+    {Array.from({ length: 8 }, (_, i) => <mesh key={`rear-rib-${i}`} position={[-1.48 + i * 0.42, 0.02, -0.79]} castShadow>
+      <boxGeometry args={[0.065, 0.76, 0.075]} />
+      <meshStandardMaterial color="#738089" metalness={0.72} roughness={0.46} />
     </mesh>)}
+
+    {/* [036C] Four round core plugs sit between the reinforcement ribs. */}
+    {[-1.25, -0.42, 0.42, 1.25].map((x) => <group key={`freeze-plug-${x}`} position={[x, 0.18, 0.855]} rotation={[Math.PI / 2, 0, 0]}>
+      <mesh castShadow><cylinderGeometry args={[0.145, 0.145, 0.045, 48]} /><meshStandardMaterial color={brightMetal} metalness={0.9} roughness={0.23} /></mesh>
+      <mesh position={[0, 0.026, 0]}><cylinderGeometry args={[0.105, 0.105, 0.012, 40]} /><meshStandardMaterial color="#7e8a91" metalness={0.86} roughness={0.32} /></mesh>
+      <mesh position={[0, 0.034, 0]}><torusGeometry args={[0.12, 0.009, 8, 40]} /><meshStandardMaterial color="#cbd1d5" metalness={0.94} roughness={0.2} /></mesh>
+    </group>)}
+
+    {/* [036D] Machined mounting ears, threaded bosses, and side plugs. */}
+    {[-1.65, -0.55, 0.55, 1.65].map((x) => <group key={`mount-ear-${x}`} position={[x, -0.53, 0.79]}>
+      <mesh castShadow><boxGeometry args={[0.32, 0.22, 0.17]} /><meshStandardMaterial color="#78858d" metalness={0.74} roughness={0.45} /></mesh>
+      <mesh position={[0, 0, 0.095]}><cylinderGeometry args={[0.085, 0.085, 0.035, 24]} /><meshStandardMaterial color="#aeb8be" metalness={0.92} roughness={0.24} /></mesh>
+      <mesh position={[0, 0, 0.115]}><cylinderGeometry args={[0.035, 0.035, 0.008, 16]} /><meshStandardMaterial color="#303940" metalness={0.62} roughness={0.38} /></mesh>
+    </group>)}
+    <mesh position={[1.87, 0.10, 0.26]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.18, 0.22, 0.2, 40]} /><meshStandardMaterial color="#929ea5" metalness={0.78} roughness={0.4} />
+    </mesh>
+    <mesh position={[-1.87, 0.10, -0.2]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.15, 0.18, 0.2, 40]} /><meshStandardMaterial color="#929ea5" metalness={0.78} roughness={0.4} />
+    </mesh>
+
+    {/* [036E] Lower crankcase side flange has a row of evenly spaced bolt seats. */}
+    {[-1.52, -1.02, -0.51, 0, 0.51, 1.02, 1.52].map((x) => <group key={`lower-boss-${x}`} position={[x, -0.55, 0.86]}>
+      <mesh><cylinderGeometry args={[0.075, 0.075, 0.045, 24]} /><meshStandardMaterial color="#aab4ba" metalness={0.88} roughness={0.28} /></mesh>
+      <mesh position={[0, 0.026, 0]}><cylinderGeometry args={[0.034, 0.034, 0.012, 6]} /><meshStandardMaterial color="#3d474e" metalness={0.82} roughness={0.3} /></mesh>
+    </group>)}
   </group>;
 }
 
-// [037] Leaves the crankcase underside open while adding skirt rails and bearing-cap supports.
+// [037] Shapes the open lower crankcase with deeper skirt rails, cross webs, and reinforced main-bearing saddles.
 function LowerCrankcase() {
   return <group>
-    {[-0.65, 0.65].map((z) => <mesh key={`skirt-${z}`} position={[0, -0.55, z]} castShadow receiveShadow>
-      <boxGeometry args={[3.48, 0.43, 0.13]} /><meshStandardMaterial color="#75828a" metalness={0.75} roughness={0.42} />
-    </mesh>)}
-    {[-1.2, -0.4, 0.4, 1.2].map((x) => <group key={`bearing-support-${x}`} position={[x, -0.79, 0]}>
-      <mesh castShadow><boxGeometry args={[0.34, 0.24, 1.12]} /><meshStandardMaterial color="#68757e" metalness={0.8} roughness={0.36} /></mesh>
-      {[-0.43, 0.43].map((z) => <HexBolt key={`main-bolt-${x}-${z}`} position={[0, -0.02, z]} scale={0.78} />)}
+    {[-0.65, 0.65].map((z) => <group key={`skirt-${z}`}>
+      <mesh position={[0, -0.48, z]} castShadow receiveShadow>
+        <boxGeometry args={[3.52, 0.55, 0.15]} />
+        <meshStandardMaterial color="#707d85" metalness={0.77} roughness={0.43} />
+      </mesh>
+      <mesh position={[0, -0.77, z]} castShadow>
+        <boxGeometry args={[3.38, 0.10, 0.19]} />
+        <meshStandardMaterial color="#58656d" metalness={0.8} roughness={0.4} />
+      </mesh>
     </group>)}
+
+    {/* [037A] Cross webs and bearing bulkheads are visible through the open crankcase. */}
+    {[-1.2, -0.4, 0.4, 1.2].map((x) => <group key={`bearing-support-${x}`} position={[x, -0.79, 0]}>
+      <mesh castShadow><boxGeometry args={[0.30, 0.30, 1.18]} /><meshStandardMaterial color="#65727a" metalness={0.82} roughness={0.36} /></mesh>
+      <mesh position={[0, -0.14, 0]} castShadow><boxGeometry args={[0.40, 0.08, 1.28]} /><meshStandardMaterial color="#89959c" metalness={0.82} roughness={0.35} /></mesh>
+      {[-0.48, 0.48].map((z) => <HexBolt key={`main-bolt-${x}-${z}`} position={[0, -0.025, z]} scale={0.78} />)}
+    </group>)}
+
+    {/* [037B] Machined longitudinal rails frame the crankshaft opening. */}
+    {[-0.48, 0.48].map((z) => <mesh key={`inner-rail-${z}`} position={[0, -0.91, z]} castShadow>
+      <boxGeometry args={[3.25, 0.09, 0.12]} />
+      <meshStandardMaterial color="#a1abb1" metalness={0.88} roughness={0.28} />
+    </mesh>)}
   </group>;
 }
 
@@ -131,6 +198,12 @@ function EngineBlock({ selected, hovered, onSelect, onHover }) {
     {[-1.55, -1.05, -0.52, 0, 0.52, 1.05, 1.55].flatMap((x) => [-0.36, 0.36].map((y) =>
       <HexBolt key={`flange-${x}-${y}`} position={[x, y, 0.81]} rotation={[Math.PI / 2, 0, 0]} scale={0.7} />
     ))}
+    {/* [040A] Raised casting identification pad and small end-face fasteners. */}
+    <mesh position={[1.72, -0.12, 0.83]} castShadow>
+      <boxGeometry args={[0.24, 0.18, 0.045]} />
+      <meshStandardMaterial color="#a1abb1" metalness={0.72} roughness={0.42} />
+    </mesh>
+    {[-0.28, 0.28].map((y) => <HexBolt key={`end-fastener-${y}`} position={[1.87, y, 0.22]} rotation={[0, 0, Math.PI / 2]} scale={0.78} />)}
     {/* [041] Adds a subtle wireframe halo when the engine block is active. */}
     {active && <mesh position={[0, 0.1, 0]} scale={[1.012, 1.012, 1.012]}>
       <boxGeometry args={[3.58, 1.7, 1.38]} /><meshBasicMaterial color="#4da9e8" wireframe transparent opacity={0.12} />
