@@ -44,6 +44,50 @@ export const PARTS = {
     what: 'The exhaust manifold collects hot exhaust gases leaving the four cylinders.',
     why: 'It routes exhaust from each cylinder into a single outlet that connects to the rest of the exhaust system.',
     where: 'It bolts to the side of the cylinder head, aligning with the four exhaust ports.'
+  },
+  // [021A] Front accessory-drive components.
+  crankshaftPulley: {
+    name: 'Crankshaft pulley / harmonic balancer', group: 'Accessory drive',
+    what: 'The crankshaft pulley attaches to the front of the crankshaft. The harmonic balancer also helps reduce torsional vibration.',
+    why: 'It transfers crankshaft rotation to the serpentine belt, which drives the engine accessories.',
+    where: 'It mounts on the front end of the crankshaft, ahead of the timing cover.'
+  },
+  waterPump: {
+    name: 'Water pump', group: 'Cooling system',
+    what: 'The water pump circulates coolant through the engine and radiator.',
+    why: 'Coolant flow carries heat away from the engine and helps maintain a safe operating temperature.',
+    where: 'It mounts at the front of the engine. Its pulley is driven by the serpentine belt in this simplified layout.'
+  },
+  alternator: {
+    name: 'Alternator', group: 'Electrical system',
+    what: 'The alternator converts engine rotation into electrical power.',
+    why: 'It supplies electrical power while the engine runs and recharges the vehicle battery.',
+    where: 'It mounts on the front accessory bracket and is driven by the serpentine belt.'
+  },
+  powerSteeringPump: {
+    name: 'Power steering pump', group: 'Steering system',
+    what: 'The power steering pump supplies pressurized hydraulic fluid to the steering system.',
+    why: 'Hydraulic pressure helps reduce the effort needed to turn the steering wheel.',
+    where: 'It mounts on the front accessory bracket and is driven by the serpentine belt.'
+  },
+  beltTensioner: {
+    name: 'Belt tensioner', group: 'Accessory drive',
+    what: 'The spring-loaded belt tensioner maintains the correct tension on the serpentine belt.',
+    why: 'Correct tension helps prevent belt slip, noise, and loss of accessory drive.',
+    where: 'It mounts to the front of the engine among the accessory pulleys.'
+  },
+  idlerPulley: {
+    name: 'Idler pulley', group: 'Accessory drive',
+    what: 'An idler pulley guides the serpentine belt along its route.',
+    why: 'It helps the belt contact the accessory pulleys at the correct angle.',
+    where: 'It mounts on the front accessory bracket and does not directly power an accessory.'
+  },
+  serpentineBelt: {
+    name: 'Serpentine belt', group: 'Accessory drive',
+    what: 'The serpentine belt is one continuous belt that loops around the crankshaft pulley and accessory pulleys.',
+    why: 'It transfers crankshaft rotation to the alternator, water pump, and power steering pump.',
+    where: 'It runs around the grooved pulleys and the smooth tensioner and idler pulleys at the front of the engine.',
+    note: 'Install the belt only after the crankshaft pulley, accessories, tensioner, and idler are installed.'
   }
 };
 
@@ -69,11 +113,43 @@ const INSTALL_RULES = {
   exhaustManifold: {
     requires: ['head'],
     reason: 'The exhaust manifold bolts to the cylinder head and must line up with its exhaust ports.'
+  },
+  crankshaftPulley: {
+    requires: ['crankshaft'],
+    reason: 'The crankshaft pulley mounts directly to the front of the crankshaft, so the crankshaft must be installed first.'
+  },
+  waterPump: {
+    requires: ['crankshaftPulley'],
+    reason: 'The water pump mounts on the front accessory drive. Install the crankshaft pulley first so the accessory-drive assembly can be built in sequence.'
+  },
+  alternator: {
+    requires: ['crankshaftPulley'],
+    reason: 'The alternator must be mounted on the front accessory bracket before the serpentine belt can be routed.'
+  },
+  powerSteeringPump: {
+    requires: ['crankshaftPulley'],
+    reason: 'The power steering pump mounts on the front accessory bracket and must be in place before the belt is routed.'
+  },
+  beltTensioner: {
+    requires: ['crankshaftPulley'],
+    reason: 'The tensioner mounts to the front of the engine and must be installed before the serpentine belt.'
+  },
+  idlerPulley: {
+    requires: ['crankshaftPulley'],
+    reason: 'The idler pulley must be installed in its guide position before the serpentine belt is routed.'
+  },
+  serpentineBelt: {
+    requires: ['crankshaftPulley', 'waterPump', 'alternator', 'powerSteeringPump', 'beltTensioner', 'idlerPulley'],
+    reason: 'The belt must route around the crankshaft pulley, water pump, alternator, power steering pump, tensioner, and idler. Install all of those components first.'
   }
 };
 
 // [023] This is the suggested teaching order. Other mechanically valid orders remain allowed.
-const RECOMMENDED_SEQUENCE = ['crankshaft', 'pistons', 'head', 'oilpan', 'exhaustManifold'];
+const RECOMMENDED_SEQUENCE = [
+  'crankshaft', 'pistons', 'head', 'oilpan', 'exhaustManifold',
+  'crankshaftPulley', 'waterPump', 'alternator', 'powerSteeringPump',
+  'beltTensioner', 'idlerPulley', 'serpentineBelt'
+];
 const INSTALLABLE_COUNT = Object.keys(INSTALL_RULES).length;
 
 // [024] App owns the installation state so the toolbar, progress display, and 3D scene stay in sync.
@@ -83,7 +159,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState(
-    'Start by selecting the crankshaft installation location underneath the engine, then click Install Part.'
+    'Start with the crankshaft, then build the engine and its front accessory drive. Select a part location on the 3D model and click Install Part.'
   );
 
   // [025] Finds the next uninstalled item in the recommended learning sequence.
