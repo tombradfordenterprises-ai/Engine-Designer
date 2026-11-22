@@ -46,50 +46,83 @@ export const PARTS = {
   }
 };
 
-// [022] Manages selection, assembly order, progress, view presets, and the sliding information panel.
+// [022] Defines realistic assembly prerequisites and a recommended teaching sequence.
+const INSTALL_RULES = {
+  crankshaft: { requires: [], order: 1, reason: 'The crankshaft must be seated in the block before the connecting rods can attach to it.' },
+  pistons: { requires: ['crankshaft'], order: 2, reason: 'The connecting rods need the crankshaft in place so their lower ends can attach to the crank throws.' },
+  oilpan: { requires: ['crankshaft', 'pistons'], order: 3, reason: 'The crankshaft and pistons belong inside the crankcase before the oil pan closes the bottom of the engine.' },
+  head: { requires: ['pistons'], order: 4, reason: 'The piston assemblies need to be in the cylinders before the cylinder head covers the top of the block.' },
+  exhaustManifold: { requires: ['head'], order: 5, reason: 'The exhaust manifold bolts to the cylinder head and must line up with its exhaust ports.' }
+};
+
+const RECOMMENDED_SEQUENCE = ['crankshaft', 'pistons', 'oilpan', 'head', 'exhaustManifold'];
+
+// [023] Manages selection, installation checks, progress, view presets, and the information panel.
 export default function App() {
   const [selected, setSelected] = useState('block');
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
-  const [message, setMessage] = useState('Rotate the engine and click a part location: top deck for pistons, underside for crankshaft, lower edge for oil pan.');
+  const [message, setMessage] = useState('Start with the crankshaft. Select an installation location on the engine, then click Install Part.');
 
   const selectPart = (id) => {
     setSelected(id);
-    setMessage(`${PARTS[id].name} selected.`);
+    if (id === 'block') {
+      setMessage('Engine block selected. It is the foundation and is already in place.');
+    } else if (installed.includes(id)) {
+      setMessage(`${PARTS[id].name} is already installed. Select another installation location to continue.`);
+    } else {
+      setMessage(`${PARTS[id].name} selected. Click Install Part to check the assembly requirements.`);
+    }
   };
 
-  // [023] Installs parts automatically while requiring the crankshaft before the piston-and-rod assembly.
+  // [024] Suggests the next uninstalled part in the recommended learning sequence.
+  const getNextSuggestion = (parts) => {
+    const nextId = RECOMMENDED_SEQUENCE.find((id) => !parts.includes(id));
+    return nextId ? PARTS[nextId].name : null;
+  };
+
+  // [025] Validates prerequisites before installing and gives a useful explanation when order is wrong.
   const installPart = () => {
     if (selected === 'block') {
-      setMessage('The engine block is the foundation and is already in place.');
-      setPanelOpen(true);
-      return;
-    }
-    if (selected === 'pistons' && !installed.includes('crankshaft')) {
-      setMessage('Install the crankshaft first, then add the pistons and connecting rods.');
+      setMessage('The engine block is already installed. Select the crankshaft location underneath the block to begin.');
       setPanelOpen(true);
       return;
     }
     if (installed.includes(selected)) {
-      setMessage(`${PARTS[selected].name} is already installed.`);
+      setMessage(`${PARTS[selected].name} is already installed. Choose a different part to continue.`);
       return;
     }
-    setInstalled((current) => [...current, selected]);
-    setMessage(`${PARTS[selected].name} installed.`);
+
+    const missing = (INSTALL_RULES[selected]?.requires || []).filter((id) => !installed.includes(id));
+    if (missing.length) {
+      const names = missing.map((id) => PARTS[id].name);
+      setMessage(`⚠️ Assembly order warning: install ${names.join(' and ')} first. ${INSTALL_RULES[selected].reason}`);
+      setPanelOpen(true);
+      return;
+    }
+
+    const updated = [...installed, selected];
+    setInstalled(updated);
+    const next = getNextSuggestion(updated);
+    if (next) {
+      setMessage(`✓ ${PARTS[selected].name} installed. Suggested next step: ${next}.`);
+    } else {
+      setMessage('✓ Engine assembly complete! All five components have been installed.');
+    }
   };
 
-  // [024] Removes the most recently installed component to support simple undo.
+  // [026] Removes the most recently installed component to support simple undo.
   const undo = () => {
-    setInstalled((current) => {
-      if (!current.length) {
-        setMessage('There is nothing to undo yet.');
-        return current;
-      }
-      const removed = current[current.length - 1];
-      setMessage(`${PARTS[removed].name} installation undone.`);
-      return current.slice(0, -1);
-    });
+    if (!installed.length) {
+      setMessage('There is nothing to undo yet.');
+      return;
+    }
+    const removed = installed[installed.length - 1];
+    const updated = installed.slice(0, -1);
+    setInstalled(updated);
+    setSelected(removed);
+    setMessage(`${PARTS[removed].name} installation undone. You can reinstall it or choose another part.`);
   };
 
   // [025] Cycles through the preset camera angles while keeping mouse orbit available.
@@ -121,7 +154,7 @@ export default function App() {
 
     {/* [028] Keeps the six-button gray toolbar fixed at the bottom of the game interface. */}
     <Toolbar selected={selected} onInstall={installPart}
-      onGuide={() => setMessage('Rotate the engine with your mouse. Click the top deck to select pistons, or switch to Bottom View and click the lower crankcase for the crankshaft. After pistons are installed, the top deck selects the cylinder head. Click the lower outer edge for the oil pan.')}
+      onGuide={() => { setMessage('Recommended order: crankshaft → pistons and connecting rods → oil pan → cylinder head → exhaust manifold. The simulator checks prerequisites and explains any step that is attempted too early. Rotate the engine and click the matching installation area to select a part.'); setPanelOpen(true); }}
       onExplain={() => setPanelOpen(true)}
       onView={changeView} onUndo={undo}
       onBack={() => setMessage('You are at the beginning of the engine build. Select an installation area directly on the engine.')} />
