@@ -1,13 +1,14 @@
 import React, { Suspense, useMemo, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
-import { Bounds, Center, Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import manifest from '../data/enginePartManifest.json';
 
 const MODEL_URL = '/models/inline_four_engine.glb';
 
-// Interaction volumes are separate from the CAD meshes. Their positions use
-// the original GLB coordinates, before the model's Z-up to Y-up rotation.
+// These are broad interaction zones in the source model's coordinates.
+// They are deliberately rendered as invisible boxes; only the active zone
+// gets a subtle wireframe so it cannot cover the actual CAD geometry.
 const PART_TARGETS = [
   { id: 'engineBlock', position: [0, 0, 0.292], size: [0.49, 0.27, 0.40] },
   { id: 'crankshaft', position: [-0.006, 0, 0.225], size: [0.61, 0.15, 0.15] },
@@ -26,58 +27,73 @@ const PART_TARGETS = [
   { id: 'oilFilter', position: [0.155, 0.166, 0.32], size: [0.12, 0.18, 0.12] },
 ];
 
-function ClickTarget({ target, selected, onSelect, onHover }) {
+function ClickTarget({ target, selected, hovered, onSelect, onHover }) {
   const active = selected === target.id;
+  const over = hovered === target.id;
   return (
     <mesh
       position={target.position}
-      onPointerOver={(e) => { e.stopPropagation(); onHover(target.id); }}
-      onPointerOut={(e) => { e.stopPropagation(); onHover(null); }}
-      onClick={(e) => { e.stopPropagation(); onSelect?.(target.id); }}
+      onPointerOver={(event) => { event.stopPropagation(); onHover(target.id); }}
+      onPointerOut={(event) => { event.stopPropagation(); onHover(null); }}
+      onClick={(event) => { event.stopPropagation(); onSelect?.(target.id); }}
     >
       <boxGeometry args={target.size} />
-      <meshBasicMaterial color="#168bff" transparent opacity={active ? 0.24 : 0.001} depthWrite={false} side={THREE.DoubleSide} />
+      <meshBasicMaterial
+        color="#168bff"
+        transparent
+        opacity={active ? 0.13 : over ? 0.07 : 0}
+        wireframe
+        depthWrite={false}
+        side={THREE.DoubleSide}
+      />
     </mesh>
   );
 }
 
-function CADModel({ installed = [], selected, onSelect, onHover }) {
+function CADModel({ installed = [], selected, hovered, onSelect, onHover }) {
   const { scene } = useGLTF(MODEL_URL);
-  const meshToPart = useMemo(() => {
-    const map = new Map();
-    Object.entries(manifest.parts).forEach(([id, part]) => (part.meshes || []).forEach((name) => map.set(name, id)));
-    return map;
-  }, []);
+  const model = useMemo(() => {
+    // Clone the loaded scene so visibility changes never mutate Drei's cached GLB.
+    const copy = scene.clone(true);
+    const meshToPart = new Map();
+    Object.entries(manifest.parts || {}).forEach(([partId, part]) => {
+      (part.meshes || []).forEach((meshName) => meshToPart.set(meshName, partId));
+    });
 
-  // IMPORTANT: use the original GLTF scene that was proven to render correctly.
-  // Restore visibility first, then hide only positively identified non-block meshes.
-  // Unknown meshes stay visible as a safety fallback instead of disappearing.
-  scene.traverse((node) => {
-    node.visible = true;
-    if (!node.isMesh) return;
-    const partId = meshToPart.get(node.name);
-    node.userData.enginePartId = partId || null;
-    node.visible = !partId || partId === 'engineBlock' || installed.includes(partId);
-    node.castShadow = true;
-    node.receiveShadow = true;
-    if (!node.userData.engineBuilderMaterialPrepared && node.material) {
-      const brighten = (source) => {
-        const m = source.clone();
-        if (m.color) m.color.lerp(new THREE.Color('#aeb8c2'), 0.62);
-        if ('roughness' in m) m.roughness = Math.max(m.roughness, 0.42);
-        if ('metalness' in m) m.metalness = Math.min(m.metalness, 0.38);
-        return m;
-      };
-      node.material = Array.isArray(node.material) ? node.material.map(brighten) : brighten(node.material);
-      node.userData.engineBuilderMaterialPrepared = true;
-    }
-  });
+    copy.traverse((node) => {
+      node.visible = true;
+      if (!node.isMesh) return;
+      const partId = meshToPart.get(node.name);
+      node.userData.enginePartId = partId || null;
+      // Bare-block starting state. Unclassified meshes are retained rather
+      // than hidden, so a manifest mismatch cannot make the model disappear.
+      node.visible = partId ? (partId === 'engineBlock') : true;
+      node.castShadow = true;
+      node.receiveShadow = true;
+      if (node.material) {
+        node.material = Array.isArray(node.material)
+          ? node.material.map((material) => material.clone())
+          : node.material.clone();
+      }
+    });
+    return copy;
+  }, [scene]);
+
+  // Show the relevant component group when the app records it as installed.
+  React.useEffect(() => {
+    const installedSet = new Set(installed);
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      const partId = node.userData.enginePartId;
+      node.visible = partId ? (partId === 'engineBlock' || installedSet.has(partId)) : true;
+    });
+  }, [model, installed]);
 
   return (
     <group rotation={[-Math.PI / 2, 0, 0]}>
-      <primitive object={scene} dispose={null} />
+      <primitive object={model} dispose={null} />
       {PART_TARGETS.map((target) => (
-        <ClickTarget key={target.id} target={target} selected={selected} onSelect={onSelect} onHover={onHover} />
+        <ClickTarget key={target.id} target={target} selected={selected} hovered={hovered} onSelect={onSelect} onHover={onHover} />
       ))}
     </group>
   );
@@ -85,13 +101,13 @@ function CADModel({ installed = [], selected, onSelect, onHover }) {
 
 function SceneContents(props) {
   return <>
-    <ambientLight intensity={1.6} />
-    <hemisphereLight args={['#ffffff', '#8995a2', 1.35]} />
-    <directionalLight position={[4, 7, 6]} intensity={2.6} />
-    <directionalLight position={[-5, 3, -4]} intensity={1.5} />
+    <ambientLight intensity={1.25} />
+    <hemisphereLight args={['#ffffff', '#8995a2', 1.0]} />
+    <directionalLight position={[4, 7, 6]} intensity={2.2} />
+    <directionalLight position={[-5, 3, -4]} intensity={1.0} />
     <Suspense fallback={null}>
-      <Bounds fit clip observe margin={1.35}>
-        <Center><CADModel {...props} /></Center>
+      <Bounds fit clip observe margin={1.25}>
+        <CADModel {...props} />
       </Bounds>
     </Suspense>
     <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={8} />
@@ -101,10 +117,18 @@ function SceneContents(props) {
 
 export default function EngineCADScene({ selected, installed = [], onSelect, view }) {
   const [hovered, setHovered] = useState(null);
-  return <Canvas shadows camera={{ position: [2.6, 2.0, 3.0], fov: 38, near: 0.01, far: 100 }} dpr={[1, 1.75]} gl={{ antialias: true, alpha: false }} style={{ cursor: hovered ? 'pointer' : 'grab' }}>
-    <color attach="background" args={['#f5f7fa']} />
-    <SceneContents selected={selected} installed={installed} onSelect={onSelect} onHover={setHovered} />
-  </Canvas>;
+  return (
+    <Canvas
+      shadows
+      camera={{ position: [2.6, 2.0, 3.0], fov: 38, near: 0.01, far: 100 }}
+      dpr={[1, 1.75]}
+      gl={{ antialias: true, alpha: false }}
+      style={{ cursor: hovered ? 'pointer' : 'grab' }}
+    >
+      <color attach="background" args={['#f5f7fa']} />
+      <SceneContents selected={selected} installed={installed} onSelect={onSelect} hovered={hovered} onHover={setHovered} />
+    </Canvas>
+  );
 }
 
 useGLTF.preload(MODEL_URL);
