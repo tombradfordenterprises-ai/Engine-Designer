@@ -1,13 +1,13 @@
 import React from 'react';
-// [040] Imports the icon library used by the fixed six-button game toolbar.
-import { Rotate3D, Wrench, Package, BookOpen, Undo2, ArrowLeft } from 'lucide-react';
+// [040] Imports icons for the fixed engine-builder toolbar.
+import { Rotate3D, Wrench, MousePointer2, BookOpen, Undo2, ArrowLeft } from 'lucide-react';
 
-// [041] Renders persistent controls for view changes, installation, parts selection, explanations, undo, and back.
-export default function Toolbar({ selected, onInstall, onParts, onExplain, onView, onUndo, onBack }) {
+// [041] Keeps the six-button toolbar while making direct 3D selection the primary way to choose components.
+export default function Toolbar({ selected, onInstall, onGuide, onExplain, onView, onUndo, onBack }) {
   const actions = [
     { label: 'Change view', icon: Rotate3D, click: onView },
     { label: 'Install part', icon: Wrench, click: onInstall },
-    { label: 'Parts', icon: Package, click: onParts },
+    { label: 'How to', icon: MousePointer2, click: onGuide },
     { label: 'Explain part', icon: BookOpen, click: onExplain },
     { label: 'Undo', icon: Undo2, click: onUndo },
     { label: 'Back', icon: ArrowLeft, click: onBack }
