@@ -1,4 +1,5 @@
 // [050] Defines the upward-sliding educational drawer for the currently selected engine component.
+import React from 'react';
 export default function InfoPanel({ part, open, onClose }) {
   return (
     <section className={`info-panel ${open ? 'is-open' : ''}`} aria-hidden={!open}>
