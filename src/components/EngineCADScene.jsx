@@ -1,13 +1,77 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { Bounds, Center, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import manifest from '../data/enginePartManifest.json';
 
 const MODEL_URL = '/models/inline_four_engine.glb';
 
-// Temporary visibility-first scene: preserve and display the complete source
-// CAD hierarchy before reintroducing component hiding and installation stages.
+function CADRaycastController({ scene, onSelect }) {
+  const { camera, gl } = useThree();
+
+  useEffect(() => {
+    const element = gl.domElement;
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let downX = 0;
+    let downY = 0;
+    let downPointerId = null;
+    let hovered = null;
+    const previousCursor = element.style.cursor;
+
+    const findPartAt = (event) => {
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObject(scene, true);
+      for (const hit of hits) {
+        const id = hit.object?.userData?.enginePartId;
+        if (id) return { id, object: hit.object };
+      }
+      return null;
+    };
+
+    const handleDown = (event) => {
+      downX = event.clientX;
+      downY = event.clientY;
+      downPointerId = event.pointerId;
+    };
+
+    const handleMove = (event) => {
+      const hit = findPartAt(event);
+      const next = hit?.object || null;
+      if (next !== hovered) {
+        hovered = next;
+        element.style.cursor = hovered ? 'pointer' : 'grab';
+      }
+    };
+
+    const handleUp = (event) => {
+      if (downPointerId !== event.pointerId) return;
+      const moved = Math.hypot(event.clientX - downX, event.clientY - downY);
+      downPointerId = null;
+      // OrbitControls uses drag gestures. Only treat a near-stationary release as a click.
+      if (moved > 6) return;
+      const hit = findPartAt(event);
+      if (hit) onSelect?.(hit.id);
+    };
+
+    element.addEventListener('pointerdown', handleDown, true);
+    element.addEventListener('pointermove', handleMove, true);
+    element.addEventListener('pointerup', handleUp, true);
+    return () => {
+      element.removeEventListener('pointerdown', handleDown, true);
+      element.removeEventListener('pointermove', handleMove, true);
+      element.removeEventListener('pointerup', handleUp, true);
+      element.style.cursor = previousCursor;
+    };
+  }, [camera, gl, onSelect, scene]);
+
+  return null;
+}
+
 function CompleteCADModel({ onSelect }) {
   const { scene } = useGLTF(MODEL_URL);
 
@@ -19,43 +83,34 @@ function CompleteCADModel({ onSelect }) {
     return map;
   }, []);
 
-  // The STEP export is Z-up. Restore every node and use a neutral, readable
-  // CAD finish so dark source materials do not disappear against the scene.
-  scene.traverse((node) => {
-    node.visible = true;
-    if (!node.isMesh) return;
-    node.castShadow = true;
-    node.receiveShadow = true;
-    node.userData.enginePartId = meshToPart.get(node.name) || null;
-    if (node.material) {
-      const brighten = (source) => {
-        const material = source.clone();
-        if (material.color) {
-          material.color.lerp(new THREE.Color('#aeb8c2'), 0.62);
-        }
-        if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.42);
-        if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.38);
-        return material;
-      };
-      node.material = Array.isArray(node.material)
-        ? node.material.map(brighten)
-        : brighten(node.material);
-    }
-  });
+  // Keep the original CAD hierarchy and every source mesh visible.
+  useMemo(() => {
+    scene.traverse((node) => {
+      node.visible = true;
+      if (!node.isMesh) return;
+      node.castShadow = true;
+      node.receiveShadow = true;
+      node.userData.enginePartId = meshToPart.get(node.name) || null;
+      if (node.material && !node.userData.engineBuilderMaterialPrepared) {
+        const brighten = (source) => {
+          const material = source.clone();
+          if (material.color) material.color.lerp(new THREE.Color('#aeb8c2'), 0.62);
+          if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.42);
+          if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.38);
+          return material;
+        };
+        node.material = Array.isArray(node.material)
+          ? node.material.map(brighten)
+          : brighten(node.material);
+        node.userData.engineBuilderMaterialPrepared = true;
+      }
+    });
+  }, [scene, meshToPart]);
 
   return (
     <group rotation={[-Math.PI / 2, 0, 0]}>
-      <primitive
-        object={scene}
-        dispose={null}
-        onClick={(event) => {
-          const id = event.object?.userData?.enginePartId;
-          if (id && onSelect) {
-            event.stopPropagation();
-            onSelect(id);
-          }
-        }}
-      />
+      <primitive object={scene} dispose={null} />
+      <CADRaycastController scene={scene} onSelect={onSelect} />
     </group>
   );
 }
