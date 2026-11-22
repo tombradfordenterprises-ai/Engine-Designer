@@ -1,11 +1,10 @@
-// [020] Imports React state, the 3D engine scene, and the persistent bottom toolbar.
-
 // [020] Imports React state, the interactive 3D engine scene, toolbar, and component guide.
 import React, { useState } from 'react';
 import EngineScene from './components/EngineScene.jsx';
 import Toolbar from './components/Toolbar.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import './App.css';
+import './parts-menu.css';
 
 // [021] Defines the selectable engine components and plain-language explanations shown in the guide.
 export const PARTS = {
@@ -47,12 +46,14 @@ export default function App() {
   const [selected, setSelected] = useState('block');
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [partsOpen, setPartsOpen] = useState(false);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState('Select an engine component to learn about it or install it.');
 
   const selectPart = (id) => {
     setSelected(id);
     setMessage(`${PARTS[id].name} selected.`);
+    setPartsOpen(false);
   };
 
   // [023] Installs parts automatically while requiring the crankshaft before the piston-and-rod assembly.
@@ -116,11 +117,30 @@ export default function App() {
     </section>
 
     {/* [028] Keeps the six-button gray toolbar fixed at the bottom of the game interface. */}
-    <Toolbar selected={selected} onInstall={installPart} onExplain={() => setPanelOpen(true)}
+    <Toolbar selected={selected} onInstall={installPart} onParts={() => setPartsOpen((open) => !open)}
+      onExplain={() => { setPanelOpen(true); setPartsOpen(false); }}
       onView={changeView} onUndo={undo}
-      onBack={() => setMessage('You are at the beginning of the engine build.')} />
+      onBack={() => { setPartsOpen(false); setMessage('You are at the beginning of the engine build.'); }} />
 
-    {/* [029] Slides the selected component's educational explanation upward from the toolbar. */}
+    {/* [029] Opens a component picker so uninstalled parts can be selected before they appear in the 3D scene. */}
+    <section className={`parts-menu ${partsOpen ? 'is-open' : ''}`} aria-hidden={!partsOpen}>
+      <div className="parts-menu-header">
+        <div><span className="panel-kicker">ENGINE COMPONENTS</span><h2>Choose a part</h2></div>
+        <button className="close-button" onClick={() => setPartsOpen(false)} aria-label="Close parts list">×</button>
+      </div>
+      <div className="parts-list">
+        {Object.entries(PARTS).map(([id, part]) => (
+          <button key={id} className={`part-choice ${selected === id ? 'is-selected' : ''}`} onClick={() => selectPart(id)}>
+            <span className="part-choice-copy"><strong>{part.name}</strong><small>{part.group}</small></span>
+            <span className={`part-state ${id === 'block' || installed.includes(id) ? 'is-installed' : ''}`}>
+              {id === 'block' || installed.includes(id) ? 'Installed' : 'Not installed'}
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    {/* [030] Slides the selected component's educational explanation upward from the toolbar. */}
     <InfoPanel part={PARTS[selected]} open={panelOpen} onClose={() => setPanelOpen(false)} />
   </main>;
 }
