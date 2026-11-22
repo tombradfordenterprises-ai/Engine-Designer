@@ -1,4 +1,5 @@
-import React, { Suspense, useEffect, useMemo } from 'react';
+
+import React, { Suspense, useMemo } from 'react';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Bounds, Center, Environment, OrbitControls, useGLTF } from '@react-three/drei';
@@ -6,86 +7,94 @@ import manifest from '../data/enginePartManifest.json';
 
 const MODEL_URL = '/models/inline_four_engine.glb';
 
-function CompleteCADModel({ onSelect }) {
-  const { scene } = useGLTF(MODEL_URL);
+function buildMeshLookup() {
+  const lookup = new Map();
+  Object.entries(manifest.parts).forEach(([partId, part]) => {
+    (part.meshes || []).forEach((meshName) => lookup.set(meshName, partId));
+  });
+  return lookup;
+}
 
-  // Build a lookup from the exact CAD mesh names to the simulator component IDs.
-  const meshToPart = useMemo(() => {
-    const map = new Map();
-    Object.entries(manifest.parts).forEach(([partId, part]) => {
-      (part.meshes || []).forEach((meshName) => map.set(meshName, partId));
-    });
-    return map;
-  }, []);
+const MESH_TO_PART = buildMeshLookup();
 
-  // Prepare the loaded CAD scene once. Keep its hierarchy and transforms untouched.
-  useEffect(() => {
-    scene.traverse((node) => {
-      node.visible = true;
-      if (!node.isMesh) return;
-
-      node.castShadow = true;
-      node.receiveShadow = true;
-      node.userData.enginePartId = meshToPart.get(node.name) || null;
-
-      if (node.material && !node.userData.engineBuilderMaterialPrepared) {
-        const brighten = (source) => {
-          const material = source.clone();
-          if (material.color) material.color.lerp(new THREE.Color('#aeb8c2'), 0.62);
-          if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.42);
-          if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.38);
-          return material;
-        };
-        node.material = Array.isArray(node.material)
-          ? node.material.map(brighten)
-          : brighten(node.material);
-        node.userData.engineBuilderMaterialPrepared = true;
+function CADNode({ node, selected, onSelect }) {
+  const partId = node.isMesh ? MESH_TO_PART.get(node.name) : null;
+  const material = useMemo(() => {
+    if (!node.isMesh || !partId || partId !== selected) return node.material;
+    const highlight = (source) => {
+      const copy = source.clone();
+      if (copy.color) copy.color.lerp(new THREE.Color('#38a8ff'), 0.48);
+      if ('emissive' in copy) {
+        copy.emissive = new THREE.Color('#087bd2');
+        copy.emissiveIntensity = 0.55;
       }
-    });
-  }, [scene, meshToPart]);
+      return copy;
+    };
+    return Array.isArray(node.material) ? node.material.map(highlight) : highlight(node.material);
+  }, [node, partId, selected]);
 
-  // These are React Three Fiber events. They receive the actual intersected mesh,
-  // and automatically distinguish a click from an OrbitControls drag.
-  const handleClick = (event) => {
-    const hitObject = event.object;
-    const partId = hitObject?.userData?.enginePartId || meshToPart.get(hitObject?.name);
-    if (!partId) return;
-    event.stopPropagation();
-    onSelect?.(partId);
+  const transform = {
+    matrix: node.matrix,
+    matrixAutoUpdate: false,
+    name: node.name || undefined,
   };
 
-  return (
-    <group rotation={[-Math.PI / 2, 0, 0]}>
-      <primitive
-        object={scene}
-        dispose={null}
-        onClick={handleClick}
+  if (node.isMesh) {
+    return (
+      <mesh
+        {...transform}
+        geometry={node.geometry}
+        material={material}
+        castShadow
+        receiveShadow
+        onClick={(event) => {
+          if (!partId) return;
+          event.stopPropagation();
+          onSelect(partId);
+        }}
+        onPointerOver={(event) => {
+          if (!partId) return;
+          event.stopPropagation();
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => { document.body.style.cursor = 'auto'; }}
       />
+    );
+  }
+
+  return (
+    <group {...transform}>
+      {node.children?.map((child) => (
+        <CADNode key={child.uuid} node={child} selected={selected} onSelect={onSelect} />
+      ))}
     </group>
   );
 }
 
-function SceneContents({ onSelect }) {
+function CompleteCADModel({ selected, onSelect }) {
+  const { scene } = useGLTF(MODEL_URL);
+  return (
+    <group rotation={[-Math.PI / 2, 0, 0]}>
+      <CADNode node={scene} selected={selected} onSelect={onSelect} />
+    </group>
+  );
+}
+
+function SceneContents({ selected, onSelect }) {
   return (
     <>
-      <ambientLight intensity={1.6} />
-      <hemisphereLight args={['#ffffff', '#8995a2', 1.35]} />
-      <directionalLight position={[4, 7, 6]} intensity={2.6} />
-      <directionalLight position={[-5, 3, -4]} intensity={1.5} />
+      <ambientLight intensity={1.5} />
+      <hemisphereLight args={['#ffffff', '#8995a2', 1.2]} />
+      <directionalLight position={[4, 7, 6]} intensity={2.4} />
+      <directionalLight position={[-5, 3, -4]} intensity={1.3} />
       <Suspense fallback={null}>
         <Bounds fit clip observe margin={1.35}>
           <Center>
-            <CompleteCADModel onSelect={onSelect} />
+            <CompleteCADModel selected={selected} onSelect={onSelect} />
           </Center>
         </Bounds>
       </Suspense>
-      <OrbitControls
-        makeDefault
-        enableDamping
-        dampingFactor={0.08}
-        minDistance={0.6}
-        maxDistance={8}
-      />
+      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={8} />
       <Environment preset="studio" />
     </>
   );
@@ -100,7 +109,7 @@ export default function EngineCADScene({ selected, installed, onSelect, view }) 
       gl={{ antialias: true, alpha: false }}
     >
       <color attach="background" args={['#f5f7fa']} />
-      <SceneContents onSelect={onSelect} />
+      <SceneContents selected={selected} onSelect={onSelect} />
     </Canvas>
   );
 }
