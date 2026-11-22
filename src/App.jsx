@@ -4,7 +4,6 @@ import EngineScene from './components/EngineScene.jsx';
 import Toolbar from './components/Toolbar.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import './App.css';
-import './parts-menu.css';
 
 // [021] Defines the selectable engine components and plain-language explanations shown in the guide.
 export const PARTS = {
@@ -46,14 +45,12 @@ export default function App() {
   const [selected, setSelected] = useState('block');
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [partsOpen, setPartsOpen] = useState(false);
   const [view, setView] = useState('isometric');
-  const [message, setMessage] = useState('Select an engine component to learn about it or install it.');
+  const [message, setMessage] = useState('Rotate the engine and click a part location: top deck for pistons, underside for crankshaft, lower edge for oil pan.');
 
   const selectPart = (id) => {
     setSelected(id);
     setMessage(`${PARTS[id].name} selected.`);
-    setPartsOpen(false);
   };
 
   // [023] Installs parts automatically while requiring the crankshaft before the piston-and-rod assembly.
@@ -110,37 +107,20 @@ export default function App() {
 
     {/* [027] Hosts the detailed 3D engine block and automatically installed engine components. */}
     <section className="workspace">
-      <div className="scene-hint"><span className="hint-dot" /> HOVER TO HIGHLIGHT · CLICK TO SELECT</div>
+      <div className="scene-hint"><span className="hint-dot" /> ROTATE THE ENGINE · HOVER TO HIGHLIGHT · CLICK A PART LOCATION</div>
       <EngineScene selected={selected} installed={installed} onSelect={selectPart} view={view} />
       <div className="status-message">{message}</div>
       <div className="view-label">{view.toUpperCase()} VIEW</div>
     </section>
 
     {/* [028] Keeps the six-button gray toolbar fixed at the bottom of the game interface. */}
-    <Toolbar selected={selected} onInstall={installPart} onParts={() => setPartsOpen((open) => !open)}
-      onExplain={() => { setPanelOpen(true); setPartsOpen(false); }}
+    <Toolbar selected={selected} onInstall={installPart}
+      onGuide={() => setMessage('Rotate the engine with your mouse. Click the top deck to select pistons, or switch to Bottom View and click the lower crankcase for the crankshaft. After pistons are installed, the top deck selects the cylinder head. Click the lower outer edge for the oil pan.')}
+      onExplain={() => setPanelOpen(true)}
       onView={changeView} onUndo={undo}
-      onBack={() => { setPartsOpen(false); setMessage('You are at the beginning of the engine build.'); }} />
+      onBack={() => setMessage('You are at the beginning of the engine build. Select an installation area directly on the engine.')} />
 
-    {/* [029] Opens a component picker so uninstalled parts can be selected before they appear in the 3D scene. */}
-    <section className={`parts-menu ${partsOpen ? 'is-open' : ''}`} aria-hidden={!partsOpen}>
-      <div className="parts-menu-header">
-        <div><span className="panel-kicker">ENGINE COMPONENTS</span><h2>Choose a part</h2></div>
-        <button className="close-button" onClick={() => setPartsOpen(false)} aria-label="Close parts list">×</button>
-      </div>
-      <div className="parts-list">
-        {Object.entries(PARTS).map(([id, part]) => (
-          <button key={id} className={`part-choice ${selected === id ? 'is-selected' : ''}`} onClick={() => selectPart(id)}>
-            <span className="part-choice-copy"><strong>{part.name}</strong><small>{part.group}</small></span>
-            <span className={`part-state ${id === 'block' || installed.includes(id) ? 'is-installed' : ''}`}>
-              {id === 'block' || installed.includes(id) ? 'Installed' : 'Not installed'}
-            </span>
-          </button>
-        ))}
-      </div>
-    </section>
-
-    {/* [030] Slides the selected component's educational explanation upward from the toolbar. */}
+    {/* [029] Slides the selected component's educational explanation upward from the toolbar. */}
     <InfoPanel part={PARTS[selected]} open={panelOpen} onClose={() => setPanelOpen(false)} />
   </main>;
 }
