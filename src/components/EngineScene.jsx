@@ -231,7 +231,39 @@ function Crankshaft() {
   </InstallMotion>;
 }
 
-// [052] Displays installed crankshaft, piston-and-rod assembly, cylinder head, or oil pan components.
+// [052] Models a four-runner exhaust manifold that bolts to the side of the cylinder head.
+function ExhaustManifold() {
+  const runners = [-0.57, -0.19, 0.19, 0.57];
+  const material = new THREE.MeshStandardMaterial({ color: '#777f84', metalness: 0.88, roughness: 0.3 });
+  return <InstallMotion startY={0.8} duration={1.05}>
+    <group>
+      {/* [052A] Long mounting flange aligns with the four exhaust ports on the side of the head. */}
+      <mesh position={[0, 0.26, 0.88]} castShadow>
+        <boxGeometry args={[3.18, 0.48, 0.12]} />
+        <meshStandardMaterial color="#8b9499" metalness={0.9} roughness={0.28} />
+      </mesh>
+      {runners.map((x, index) => {
+        const start = new THREE.Vector3(x * 2, 0.27, 0.96);
+        const mid = new THREE.Vector3(x * 1.45, -0.02, 1.18);
+        const merge = new THREE.Vector3(0.15, -0.34, 1.34);
+        const curve = new THREE.CatmullRomCurve3([start, mid, merge]);
+        const geometry = new THREE.TubeGeometry(curve, 24, 0.075, 12, false);
+        return <mesh key={`exhaust-runner-${index}`} geometry={geometry} material={material} castShadow />;
+      })}
+      {/* [052B] Collector outlet joins the four runners into one exhaust pipe. */}
+      <mesh position={[0.15, -0.36, 1.35]} rotation={[0.2, 0, 0.15]} castShadow>
+        <cylinderGeometry args={[0.14, 0.17, 0.52, 28]} />
+        <meshStandardMaterial color="#626b70" metalness={0.9} roughness={0.3} />
+      </mesh>
+      {runners.map((x, index) => <mesh key={`exhaust-port-${index}`} position={[x * 2, 0.26, 0.95]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.105, 0.018, 10, 28]} />
+        <meshStandardMaterial color="#c0c6c9" metalness={0.94} roughness={0.22} />
+      </mesh>)}
+    </group>
+  </InstallMotion>;
+}
+
+// [052C] Displays installed crankshaft, pistons, cylinder head, oil pan, or exhaust manifold.
 function InstalledPart({ id }) {
   if (id === 'crankshaft') return <Crankshaft />;
   if (id === 'pistons') return <PistonRodSet />;
@@ -247,6 +279,7 @@ function InstalledPart({ id }) {
       <meshStandardMaterial color="#454f57" metalness={0.78} roughness={0.32} />
     </mesh>
   </InstallMotion>;
+  if (id === 'exhaustManifold') return <ExhaustManifold />;
   return null;
 }
 
@@ -256,6 +289,8 @@ function InstallationPickZones({ installed, hovered, onSelect, onHover }) {
   const zones = [
     // The top deck selects the piston assembly first, then the cylinder head after pistons are installed.
     { id: topPart, position: [0, 1.035, 0], size: [3.22, 0.09, 1.18] },
+    // The four-port side face selects the exhaust manifold.
+    { id: 'exhaustManifold', position: [0, 0.25, 0.91], size: [3.35, 0.58, 0.12] },
     // The lower central crankcase is selected from underneath using the Bottom camera view.
     { id: 'crankshaft', position: [0, -0.985, 0], size: [3.02, 0.10, 0.92] },
     // The oil-pan mounting flange is a separate lower side-edge target to avoid covering the crankshaft target.
@@ -298,7 +333,8 @@ function SelectableInstalledPart({ id, selected, hovered, onSelect, onHover }) {
     crankshaft: { position: [0, -0.62, 0], size: [3.48, 0.58, 0.72] },
     pistons: { position: [0, 0.12, 0], size: [3.42, 1.18, 0.72] },
     head: { position: [0, 1.2, 0], size: [3.82, 0.48, 1.58] },
-    oilpan: { position: [0, -1.12, 0], size: [3.38, 0.42, 1.34] }
+    oilpan: { position: [0, -1.12, 0], size: [3.38, 0.42, 1.34] },
+    exhaustManifold: { position: [0, 0.02, 1.12], size: [3.48, 0.78, 0.62] }
   }[id];
 
   return <group
