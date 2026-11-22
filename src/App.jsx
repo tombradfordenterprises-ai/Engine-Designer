@@ -37,6 +37,12 @@ export const PARTS = {
     what: 'The oil pan is a reservoir that holds engine oil when it is not circulating through the engine.',
     why: 'It supplies the oil pickup so the oil pump can send oil around the engine.',
     where: 'It bolts to the underside of the engine.'
+  },
+  exhaustManifold: {
+    name: 'Exhaust manifold', group: 'Exhaust system',
+    what: 'The exhaust manifold collects hot exhaust gases leaving the four cylinders.',
+    why: 'It routes the exhaust from each cylinder into a single outlet that connects to the rest of the exhaust system.',
+    where: 'It bolts to the side of the cylinder head, aligning with the four exhaust ports.'
   }
 };
 
@@ -100,8 +106,8 @@ export default function App() {
         <h1>Inline Four <span>Engine Builder</span></h1>
       </div>
       <div className="progress-wrap">
-        <div className="progress-label"><span>ASSEMBLY</span><strong>{installed.length}/4 PARTS</strong></div>
-        <div className="progress-track"><div style={{ width: `${installed.length / 4 * 100}%` }} /></div>
+        <div className="progress-label"><span>ASSEMBLY</span><strong>{installed.length}/5 PARTS</strong></div>
+        <div className="progress-track"><div style={{ width: `${installed.length / 5 * 100}%` }} /></div>
       </div>
     </header>
 
