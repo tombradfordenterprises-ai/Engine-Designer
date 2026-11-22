@@ -1,3 +1,4 @@
+
 import React from 'react';
 // [040] Imports icons for the fixed engine-builder toolbar.
 import { Rotate3D, Wrench, MousePointer2, BookOpen, Undo2, ArrowLeft } from 'lucide-react';
@@ -6,7 +7,7 @@ import { Rotate3D, Wrench, MousePointer2, BookOpen, Undo2, ArrowLeft } from 'luc
 export default function Toolbar({ selected, onInstall, onGuide, onExplain, onView, onUndo, onBack }) {
   const actions = [
     { label: 'Change view', icon: Rotate3D, click: onView },
-    { label: 'Install part', icon: Wrench, click: onInstall },
+    { label: 'Install part', icon: Wrench, click: onInstall, title: selected === 'block' ? 'Select a component on the engine first' : `Install selected component: ${selected}` },
     { label: 'How to', icon: MousePointer2, click: onGuide },
     { label: 'Explain part', icon: BookOpen, click: onExplain },
     { label: 'Undo', icon: Undo2, click: onUndo },
@@ -14,8 +15,8 @@ export default function Toolbar({ selected, onInstall, onGuide, onExplain, onVie
   ];
   return (
     <nav className="toolbar" aria-label="Engine builder controls">
-      {actions.map(({ label, icon: Icon, click }) => (
-        <button className="tool-button" key={label} onClick={click} title={label}>
+      {actions.map(({ label, icon: Icon, click, title }) => (
+        <button className="tool-button" key={label} onClick={click} title={title || label} aria-label={title || label}>
           <Icon size={21} strokeWidth={1.8} />
           <span>{label}</span>
         </button>
