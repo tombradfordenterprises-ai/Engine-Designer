@@ -1,7 +1,7 @@
 // [030] Imports the React Three Fiber canvas, camera controls, and Three.js materials.
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import * as THREE from 'three';
 
 // [031] Creates a reusable clickable engine component with hover highlighting and installed-state styling.
