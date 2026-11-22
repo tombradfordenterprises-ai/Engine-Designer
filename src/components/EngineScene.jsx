@@ -118,12 +118,12 @@ function EngineBlock({ selected, hovered, onSelect, onHover }) {
   const active = selected === 'block' || hovered;
   const geometry = useMemo(() => createBlockGeometry(), []);
   const material = useMetalMaterial('#89959d', active, 0.43, 0.74);
-  return <group>
-    {/* [039] Main hollow casting includes the four open cylinder bores. */}
-    <mesh geometry={geometry} material={material} castShadow receiveShadow
-      onClick={(e) => { e.stopPropagation(); onSelect('block'); }}
-      onPointerOver={(e) => { e.stopPropagation(); onHover(true); }}
-      onPointerOut={() => onHover(false)} />
+  return <group
+    onClick={(e) => { e.stopPropagation(); onSelect('block'); }}
+    onPointerOver={(e) => { e.stopPropagation(); onHover('block'); }}
+    onPointerOut={() => onHover(null)}>
+    {/* [039] Main hollow casting and its attached details all select as one engine-block component. */}
+    <mesh geometry={geometry} material={material} castShadow receiveShadow />
     <LowerCrankcase />
     <CylinderDeck />
     <BlockSideDetails />
@@ -251,8 +251,18 @@ function InstalledPart({ id }) {
 }
 
 // [053] Provides camera presets while retaining user orbit, pan, and zoom controls.
+function SelectableInstalledPart({ id, selected, hovered, onSelect, onHover }) {
+  return <group
+    onClick={(e) => { e.stopPropagation(); onSelect(id); }}
+    onPointerOver={(e) => { e.stopPropagation(); onHover(id); }}
+    onPointerOut={() => onHover(null)}>
+    <InstalledPart id={id} />
+  </group>;
+}
+
+// [055] Tracks the hovered component by ID so each visible installed part can highlight and select independently.
 export default function EngineScene({ selected, installed, onSelect, view }) {
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState(null);
   const cameraPositions = {
     isometric: [4.8, 3.7, 5.8], front: [0, 1.2, 7],
     top: [0, 8, 0.01], side: [7, 1.2, 0], bottom: [0, -7, 0.01]
@@ -265,8 +275,8 @@ export default function EngineScene({ selected, installed, onSelect, view }) {
     <directionalLight position={[-5, 3, -4]} intensity={0.85} />
     <spotLight position={[0, 6, 1]} intensity={0.65} angle={0.65} penumbra={0.7} />
     <group rotation={[0.04, -0.42, 0]}>
-      <EngineBlock selected={selected} hovered={hovered} onSelect={onSelect} onHover={setHovered} />
-      {installed.map((id) => <InstalledPart key={id} id={id} />)}
+      <EngineBlock selected={selected} hovered={hovered === 'block'} onSelect={onSelect} onHover={setHovered} />
+      {installed.map((id) => <SelectableInstalledPart key={id} id={id} selected={selected} hovered={hovered === id} onSelect={onSelect} onHover={setHovered} />)}
     </group>
     <ContactShadows position={[0, -1.34, 0]} opacity={0.2} scale={8} blur={2.8} far={3} />
     <Environment preset="studio" />
