@@ -368,6 +368,139 @@ function ExhaustManifold() {
   </InstallMotion>;
 }
 
+
+// [052D] Front accessory-drive hardware. The engine's front face is the positive-X end.
+function AccessoryPulley({ position, radius, width = 0.10, color = '#89959c', grooves = 2 }) {
+  return <group position={position}>
+    <mesh rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+      <cylinderGeometry args={[radius, radius, width, 48]} />
+      <meshStandardMaterial color={color} metalness={0.9} roughness={0.25} />
+    </mesh>
+    <mesh rotation={[0, Math.PI / 2, 0]}>
+      <torusGeometry args={[radius * 0.76, 0.025, 10, 48]} />
+      <meshStandardMaterial color="#c3cbd0" metalness={0.95} roughness={0.2} />
+    </mesh>
+    {Array.from({ length: grooves }).map((_, i) => (
+      <mesh key={`pulley-groove-${i}`} rotation={[0, Math.PI / 2, 0]}>
+        <torusGeometry args={[radius * (0.82 + i * 0.075), 0.012, 8, 48]} />
+        <meshStandardMaterial color="#30383d" metalness={0.72} roughness={0.34} />
+      </mesh>
+    ))}
+    <mesh rotation={[0, 0, Math.PI / 2]}>
+      <cylinderGeometry args={[radius * 0.24, radius * 0.24, width + 0.025, 32]} />
+      <meshStandardMaterial color="#515d65" metalness={0.9} roughness={0.26} />
+    </mesh>
+  </group>;
+}
+
+function AccessoryHousing({ position, radius, depth = 0.42, color = '#8e999f' }) {
+  return <group position={position}>
+    <mesh rotation={[0, 0, Math.PI / 2]} castShadow receiveShadow>
+      <cylinderGeometry args={[radius, radius * 0.92, depth, 48]} />
+      <meshStandardMaterial color={color} metalness={0.82} roughness={0.34} />
+    </mesh>
+    <mesh position={[0.02, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+      <torusGeometry args={[radius * 0.86, 0.025, 10, 48]} />
+      <meshStandardMaterial color="#c2cbd0" metalness={0.94} roughness={0.22} />
+    </mesh>
+  </group>;
+}
+
+// [052E] Renders each accessory as its own selectable and installable component.
+function AccessoryComponent({ id }) {
+  const beltGeometry = useMemo(() => {
+    const points = [
+      [2.40, -1.12, 0.04], [2.40, -1.00, 0.38], [2.40, -0.68, 0.60],
+      [2.40, -0.27, 0.66], [2.40, 0.14, 0.62], [2.40, 0.64, 0.53],
+      [2.40, 1.02, 0.25], [2.40, 1.04, -0.18], [2.40, 0.82, -0.58],
+      [2.40, 0.36, -0.77], [2.40, -0.15, -0.75], [2.40, -0.62, -0.54],
+      [2.40, -0.98, -0.30]
+    ].map((p) => new THREE.Vector3(...p));
+    const curve = new THREE.CatmullRomCurve3(points, true, 'catmullrom', 0.25);
+    return new THREE.TubeGeometry(curve, 180, 0.038, 10, true);
+  }, []);
+
+  let component = null;
+  if (id === 'crankshaftPulley') component = <group>
+    <mesh position={[1.98, -0.68, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.24, 0.24, 0.30, 48]} />
+      <meshStandardMaterial color="#5f6a72" metalness={0.9} roughness={0.3} />
+    </mesh>
+    <AccessoryPulley position={[2.22, -0.68, 0]} radius={0.39} width={0.16} color="#77838b" grooves={4} />
+    <mesh position={[2.32, -0.68, 0]} rotation={[0, Math.PI / 2, 0]}>
+      <torusGeometry args={[0.39, 0.022, 10, 64]} />
+      <meshStandardMaterial color="#c5cdd1" metalness={0.95} roughness={0.2} />
+    </mesh>
+  </group>;
+
+  if (id === 'waterPump') component = <group>
+    <AccessoryHousing position={[2.03, 0.20, 0.02]} radius={0.28} depth={0.42} color="#a4afb5" />
+    <mesh position={[1.86, 0.20, 0.02]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.20, 0.20, 0.13, 40]} />
+      <meshStandardMaterial color="#65727a" metalness={0.85} roughness={0.32} />
+    </mesh>
+    <AccessoryPulley position={[2.30, 0.20, 0.02]} radius={0.27} width={0.12} color="#8b969c" grooves={3} />
+    <mesh position={[1.78, 0.20, 0.02]} rotation={[0, Math.PI / 2, 0]}>
+      <torusGeometry args={[0.24, 0.025, 10, 48]} />
+      <meshStandardMaterial color="#c5cdd1" metalness={0.9} roughness={0.22} />
+    </mesh>
+  </group>;
+
+  if (id === 'alternator') component = <group>
+    <AccessoryHousing position={[2.03, 0.80, 0.22]} radius={0.28} depth={0.48} color="#aeb8bd" />
+    {Array.from({ length: 12 }).map((_, i) => (
+      <mesh key={`alt-vent-${i}`} position={[2.02, 0.80 + Math.sin(i * Math.PI / 6) * 0.20, 0.22 + Math.cos(i * Math.PI / 6) * 0.20]} rotation={[0, 0, Math.PI / 2]}>
+        <boxGeometry args={[0.035, 0.045, 0.20]} />
+        <meshStandardMaterial color="#56636b" metalness={0.82} roughness={0.36} />
+      </mesh>
+    ))}
+    <AccessoryPulley position={[2.31, 0.80, 0.22]} radius={0.24} width={0.12} color="#7f8b92" grooves={4} />
+    <mesh position={[2.29, 1.10, 0.22]} castShadow>
+      <boxGeometry args={[0.34, 0.13, 0.15]} />
+      <meshStandardMaterial color="#727e85" metalness={0.82} roughness={0.36} />
+    </mesh>
+  </group>;
+
+  if (id === 'powerSteeringPump') component = <group>
+    <AccessoryHousing position={[2.02, -0.20, 0.50]} radius={0.23} depth={0.42} color="#7c8991" />
+    <mesh position={[2.00, 0.05, 0.50]} castShadow>
+      <cylinderGeometry args={[0.13, 0.13, 0.34, 36]} />
+      <meshStandardMaterial color="#929da3" metalness={0.8} roughness={0.35} />
+    </mesh>
+    <AccessoryPulley position={[2.30, -0.20, 0.50]} radius={0.22} width={0.12} color="#8b969c" grooves={3} />
+    <mesh position={[1.79, -0.20, 0.50]} rotation={[0, Math.PI / 2, 0]}>
+      <torusGeometry args={[0.19, 0.02, 8, 40]} />
+      <meshStandardMaterial color="#c5cdd1" metalness={0.92} roughness={0.22} />
+    </mesh>
+  </group>;
+
+  if (id === 'beltTensioner') component = <group>
+    <mesh position={[2.02, 0.02, -0.48]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.18, 0.18, 0.22, 40]} />
+      <meshStandardMaterial color="#66737b" metalness={0.85} roughness={0.32} />
+    </mesh>
+    <AccessoryPulley position={[2.30, 0.02, -0.48]} radius={0.18} width={0.10} color="#a3adb3" grooves={1} />
+    <mesh position={[1.96, -0.18, -0.48]} rotation={[0, 0, -0.35]} castShadow>
+      <boxGeometry args={[0.20, 0.42, 0.13]} />
+      <meshStandardMaterial color="#707d85" metalness={0.8} roughness={0.34} />
+    </mesh>
+  </group>;
+
+  if (id === 'idlerPulley') component = <group>
+    <mesh position={[2.02, 0.68, -0.48]} rotation={[0, 0, Math.PI / 2]} castShadow>
+      <cylinderGeometry args={[0.15, 0.15, 0.22, 40]} />
+      <meshStandardMaterial color="#65727a" metalness={0.85} roughness={0.3} />
+    </mesh>
+    <AccessoryPulley position={[2.30, 0.68, -0.48]} radius={0.17} width={0.10} color="#aab4ba" grooves={1} />
+  </group>;
+
+  if (id === 'serpentineBelt') component = <mesh geometry={beltGeometry} castShadow receiveShadow>
+    <meshStandardMaterial color="#20262b" roughness={0.78} metalness={0.08} />
+  </mesh>;
+
+  return <InstallMotion startY={0.75} duration={1.15}>{component}</InstallMotion>;
+}
+
 // [052C] Displays installed crankshaft, pistons, cylinder head, oil pan, or exhaust manifold.
 function InstalledPart({ id }) {
   if (id === 'crankshaft') return <Crankshaft />;
@@ -385,6 +518,9 @@ function InstalledPart({ id }) {
     </mesh>
   </InstallMotion>;
   if (id === 'exhaustManifold') return <ExhaustManifold />;
+  if (['crankshaftPulley', 'waterPump', 'alternator', 'powerSteeringPump', 'beltTensioner', 'idlerPulley', 'serpentineBelt'].includes(id)) {
+    return <AccessoryComponent id={id} />;
+  }
   return null;
 }
 
@@ -399,7 +535,16 @@ function InstallationPickZones({ installed, hovered, onSelect, onHover }) {
     // The lower central crankcase is selected from underneath using the Bottom camera view.
     { id: 'crankshaft', position: [0, -0.985, 0], size: [3.02, 0.10, 0.92] },
     // The oil-pan mounting flange is a separate lower side-edge target to avoid covering the crankshaft target.
-    { id: 'oilpan', position: [0, -0.99, 0.72], size: [3.12, 0.18, 0.12] }
+    { id: 'oilpan', position: [0, -0.99, 0.72], size: [3.12, 0.18, 0.12] },
+    // Accessory-drive locations sit on the positive-X front face of the engine.
+    { id: 'crankshaftPulley', position: [2.34, -0.68, 0], size: [0.14, 0.78, 0.78] },
+    { id: 'waterPump', position: [2.34, 0.20, 0.02], size: [0.14, 0.56, 0.56] },
+    { id: 'alternator', position: [2.34, 0.80, 0.22], size: [0.14, 0.48, 0.48] },
+    { id: 'powerSteeringPump', position: [2.34, -0.20, 0.50], size: [0.14, 0.44, 0.44] },
+    { id: 'beltTensioner', position: [2.34, 0.02, -0.48], size: [0.14, 0.36, 0.36] },
+    { id: 'idlerPulley', position: [2.34, 0.68, -0.48], size: [0.14, 0.36, 0.36] },
+    // A small lower loop section is the belt's dedicated pick target once the pulleys are in place.
+    { id: 'serpentineBelt', position: [2.43, -0.18, -0.76], size: [0.12, 0.42, 0.16] }
   ];
 
   return <group>
@@ -439,7 +584,14 @@ function SelectableInstalledPart({ id, selected, hovered, onSelect, onHover }) {
     pistons: { position: [0, 0.12, 0], size: [3.42, 1.18, 0.72] },
     head: { position: [0, 1.2, 0], size: [3.82, 0.48, 1.58] },
     oilpan: { position: [0, -1.12, 0], size: [3.38, 0.42, 1.34] },
-    exhaustManifold: { position: [0, 0.02, 1.12], size: [3.48, 0.78, 0.62] }
+    exhaustManifold: { position: [0, 0.02, 1.12], size: [3.48, 0.78, 0.62] },
+    crankshaftPulley: { position: [2.28, -0.68, 0], size: [0.30, 0.86, 0.86] },
+    waterPump: { position: [2.16, 0.20, 0.02], size: [0.60, 0.62, 0.62] },
+    alternator: { position: [2.16, 0.80, 0.22], size: [0.62, 0.56, 0.56] },
+    powerSteeringPump: { position: [2.16, -0.20, 0.50], size: [0.62, 0.52, 0.52] },
+    beltTensioner: { position: [2.16, 0.02, -0.48], size: [0.56, 0.42, 0.42] },
+    idlerPulley: { position: [2.16, 0.68, -0.48], size: [0.56, 0.42, 0.42] },
+    serpentineBelt: { position: [2.40, -0.02, -0.04], size: [0.16, 2.35, 1.55] }
   }[id];
 
   return <group
