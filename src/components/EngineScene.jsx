@@ -250,13 +250,66 @@ function InstalledPart({ id }) {
   return null;
 }
 
+// [053] Invisible, clickable installation zones make the 3D engine itself the parts menu.
+function InstallationPickZones({ installed, hovered, onSelect, onHover }) {
+  const topPart = installed.includes('pistons') ? 'head' : 'pistons';
+  const zones = [
+    // The top deck selects the piston assembly first, then the cylinder head after pistons are installed.
+    { id: topPart, position: [0, 1.035, 0], size: [3.22, 0.09, 1.18] },
+    // The lower central crankcase is selected from underneath using the Bottom camera view.
+    { id: 'crankshaft', position: [0, -0.985, 0], size: [3.02, 0.10, 0.92] },
+    // The oil-pan mounting flange is a separate lower side-edge target to avoid covering the crankshaft target.
+    { id: 'oilpan', position: [0, -0.99, 0.72], size: [3.12, 0.18, 0.12] }
+  ];
+
+  return <group>
+    {zones.map((zone) => {
+      const active = hovered === zone.id;
+      return <mesh
+        key={zone.id}
+        position={zone.position}
+        onClick={(event) => {
+          event.stopPropagation();
+          onSelect(zone.id);
+        }}
+        onPointerOver={(event) => {
+          event.stopPropagation();
+          onHover(zone.id);
+        }}
+        onPointerOut={() => onHover(null)}
+      >
+        <boxGeometry args={zone.size} />
+        <meshBasicMaterial
+          color={active ? '#39a9ed' : '#ffffff'}
+          transparent
+          opacity={active ? 0.22 : 0}
+          depthWrite={false}
+          side={THREE.DoubleSide}
+        />
+      </mesh>;
+    })}
+  </group>;
+}
+
 // [053] Provides camera presets while retaining user orbit, pan, and zoom controls.
 function SelectableInstalledPart({ id, selected, hovered, onSelect, onHover }) {
+  const active = selected === id || hovered === id;
+  const bounds = {
+    crankshaft: { position: [0, -0.62, 0], size: [3.48, 0.58, 0.72] },
+    pistons: { position: [0, 0.12, 0], size: [3.42, 1.18, 0.72] },
+    head: { position: [0, 1.2, 0], size: [3.82, 0.48, 1.58] },
+    oilpan: { position: [0, -1.12, 0], size: [3.38, 0.42, 1.34] }
+  }[id];
+
   return <group
     onClick={(e) => { e.stopPropagation(); onSelect(id); }}
     onPointerOver={(e) => { e.stopPropagation(); onHover(id); }}
     onPointerOut={() => onHover(null)}>
     <InstalledPart id={id} />
+    {active && bounds && <mesh position={bounds.position}>
+      <boxGeometry args={bounds.size} />
+      <meshBasicMaterial color="#3da9e8" wireframe transparent opacity={0.42} />
+    </mesh>}
   </group>;
 }
 
@@ -276,6 +329,7 @@ export default function EngineScene({ selected, installed, onSelect, view }) {
     <spotLight position={[0, 6, 1]} intensity={0.65} angle={0.65} penumbra={0.7} />
     <group rotation={[0.04, -0.42, 0]}>
       <EngineBlock selected={selected} hovered={hovered === 'block'} onSelect={onSelect} onHover={setHovered} />
+      <InstallationPickZones installed={installed} hovered={hovered} onSelect={onSelect} onHover={setHovered} />
       {installed.map((id) => <SelectableInstalledPart key={id} id={id} selected={selected} hovered={hovered === id} onSelect={onSelect} onHover={setHovered} />)}
     </group>
     <ContactShadows position={[0, -1.34, 0]} opacity={0.2} scale={8} blur={2.8} far={3} />
