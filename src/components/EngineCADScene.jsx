@@ -1,7 +1,9 @@
+
 import React, { Suspense, useMemo, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Bounds, Center, Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import manifest from '../data/enginePartManifest.json';
 
 const MODEL_URL = '/models/inline_four_engine.glb';
 
@@ -45,12 +47,18 @@ function ClickTarget({ target, selected, onSelect, onHover }) {
   );
 }
 
-function CompleteCADModel({ selected, onSelect, onHover }) {
+function CompleteCADModel({ selected, installed = [], onSelect, onHover }) {
   const { scene } = useGLTF(MODEL_URL);
   useMemo(() => {
+    const meshToPart = new Map();
+    Object.entries(manifest.parts).forEach(([partId, part]) => {
+      (part.meshes || []).forEach((meshName) => meshToPart.set(meshName, partId));
+    });
+    const visibleParts = new Set(['engineBlock', ...installed]);
     scene.traverse((node) => {
-      node.visible = true;
-      if (!node.isMesh) return;
+      if (!node.isMesh) { node.visible = true; return; }
+      const partId = meshToPart.get(node.name);
+      node.visible = Boolean(partId && visibleParts.has(partId));
       node.castShadow = true;
       node.receiveShadow = true;
       if (!node.userData.engineBuilderMaterialPrepared && node.material) {
@@ -65,7 +73,7 @@ function CompleteCADModel({ selected, onSelect, onHover }) {
         node.userData.engineBuilderMaterialPrepared = true;
       }
     });
-  }, [scene]);
+  }, [scene, installed]);
 
   return (
     <group rotation={[-Math.PI / 2, 0, 0]}>
@@ -77,7 +85,7 @@ function CompleteCADModel({ selected, onSelect, onHover }) {
   );
 }
 
-function SceneContents({ selected, onSelect, onHover }) {
+function SceneContents({ selected, installed, onSelect, onHover }) {
   return (
     <>
       <ambientLight intensity={1.6} />
@@ -87,7 +95,7 @@ function SceneContents({ selected, onSelect, onHover }) {
       <Suspense fallback={null}>
         <Bounds fit clip observe margin={1.35}>
           <Center>
-            <CompleteCADModel selected={selected} onSelect={onSelect} onHover={onHover} />
+            <CompleteCADModel selected={selected} installed={installed} onSelect={onSelect} onHover={onHover} />
           </Center>
         </Bounds>
       </Suspense>
@@ -108,7 +116,7 @@ export default function EngineCADScene({ selected, installed, onSelect, view }) 
       style={{ cursor: hovered ? 'pointer' : 'grab' }}
     >
       <color attach="background" args={['#f5f7fa']} />
-      <SceneContents selected={selected} onSelect={onSelect} onHover={setHovered} />
+      <SceneContents selected={selected} installed={installed} onSelect={onSelect} onHover={setHovered} />
     </Canvas>
   );
 }
