@@ -62,6 +62,9 @@ const PICK_ZONES = [
 
 // [084] Clones each named mesh into a component group, preserving its original CAD coordinates.
 function buildPartGroups(gltfScene) {
+  // The GLB stores many parts beneath transformed parent nodes. Capture each
+  // mesh's full world transform before detaching it into its installable group.
+  gltfScene.updateMatrixWorld(true);
   const meshByName = new Map();
   gltfScene.traverse((node) => {
     if (node.isMesh) meshByName.set(node.name, node);
@@ -80,6 +83,13 @@ function buildPartGroups(gltfScene) {
       if (!sourceMesh) continue;
       const clone = sourceMesh.clone();
       clone.name = sourceMesh.name;
+      // Preserve the original CAD placement. A plain clone only retains the
+      // mesh's local transform; adding it to a new group would discard any
+      // transforms inherited from its original GLB parent nodes.
+      clone.matrixAutoUpdate = false;
+      clone.matrix.copy(sourceMesh.matrixWorld);
+      clone.matrixWorld.copy(sourceMesh.matrixWorld);
+      clone.matrixWorldNeedsUpdate = true;
       clone.castShadow = true;
       clone.receiveShadow = true;
       group.add(clone);
