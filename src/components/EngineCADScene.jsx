@@ -1,159 +1,81 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import * as THREE from 'three';
-import { Canvas, useThree } from '@react-three/fiber';
-import { ContactShadows, Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { Bounds, Center, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import manifest from '../data/enginePartManifest.json';
 
 const MODEL_URL = '/models/inline_four_engine.glb';
-const CAMERA_POSITIONS = {
-  isometric: [-3.4, 2.7, 4.2],
-  front: [-4.5, 1.0, 0.15],
-  top: [0, 5.2, 0.01],
-  side: [0.1, 1.5, 4.6],
-  bottom: [0, -5.0, 0.01]
-};
 
-const ACTIVE_PART_IDS = [
-  'engineBlock', 'crankshaft', 'pistonsRods', 'headGasket', 'cylinderHead',
-  'valvetrain', 'valveCover', 'oilPan', 'timingCovers', 'crankPulley',
-  'alternator', 'accessoryBelt', 'intakeManifold', 'exhaustManifold', 'oilFilter'
-];
+// Temporary visibility-first scene: preserve and display the complete source
+// CAD hierarchy before reintroducing component hiding and installation stages.
+function CompleteCADModel({ onSelect }) {
+  const { scene } = useGLTF(MODEL_URL);
 
-// Keep the GLTF's original hierarchy intact. Its parent nodes contain important
-// transforms; extracting/cloning individual meshes can make the model disappear.
-function indexModel(scene) {
-  scene.updateMatrixWorld(true);
-  const nameToPart = new Map();
-  for (const id of ACTIVE_PART_IDS) {
-    for (const meshName of manifest.parts[id]?.meshes || []) nameToPart.set(meshName, id);
-  }
+  const meshToPart = useMemo(() => {
+    const map = new Map();
+    Object.entries(manifest.parts).forEach(([partId, part]) => {
+      (part.meshes || []).forEach((meshName) => map.set(meshName, partId));
+    });
+    return map;
+  }, []);
 
-  const bounds = {};
-  const meshesByPart = {};
-  ACTIVE_PART_IDS.forEach((id) => {
-    bounds[id] = new THREE.Box3();
-    meshesByPart[id] = [];
-  });
-
+  // The STEP export is Z-up. Restore every node and use a neutral, readable
+  // CAD finish so dark source materials do not disappear against the scene.
   scene.traverse((node) => {
+    node.visible = true;
     if (!node.isMesh) return;
-    const id = nameToPart.get(node.name);
-    node.userData.enginePartId = id || null;
     node.castShadow = true;
     node.receiveShadow = true;
-    if (!id) {
-      // The source also contains a manual flywheel; this simulator is configured
-      // for an automatic transmission, so unassigned meshes stay hidden.
-      node.visible = false;
-      return;
+    node.userData.enginePartId = meshToPart.get(node.name) || null;
+    if (node.material) {
+      const brighten = (source) => {
+        const material = source.clone();
+        if (material.color) {
+          material.color.lerp(new THREE.Color('#aeb8c2'), 0.62);
+        }
+        if ('roughness' in material) material.roughness = Math.max(material.roughness, 0.42);
+        if ('metalness' in material) material.metalness = Math.min(material.metalness, 0.38);
+        return material;
+      };
+      node.material = Array.isArray(node.material)
+        ? node.material.map(brighten)
+        : brighten(node.material);
     }
-    meshesByPart[id].push(node);
-    const meshBounds = new THREE.Box3().setFromObject(node);
-    bounds[id].union(meshBounds);
   });
 
-  const pickBounds = {};
-  for (const id of ACTIVE_PART_IDS) {
-    if (bounds[id].isEmpty()) continue;
-    const center = new THREE.Vector3();
-    const size = new THREE.Vector3();
-    bounds[id].getCenter(center);
-    bounds[id].getSize(size);
-    pickBounds[id] = {
-      center: center.toArray(),
-      size: size.toArray().map((value) => Math.max(value * 1.25, 0.045))
-    };
-  }
-  return { meshesByPart, pickBounds };
+  return (
+    <group rotation={[-Math.PI / 2, 0, 0]}>
+      <primitive
+        object={scene}
+        dispose={null}
+        onClick={(event) => {
+          const id = event.object?.userData?.enginePartId;
+          if (id && onSelect) {
+            event.stopPropagation();
+            onSelect(id);
+          }
+        }}
+      />
+    </group>
+  );
 }
 
-function CameraPreset({ view }) {
-  const { camera } = useThree();
-  useEffect(() => {
-    const position = CAMERA_POSITIONS[view] || CAMERA_POSITIONS.isometric;
-    camera.position.set(...position);
-    camera.lookAt(0, 0, 0);
-  }, [camera, view]);
-  return null;
-}
-
-function CADModel({ selected, installed, onSelect, view }) {
-  const { scene } = useGLTF(MODEL_URL);
-  const { meshesByPart, pickBounds } = useMemo(() => indexModel(scene), [scene]);
-  const [hovered, setHovered] = useState(null);
-  const installedSet = useMemo(() => new Set(installed), [installed]);
-
-  useEffect(() => {
-    for (const id of ACTIVE_PART_IDS) {
-      const shouldShow = id === 'engineBlock' || installedSet.has(id);
-      for (const mesh of meshesByPart[id] || []) mesh.visible = shouldShow;
-    }
-  }, [installedSet, meshesByPart]);
-
-  const handleMeshClick = (event) => {
-    const id = event.object?.userData?.enginePartId;
-    if (id) {
-      event.stopPropagation();
-      onSelect(id);
-    }
-  };
-
-  const handleMeshHover = (event) => {
-    const id = event.object?.userData?.enginePartId;
-    if (id) {
-      event.stopPropagation();
-      setHovered(id);
-    }
-  };
-
+function SceneContents({ onSelect }) {
   return (
     <>
-      {/* Original GLTF hierarchy and all parent transforms are preserved. */}
-      <group rotation={[-Math.PI / 2, 0, 0]} scale={3} position={[0, -1, 0]}>
-        <primitive
-          object={scene}
-          dispose={null}
-          onClick={handleMeshClick}
-          onPointerOver={handleMeshHover}
-          onPointerOut={() => setHovered(null)}
-        />
-
-        {/* Invisible, accurately bounded targets let users select parts before installation. */}
-        {ACTIVE_PART_IDS.filter((id) => id !== 'engineBlock' && !installedSet.has(id) && pickBounds[id]).map((id) => {
-          const box = pickBounds[id];
-          const active = selected === id || hovered === id;
-          return (
-            <mesh
-              key={id}
-              position={box.center}
-              onClick={(event) => { event.stopPropagation(); onSelect(id); }}
-              onPointerOver={(event) => { event.stopPropagation(); setHovered(id); }}
-              onPointerOut={() => setHovered(null)}
-            >
-              <boxGeometry args={box.size} />
-              <meshBasicMaterial
-                color="#299de0"
-                wireframe={active}
-                transparent
-                opacity={active ? 0.45 : 0.001}
-                depthWrite={false}
-              />
-            </mesh>
-          );
-        })}
-
-        {selected && pickBounds[selected] && (
-          <mesh position={pickBounds[selected].center}>
-            <boxGeometry args={pickBounds[selected].size.map((v) => v * 1.04)} />
-            <meshBasicMaterial color="#299de0" wireframe transparent opacity={0.55} />
-          </mesh>
-        )}
-      </group>
-
-      <ContactShadows position={[0, -1.03, 0]} opacity={0.22} scale={4.5} blur={2.5} far={3} />
-      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={2.2} maxDistance={8.5} target={[0, 0, 0]} />
+      <ambientLight intensity={1.6} />
+      <hemisphereLight args={['#ffffff', '#8995a2', 1.35]} />
+      <directionalLight position={[4, 7, 6]} intensity={2.6} />
+      <directionalLight position={[-5, 3, -4]} intensity={1.5} />
+      <Suspense fallback={null}>
+        <Bounds fit clip observe margin={1.35}>
+          <Center>
+            <CompleteCADModel onSelect={onSelect} />
+          </Center>
+        </Bounds>
+      </Suspense>
+      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={8} />
       <Environment preset="studio" />
-      <CameraPreset view={view} />
     </>
   );
 }
@@ -162,18 +84,12 @@ export default function EngineCADScene({ selected, installed, onSelect, view }) 
   return (
     <Canvas
       shadows
-      camera={{ position: CAMERA_POSITIONS.isometric, fov: 39, near: 0.01, far: 100 }}
+      camera={{ position: [2.6, 2.0, 3.0], fov: 38, near: 0.01, far: 100 }}
       dpr={[1, 1.75]}
       gl={{ antialias: true, alpha: false }}
     >
-      <color attach="background" args={['#ffffff']} />
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[-3, 6, 5]} intensity={2.2} castShadow shadow-mapSize={[2048, 2048]} />
-      <directionalLight position={[4, 3, -4]} intensity={1.0} />
-      <spotLight position={[0, 5, 2]} intensity={0.65} angle={0.7} penumbra={0.8} />
-      <Suspense fallback={null}>
-        <CADModel selected={selected} installed={installed} onSelect={onSelect} view={view} />
-      </Suspense>
+      <color attach="background" args={['#f5f7fa']} />
+      <SceneContents onSelect={onSelect} />
     </Canvas>
   );
 }
