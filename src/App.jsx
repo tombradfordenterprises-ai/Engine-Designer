@@ -1,178 +1,193 @@
-// [020] Imports React state, the interactive 3D engine scene, toolbar, and component guide.
+// [020] Imports React state, the CAD-based engine scene, toolbar, and component guide.
 import React, { useState } from 'react';
-import EngineScene from './components/EngineScene.jsx';
+import EngineCADScene from './components/EngineCADScene.jsx';
 import Toolbar from './components/Toolbar.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import './App.css';
 
-// [021] Defines the selectable engine components and plain-language explanations.
+// [021] Component explanations correspond to the separate groups in the supplied CC0 CAD model.
 export const PARTS = {
-  block: {
-    name: 'Engine block', group: 'Foundation',
-    what: 'The engine block is the main structure of the engine. It contains four cylinders and supports the moving parts.',
-    why: 'It keeps the cylinders aligned and provides the structure that holds the crankshaft, pistons, and cylinder head.',
-    where: 'The block is the foundation of the entire engine assembly.'
+  engineBlock: {
+    name: 'Engine block and crankcase', group: 'Foundation',
+    what: 'The cast engine block is the main structure of the inline-four. It contains the four cylinder liners and supports the crankshaft and cylinder head.',
+    why: 'It keeps the cylinders aligned and carries the loads produced by combustion and the rotating assembly.',
+    where: 'It forms the central body of the engine. The cylinder bores are at the top and the crankcase is below.'
   },
   crankshaft: {
     name: 'Crankshaft', group: 'Rotating assembly',
-    what: 'The crankshaft turns the pistons’ up-and-down movement into rotation.',
-    why: 'That rotation is eventually transferred through the transmission to turn the wheels.',
-    where: 'It sits in the lower crankcase, supported by the main bearings.'
+    what: 'The crankshaft converts the pistons’ up-and-down movement into rotation.',
+    why: 'Its rotation is the mechanical output that ultimately drives the transmission.',
+    where: 'It sits inside the lower crankcase and is supported by the main bearing bridges.'
   },
-  pistons: {
+  pistonsRods: {
     name: 'Pistons and connecting rods', group: 'Rotating assembly',
-    what: 'Four pistons slide inside the cylinders. Each piston connects to the crankshaft through a connecting rod.',
-    why: 'Combustion pushes the pistons down. The connecting rods transfer that force to the crankshaft.',
-    where: 'The pistons fit inside the four cylinder bores. Their connecting rods reach down to the crankshaft.',
-    note: 'The crankshaft must be installed before the connecting rods can be attached.'
+    what: 'Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.',
+    why: 'Combustion pressure pushes the pistons down, and the connecting rods transfer that force to the crankshaft.',
+    where: 'The pistons fit into the four cylinder bores, with their connecting rods extending down to the crankshaft.'
   },
-  head: {
+  headGasket: {
+    name: 'Cylinder head gasket', group: 'Cylinder head',
+    what: 'The head gasket is a thin, carefully sealed layer between the engine block and cylinder head.',
+    why: 'It seals combustion pressure and keeps coolant and engine oil passages separated.',
+    where: 'It sits on the machined deck surface at the top of the engine block.'
+  },
+  cylinderHead: {
     name: 'Cylinder head', group: 'Cylinder head',
-    what: 'The cylinder head closes the top of the cylinders and contains the valves and combustion chambers.',
-    why: 'It seals the cylinders and helps control the air and exhaust moving through the engine.',
-    where: 'It bolts to the top of the engine block, with a head gasket between them.'
+    what: 'The cylinder head closes the top of the cylinders and contains the combustion chambers and valve passages.',
+    why: 'It seals the cylinders and routes incoming air and outgoing exhaust gases.',
+    where: 'It bolts to the top of the engine block over the head gasket.'
   },
-  oilpan: {
-    name: 'Oil pan', group: 'Lubrication',
-    what: 'The oil pan is a reservoir that holds engine oil when it is not circulating through the engine.',
-    why: 'It supplies the oil pickup so the oil pump can send oil around the engine.',
-    where: 'It bolts to the underside of the engine.',
-    note: 'Install the internal rotating parts before closing the bottom of the crankcase.'
+  valvetrain: {
+    name: 'Valvetrain and dual overhead camshafts', group: 'Valvetrain',
+    what: 'The valvetrain includes the intake and exhaust valves, valve springs, retainers, camshafts, and cam bearing bridges.',
+    why: 'The camshafts open and close the valves at the correct time so the cylinders can breathe.',
+    where: 'It is installed in and on the cylinder head, underneath the valve cover.'
   },
-  exhaustManifold: {
-    name: 'Exhaust manifold', group: 'Exhaust system',
-    what: 'The exhaust manifold collects hot exhaust gases leaving the four cylinders.',
-    why: 'It routes exhaust from each cylinder into a single outlet that connects to the rest of the exhaust system.',
-    where: 'It bolts to the side of the cylinder head, aligning with the four exhaust ports.'
+  valveCover: {
+    name: 'Valve cover', group: 'Upper engine',
+    what: 'The valve cover encloses the upper valvetrain and helps keep oil inside the cylinder head.',
+    why: 'It protects the camshaft area from dirt and prevents oil from escaping.',
+    where: 'It bolts over the camshafts at the very top of the engine.'
   },
-  // [021A] Front accessory-drive components.
-  crankshaftPulley: {
-    name: 'Crankshaft pulley / harmonic balancer', group: 'Accessory drive',
-    what: 'The crankshaft pulley attaches to the front of the crankshaft. The harmonic balancer also helps reduce torsional vibration.',
-    why: 'It transfers crankshaft rotation to the serpentine belt, which drives the engine accessories.',
-    where: 'It mounts on the front end of the crankshaft, ahead of the timing cover.'
+  oilPan: {
+    name: 'Oil pan / sump', group: 'Lubrication',
+    what: 'The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.',
+    why: 'The oil pump draws oil from the sump and sends it to bearings and other moving parts.',
+    where: 'It bolts to the underside of the crankcase.'
   },
-  waterPump: {
-    name: 'Water pump', group: 'Cooling system',
-    what: 'The water pump circulates coolant through the engine and radiator.',
-    why: 'Coolant flow carries heat away from the engine and helps maintain a safe operating temperature.',
-    where: 'It mounts at the front of the engine. Its pulley is driven by the serpentine belt in this simplified layout.'
+  timingCovers: {
+    name: 'Timing and end covers', group: 'Engine covers',
+    what: 'These covers close the ends of the engine and protect the timing and rotating components.',
+    why: 'They help keep the assembly enclosed and protect internal components from contamination.',
+    where: 'They attach at the front and rear ends of the engine block.'
+  },
+  crankPulley: {
+    name: 'Crankshaft accessory pulley', group: 'Accessory drive',
+    what: 'The grooved crankshaft pulley is driven directly by the crankshaft.',
+    why: 'It transfers crankshaft rotation to the accessory belt. A production engine commonly combines this function with a harmonic balancer.',
+    where: 'It mounts at the front end of the crankshaft, outside the timing cover.'
   },
   alternator: {
-    name: 'Alternator', group: 'Electrical system',
-    what: 'The alternator converts engine rotation into electrical power.',
+    name: 'Alternator assembly', group: 'Electrical system',
+    what: 'The alternator converts mechanical rotation into electrical power.',
     why: 'It supplies electrical power while the engine runs and recharges the vehicle battery.',
-    where: 'It mounts on the front accessory bracket and is driven by the serpentine belt.'
+    where: 'It mounts on a bracket at the front accessory drive and is driven by the belt.'
   },
-  powerSteeringPump: {
-    name: 'Power steering pump', group: 'Steering system',
-    what: 'The power steering pump supplies pressurized hydraulic fluid to the steering system.',
-    why: 'Hydraulic pressure helps reduce the effort needed to turn the steering wheel.',
-    where: 'It mounts on the front accessory bracket and is driven by the serpentine belt.'
+  accessoryBelt: {
+    name: 'Accessory drive belt', group: 'Accessory drive',
+    what: 'The accessory belt transfers rotation from the crankshaft pulley to the alternator pulley.',
+    why: 'It allows the crankshaft to drive engine accessories.',
+    where: 'It loops around the crankshaft pulley and alternator pulley in this CAD model.'
   },
-  beltTensioner: {
-    name: 'Belt tensioner', group: 'Accessory drive',
-    what: 'The spring-loaded belt tensioner maintains the correct tension on the serpentine belt.',
-    why: 'Correct tension helps prevent belt slip, noise, and loss of accessory drive.',
-    where: 'It mounts to the front of the engine among the accessory pulleys.'
+  intakeManifold: {
+    name: 'Intake manifold', group: 'Air intake',
+    what: 'The intake manifold distributes incoming air to the four cylinders.',
+    why: 'It helps each cylinder receive the air needed for combustion.',
+    where: 'It bolts to one side of the cylinder head and routes air through four runners.'
   },
-  idlerPulley: {
-    name: 'Idler pulley', group: 'Accessory drive',
-    what: 'An idler pulley guides the serpentine belt along its route.',
-    why: 'It helps the belt contact the accessory pulleys at the correct angle.',
-    where: 'It mounts on the front accessory bracket and does not directly power an accessory.'
+  exhaustManifold: {
+    name: 'Exhaust manifold', group: 'Exhaust',
+    what: 'The exhaust manifold collects hot gases leaving the four cylinders.',
+    why: 'It routes exhaust from each cylinder into a common outlet.',
+    where: 'It bolts to the opposite side of the cylinder head and aligns with the exhaust ports.'
   },
-  serpentineBelt: {
-    name: 'Serpentine belt', group: 'Accessory drive',
-    what: 'The serpentine belt is one continuous belt that loops around the crankshaft pulley and accessory pulleys.',
-    why: 'It transfers crankshaft rotation to the alternator, water pump, and power steering pump.',
-    where: 'It runs around the grooved pulleys and the smooth tensioner and idler pulleys at the front of the engine.',
-    note: 'Install the belt only after the crankshaft pulley, accessories, tensioner, and idler are installed.'
+  oilFilter: {
+    name: 'Oil filter assembly', group: 'Lubrication',
+    what: 'The oil filter removes contaminants from the engine oil.',
+    why: 'Filtering debris helps protect bearings and other precision moving surfaces.',
+    where: 'It mounts to an angled boss on the side of the engine block.'
   }
 };
 
-// [022] Rules enforce real component dependencies rather than an arbitrary fixed order.
-// A component is allowed as soon as all of its required components are installed.
+// [022] The block is the fixed foundation. Other groups become available when their prerequisites are installed.
 const INSTALL_RULES = {
   crankshaft: {
     requires: [],
-    reason: 'The crankshaft is supported inside the engine block and forms the rotating foundation for the piston assemblies.'
+    reason: 'The crankshaft is installed in the block and supported by the main bearing bridges.'
   },
-  pistons: {
+  pistonsRods: {
     requires: ['crankshaft'],
-    reason: 'The connecting rods need the crankshaft in place so their lower ends can attach to the crank throws.'
+    reason: 'The connecting rods need the crankshaft in place so their big ends can attach to the crank throws.'
   },
-  head: {
-    requires: ['pistons'],
-    reason: 'The piston assemblies need to be in the cylinders before the cylinder head closes the top of the block.'
+  headGasket: {
+    requires: ['pistonsRods'],
+    reason: 'Install the piston and rod assemblies before sealing the top of the block with the head gasket.'
   },
-  oilpan: {
-    requires: ['crankshaft', 'pistons'],
-    reason: 'The crankshaft and piston assemblies belong inside the crankcase before the oil pan closes the bottom.'
+  cylinderHead: {
+    requires: ['headGasket'],
+    reason: 'The cylinder head sits on the head gasket. The gasket must be in place first.'
   },
-  exhaustManifold: {
-    requires: ['head'],
-    reason: 'The exhaust manifold bolts to the cylinder head and must line up with its exhaust ports.'
+  valvetrain: {
+    requires: ['cylinderHead'],
+    reason: 'The valves, springs, and camshafts are installed in the cylinder head.'
   },
-  crankshaftPulley: {
+  valveCover: {
+    requires: ['valvetrain'],
+    reason: 'The valve cover encloses the camshafts and must be installed after the valvetrain.'
+  },
+  oilPan: {
+    requires: ['crankshaft', 'pistonsRods'],
+    reason: 'Install the crankshaft and connecting rod assemblies before closing the bottom of the crankcase with the oil pan.'
+  },
+  timingCovers: {
     requires: ['crankshaft'],
-    reason: 'The crankshaft pulley mounts directly to the front of the crankshaft, so the crankshaft must be installed first.'
+    reason: 'The crankshaft must be in place before the end covers are fitted around the rotating assembly.'
   },
-  waterPump: {
-    requires: ['crankshaftPulley'],
-    reason: 'The water pump mounts on the front accessory drive. Install the crankshaft pulley first so the accessory-drive assembly can be built in sequence.'
+  crankPulley: {
+    requires: ['crankshaft', 'timingCovers'],
+    reason: 'The crankshaft pulley mounts on the crankshaft nose outside the front cover.'
   },
   alternator: {
-    requires: ['crankshaftPulley'],
-    reason: 'The alternator must be mounted on the front accessory bracket before the serpentine belt can be routed.'
+    requires: ['crankPulley'],
+    reason: 'The alternator is driven by the accessory belt, so the crankshaft pulley must be installed first.'
   },
-  powerSteeringPump: {
-    requires: ['crankshaftPulley'],
-    reason: 'The power steering pump mounts on the front accessory bracket and must be in place before the belt is routed.'
+  accessoryBelt: {
+    requires: ['crankPulley', 'alternator'],
+    reason: 'The accessory belt must route around the installed crankshaft and alternator pulleys.'
   },
-  beltTensioner: {
-    requires: ['crankshaftPulley'],
-    reason: 'The tensioner mounts to the front of the engine and must be installed before the serpentine belt.'
+  intakeManifold: {
+    requires: ['cylinderHead'],
+    reason: 'The intake manifold bolts to the cylinder head and must align with its intake ports.'
   },
-  idlerPulley: {
-    requires: ['crankshaftPulley'],
-    reason: 'The idler pulley must be installed in its guide position before the serpentine belt is routed.'
+  exhaustManifold: {
+    requires: ['cylinderHead'],
+    reason: 'The exhaust manifold bolts to the cylinder head and must align with its exhaust ports.'
   },
-  serpentineBelt: {
-    requires: ['crankshaftPulley', 'waterPump', 'alternator', 'powerSteeringPump', 'beltTensioner', 'idlerPulley'],
-    reason: 'The belt must route around the crankshaft pulley, water pump, alternator, power steering pump, tensioner, and idler. Install all of those components first.'
+  oilFilter: {
+    requires: [],
+    reason: 'The oil filter mounts to the side of the engine block.'
   }
 };
 
-// [023] This is the suggested teaching order. Other mechanically valid orders remain allowed.
+// [023] Recommended teaching order. Dependencies are checked separately, so valid alternate orders are allowed.
 const RECOMMENDED_SEQUENCE = [
-  'crankshaft', 'pistons', 'head', 'oilpan', 'exhaustManifold',
-  'crankshaftPulley', 'waterPump', 'alternator', 'powerSteeringPump',
-  'beltTensioner', 'idlerPulley', 'serpentineBelt'
+  'crankshaft', 'pistonsRods', 'oilPan', 'headGasket', 'cylinderHead',
+  'valvetrain', 'valveCover', 'timingCovers', 'crankPulley', 'alternator',
+  'accessoryBelt', 'intakeManifold', 'exhaustManifold', 'oilFilter'
 ];
 const INSTALLABLE_COUNT = Object.keys(INSTALL_RULES).length;
 
-// [024] App owns the installation state so the toolbar, progress display, and 3D scene stay in sync.
+// [024] App owns installation state so progress, the toolbar, and the CAD scene stay synchronized.
 export default function App() {
-  const [selected, setSelected] = useState('block');
+  const [selected, setSelected] = useState('engineBlock');
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState(
-    'Start with the crankshaft, then build the engine and its front accessory drive. Select a part location on the 3D model and click Install Part.'
+    'The real CAD engine block is loaded. Select a component location on the model, then click Install Part.'
   );
 
-  // [025] Finds the next uninstalled item in the recommended learning sequence.
+  // [025] Finds the next uninstalled item in the recommended sequence.
   const getNextSuggestion = (parts) => {
     const nextId = RECOMMENDED_SEQUENCE.find((id) => !parts.includes(id));
     return nextId ? PARTS[nextId].name : null;
   };
 
-  // [026] Handles direct selection from the 3D model and explains the current selection.
+  // [026] Handles selection from actual CAD meshes and installation hotspots.
   const selectPart = (id) => {
     setSelected(id);
-    if (id === 'block') {
-      setMessage('Engine block selected. It is the foundation of the assembly and is already in place.');
+    if (id === 'engineBlock') {
+      setMessage('Engine block selected. This is the fixed foundation of the assembly.');
       return;
     }
     if (installed.includes(id)) {
@@ -182,27 +197,24 @@ export default function App() {
     setMessage(`${PARTS[id]?.name || 'Component'} selected. Click Install Part to check its installation requirements.`);
   };
 
-  // [027] Validates dependencies before changing the installed list.
+  // [027] Validates component dependencies before revealing the CAD meshes.
   const installPart = () => {
-    if (selected === 'block') {
-      setMessage('The engine block is already installed. Select an uninstalled component location on the 3D engine first.');
+    if (selected === 'engineBlock') {
+      setMessage('The engine block is already present. Select another component location on the 3D model first.');
       setPanelOpen(true);
       return;
     }
-
     const rule = INSTALL_RULES[selected];
     if (!rule || !PARTS[selected]) {
-      setMessage('Select a valid component installation location on the 3D engine first.');
+      setMessage('Select a valid component location on the 3D engine first.');
       setPanelOpen(true);
       return;
     }
-
     if (installed.includes(selected)) {
       setMessage(`${PARTS[selected].name} is already installed. Choose another uninstalled component.`);
       setPanelOpen(true);
       return;
     }
-
     const missing = rule.requires.filter((requiredId) => !installed.includes(requiredId));
     if (missing.length > 0) {
       const missingNames = missing.map((id) => PARTS[id].name);
@@ -214,21 +226,18 @@ export default function App() {
       setPanelOpen(true);
       return;
     }
-
     const updated = [...installed, selected];
     setInstalled(updated);
     const next = getNextSuggestion(updated);
-
     if (updated.length === INSTALLABLE_COUNT) {
-      setMessage(`✓ ${PARTS[selected].name} installed. Engine assembly stage complete! All ${INSTALLABLE_COUNT} currently modeled components are installed.`);
+      setMessage(`✓ ${PARTS[selected].name} installed. All ${INSTALLABLE_COUNT} modeled component groups are now installed.`);
     } else {
       setMessage(`✓ ${PARTS[selected].name} installed successfully.${next ? ` Recommended next step: ${next}.` : ''}`);
     }
     setPanelOpen(false);
   };
 
-  // [028] Undo removes the most recently installed part. Since prerequisites must come first,
-  // last-in-first-out undo also preserves the dependency order.
+  // [028] Undo removes the most recently installed group, preserving dependency order.
   const undo = () => {
     if (installed.length === 0) {
       setMessage('There is nothing to undo yet. Install a component first.');
@@ -238,26 +247,26 @@ export default function App() {
     const updated = installed.slice(0, -1);
     setInstalled(updated);
     setSelected(removed);
-    setMessage(`${PARTS[removed].name} installation undone. Select Install Part to put it back, or choose another available component.`);
+    setMessage(`${PARTS[removed].name} installation undone.`);
     setPanelOpen(false);
   };
 
-  // [029] Cycles through camera presets while mouse orbit remains available in the 3D scene.
+  // [029] Cycles camera presets; free orbit, pan, and zoom remain available in the scene.
   const changeView = () => {
     const views = ['isometric', 'front', 'top', 'side', 'bottom'];
     setView((current) => views[(views.indexOf(current) + 1) % views.length]);
   };
 
-  // [030] Opens a concise guide that shows the suggested order and explains that dependencies are checked.
+  // [030] Shows the suggested order and remaining steps.
   const showGuide = () => {
     const remaining = RECOMMENDED_SEQUENCE
       .filter((id) => !installed.includes(id))
       .map((id, index) => `${index + 1}. ${PARTS[id].name}`);
     setMessage(
       `Suggested assembly order: ${RECOMMENDED_SEQUENCE.map((id) => PARTS[id].name).join(' → ')}. ` +
-      `Already installed: ${installed.length} of ${INSTALLABLE_COUNT}. ` +
-      (remaining.length ? `Remaining suggested steps: ${remaining.join('; ')}. ` : 'This modeled assembly stage is complete. ') +
-      'Select a component directly on the 3D engine and click Install Part. The simulator checks prerequisites and explains any step attempted too early.'
+      `Installed: ${installed.length} of ${INSTALLABLE_COUNT}. ` +
+      (remaining.length ? `Remaining: ${remaining.join('; ')}. ` : 'This modeled assembly stage is complete. ') +
+      'Select a component on the CAD model and click Install Part. The simulator checks prerequisites before installing it.'
     );
     setPanelOpen(true);
   };
@@ -266,7 +275,7 @@ export default function App() {
 
   return (
     <main className="app-shell">
-      {/* [031] Shows the title and live assembly progress. */}
+      {/* [031] Header and live installation progress. */}
       <header className="topbar">
         <div>
           <div className="eyebrow">INTERACTIVE MECHANICAL WORKSHOP</div>
@@ -277,21 +286,19 @@ export default function App() {
             <span>ASSEMBLY</span>
             <strong>{installed.length}/{INSTALLABLE_COUNT} PARTS</strong>
           </div>
-          <div className="progress-track">
-            <div style={{ width: `${progress}%` }} />
-          </div>
+          <div className="progress-track"><div style={{ width: `${progress}%` }} /></div>
         </div>
       </header>
 
-      {/* [032] Hosts the selectable engine and installed components. */}
+      {/* [032] The new CAD scene uses separate meshes from the supplied STEP-derived model. */}
       <section className="workspace">
-        <div className="scene-hint"><span className="hint-dot" /> ROTATE THE ENGINE · HOVER TO HIGHLIGHT · CLICK A PART LOCATION</div>
-        <EngineScene selected={selected} installed={installed} onSelect={selectPart} view={view} />
+        <div className="scene-hint"><span className="hint-dot" /> REAL CAD MODEL · HOVER TO HIGHLIGHT · CLICK A COMPONENT LOCATION</div>
+        <EngineCADScene selected={selected} installed={installed} onSelect={selectPart} view={view} />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.toUpperCase()} VIEW</div>
       </section>
 
-      {/* [033] Toolbar actions all call real application handlers. */}
+      {/* [033] Existing toolbar actions remain connected to the new CAD component groups. */}
       <Toolbar
         selected={selected}
         installed={installed}
@@ -301,14 +308,14 @@ export default function App() {
         onView={changeView}
         onUndo={undo}
         onBack={() => {
-          setSelected('block');
-          setMessage('You are viewing the engine assembly. Select an uninstalled component location directly on the 3D model to continue.');
+          setSelected('engineBlock');
+          setMessage('Engine overview. Select a component location directly on the CAD model to continue.');
           setPanelOpen(false);
         }}
       />
 
-      {/* [034] Displays the selected component's explanation. */}
-      <InfoPanel part={PARTS[selected] || PARTS.block} open={panelOpen} onClose={() => setPanelOpen(false)} />
+      {/* [034] Educational panel for the selected CAD component. */}
+      <InfoPanel part={PARTS[selected] || PARTS.engineBlock} open={panelOpen} onClose={() => setPanelOpen(false)} />
     </main>
   );
 }
