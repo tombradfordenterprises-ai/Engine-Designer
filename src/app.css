@@ -1,0 +1,52 @@
+/* [070] Defines the full-screen workspace, typography, responsive header, and assembly progress indicator. */
+.app-shell { height: 100%; min-height: 560px; display: flex; flex-direction: column; background: #fff; overflow: hidden; }
+.topbar { height: 88px; flex: 0 0 88px; padding: 18px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #edf0f2; z-index: 2; }
+.eyebrow { color: #8a9299; font-size: 9px; letter-spacing: .16em; font-weight: 800; }
+h1 { margin: 4px 0 0; font-size: 20px; letter-spacing: -.045em; font-weight: 750; }
+h1 span { color: #87919a; font-weight: 450; }
+.progress-wrap { width: 190px; }
+.progress-label { display: flex; justify-content: space-between; color: #858e96; font-size: 9px; letter-spacing: .12em; font-weight: 750; margin-bottom: 8px; }
+.progress-label strong { color: #39434b; }
+.progress-track { height: 4px; border-radius: 5px; background: #edf0f2; overflow: hidden; }
+.progress-track div { height: 100%; background: #5b9bc8; transition: width .35s ease; }
+
+/* [071] Positions the 3D canvas, usage hint, status message, and camera-view label. */
+.workspace { position: relative; flex: 1; min-height: 0; background: #fff; }
+.workspace canvas { display: block; }
+.scene-hint { position: absolute; z-index: 1; top: 22px; left: 28px; color: #9aa1a7; font-size: 9px; font-weight: 750; letter-spacing: .13em; pointer-events: none; }
+.hint-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #70a9ce; margin-right: 7px; vertical-align: 1px; }
+.status-message { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); color: #879098; font-size: 11px; white-space: nowrap; pointer-events: none; }
+.view-label { position: absolute; right: 28px; top: 22px; color: #a0a7ad; font-size: 9px; font-weight: 750; letter-spacing: .13em; }
+
+/* [072] Styles the permanent gray toolbar and its six evenly sized icon controls. */
+.toolbar { height: 82px; flex: 0 0 82px; display: grid; grid-template-columns: repeat(6, 1fr); align-items: stretch; background: #d9dcdf; border-top: 1px solid #cdd1d4; padding: 7px max(14px, calc((100% - 780px) / 2)); gap: 7px; z-index: 5; }
+.tool-button { border: 0; border-radius: 8px; color: #424a50; background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; cursor: pointer; transition: background .16s, color .16s; }
+.tool-button span { font-size: 9px; font-weight: 650; }
+.tool-button:hover { background: #eef0f1; color: #1d5f8b; }
+.tool-button:active { transform: translateY(1px); }
+
+/* [073] Animates the component information panel upward from the bottom edge above the toolbar. */
+.info-panel { position: absolute; z-index: 4; left: 0; right: 0; bottom: 82px; background: rgba(250,251,252,.98); border-top: 1px solid #dfe3e6; box-shadow: 0 -12px 35px rgba(30,45,55,.09); padding: 22px max(24px, calc((100% - 1040px) / 2)) 25px; transform: translateY(calc(100% + 30px)); opacity: 0; visibility: hidden; transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .22s ease, visibility .32s; }
+.info-panel.is-open { transform: translateY(0); opacity: 1; visibility: visible; }
+.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.panel-header h2 { margin: 4px 0 0; font-size: 20px; letter-spacing: -.04em; }
+.close-button { border: 0; width: 32px; height: 32px; border-radius: 50%; background: #e9edef; color: #59636b; font-size: 22px; cursor: pointer; }
+.explanation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.explanation-grid article { border-left: 2px solid #c5d9e7; padding-left: 12px; }
+.explanation-grid article span { color: #82909a; font-size: 9px; letter-spacing: .12em; font-weight: 800; }
+.explanation-grid p { margin: 7px 0 0; color: #505b63; font-size: 12px; line-height: 1.55; }
+
+/* [074] Adapts spacing and the explanation layout for narrow screens. */
+@media (max-width: 640px) {
+  .topbar { height: 76px; flex-basis: 76px; padding: 14px 16px; }
+  h1 { font-size: 17px; }
+  .progress-wrap { width: 105px; }
+  .toolbar { height: 72px; flex-basis: 72px; padding: 5px 6px; gap: 2px; }
+  .tool-button span { font-size: 8px; }
+  .tool-button svg { width: 18px; }
+  .info-panel { bottom: 72px; padding: 17px 18px 20px; max-height: 52%; overflow-y: auto; }
+  .explanation-grid { grid-template-columns: 1fr; gap: 13px; }
+  .scene-hint { left: 15px; top: 15px; font-size: 8px; }
+  .view-label { right: 15px; top: 15px; }
+  .status-message { font-size: 9px; bottom: 15px; }
+}
