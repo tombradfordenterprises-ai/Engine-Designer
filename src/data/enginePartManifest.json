@@ -1,0 +1,411 @@
+{
+  "assetName": "Generic inline-four engine CAD assembly",
+  "sourceFile": "four-cylinder-inline-piston-engine-assembled.step",
+  "license": {
+    "name": "CC0 1.0 Universal",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "evidence": "The uploaded STEP file HEADER explicitly dedicates the model under CC0 1.0 Universal."
+  },
+  "format": "glTF Binary (.glb)",
+  "units": "STEP source uses millimetre-scale coordinates; exported GLB bounds are approximately 604 x 531 x 666 mm.",
+  "geometry": {
+    "uniqueComponentMeshes": 231,
+    "boundsMeters": [
+      [
+        -0.3100000023841858,
+        -0.26899999380111694,
+        0.0
+      ],
+      [
+        0.2939999997615814,
+        0.2619999945163727,
+        0.6660000085830688
+      ]
+    ],
+    "meshCount": 231,
+    "meshNamesArePreserved": true
+  },
+  "parts": {
+    "engineBlock": {
+      "label": "Engine block and crankcase",
+      "group": "foundation",
+      "requires": [],
+      "meshes": [
+        "000_Cylinder block and hollow crankcase",
+        "001_Cylinder liner 1",
+        "002_Cylinder liner 2",
+        "003_Cylinder liner 3",
+        "004_Cylinder liner 4",
+        "022_Main bearing bridge 1",
+        "023_Main bearing bolt 1 -72",
+        "024_Main bearing bolt 1 72",
+        "025_Main bearing bridge 2",
+        "026_Main bearing bolt 2 -72",
+        "027_Main bearing bolt 2 72",
+        "028_Main bearing bridge 3",
+        "029_Main bearing bolt 3 -72",
+        "030_Main bearing bolt 3 72",
+        "031_Main bearing bridge 4",
+        "032_Main bearing bolt 4 -72",
+        "033_Main bearing bolt 4 72",
+        "034_Main bearing bridge 5",
+        "035_Main bearing bolt 5 -72",
+        "036_Main bearing bolt 5 72",
+        "188_Engine mounting ear -181 -1",
+        "189_Engine mounting ear -181 1",
+        "190_Engine mounting ear 181 -1",
+        "191_Engine mounting ear 181 1"
+      ]
+    },
+    "oilPan": {
+      "label": "Oil sump and drain hardware",
+      "group": "lubrication",
+      "requires": [
+        "engineBlock"
+      ],
+      "meshes": [
+        "005_Hollow cast oil sump",
+        "006_Sump flange fastener -204 -118",
+        "007_Sump flange fastener -204 118",
+        "008_Sump flange fastener -136 -118",
+        "009_Sump flange fastener -136 118",
+        "010_Sump flange fastener -68 -118",
+        "011_Sump flange fastener -68 118",
+        "012_Sump flange fastener 0 -118",
+        "013_Sump flange fastener 0 118",
+        "014_Sump flange fastener 68 -118",
+        "015_Sump flange fastener 68 118",
+        "016_Sump flange fastener 136 -118",
+        "017_Sump flange fastener 136 118",
+        "018_Sump flange fastener 204 -118",
+        "019_Sump flange fastener 204 118",
+        "020_Oil drain boss",
+        "021_Oil drain plug"
+      ]
+    },
+    "crankshaft": {
+      "label": "Crankshaft",
+      "group": "rotatingAssembly",
+      "requires": [
+        "engineBlock"
+      ],
+      "meshes": [
+        "037_Crankshaft journals throws and counterweights"
+      ]
+    },
+    "pistonsRods": {
+      "label": "Pistons and connecting rods",
+      "group": "rotatingAssembly",
+      "requires": [
+        "crankshaft"
+      ],
+      "meshes": [
+        "038_Connecting rod 1 bored big and small ends",
+        "039_Piston ring 1.1",
+        "040_Piston ring 1.2",
+        "041_Piston ring 1.3",
+        "042_Hollow skirted piston 1",
+        "043_Piston wrist pin 1",
+        "044_Connecting rod 2 bored big and small ends",
+        "045_Piston ring 2.1",
+        "046_Piston ring 2.2",
+        "047_Piston ring 2.3",
+        "048_Hollow skirted piston 2",
+        "049_Piston wrist pin 2",
+        "050_Connecting rod 3 bored big and small ends",
+        "051_Piston ring 3.1",
+        "052_Piston ring 3.2",
+        "053_Piston ring 3.3",
+        "054_Hollow skirted piston 3",
+        "055_Piston wrist pin 3",
+        "056_Connecting rod 4 bored big and small ends",
+        "057_Piston ring 4.1",
+        "058_Piston ring 4.2",
+        "059_Piston ring 4.3",
+        "060_Hollow skirted piston 4",
+        "061_Piston wrist pin 4"
+      ]
+    },
+    "headGasket": {
+      "label": "Cylinder head gasket",
+      "group": "cylinderHead",
+      "requires": [
+        "pistonsRods"
+      ],
+      "meshes": [
+        "062_Cylinder head sealing gasket"
+      ]
+    },
+    "cylinderHead": {
+      "label": "Cylinder head",
+      "group": "cylinderHead",
+      "requires": [
+        "headGasket"
+      ],
+      "meshes": [
+        "063_Ported sixteen valve cylinder head"
+      ]
+    },
+    "valvetrain": {
+      "label": "Valves, springs and camshafts",
+      "group": "valvetrain",
+      "requires": [
+        "cylinderHead"
+      ],
+      "meshes": [
+        "064_Poppet valve 1 -17 -1",
+        "065_Connected helical valve spring 1 -17 -1",
+        "066_Valve spring lower seat 1 -17 -1",
+        "067_Valve spring retainer 1 -17 -1",
+        "068_Poppet valve 1 -17 1",
+        "069_Connected helical valve spring 1 -17 1",
+        "070_Valve spring lower seat 1 -17 1",
+        "071_Valve spring retainer 1 -17 1",
+        "072_Poppet valve 1 17 -1",
+        "073_Connected helical valve spring 1 17 -1",
+        "074_Valve spring lower seat 1 17 -1",
+        "075_Valve spring retainer 1 17 -1",
+        "076_Poppet valve 1 17 1",
+        "077_Connected helical valve spring 1 17 1",
+        "078_Valve spring lower seat 1 17 1",
+        "079_Valve spring retainer 1 17 1",
+        "080_Poppet valve 2 -17 -1",
+        "081_Connected helical valve spring 2 -17 -1",
+        "082_Valve spring lower seat 2 -17 -1",
+        "083_Valve spring retainer 2 -17 -1",
+        "084_Poppet valve 2 -17 1",
+        "085_Connected helical valve spring 2 -17 1",
+        "086_Valve spring lower seat 2 -17 1",
+        "087_Valve spring retainer 2 -17 1",
+        "088_Poppet valve 2 17 -1",
+        "089_Connected helical valve spring 2 17 -1",
+        "090_Valve spring lower seat 2 17 -1",
+        "091_Valve spring retainer 2 17 -1",
+        "092_Poppet valve 2 17 1",
+        "093_Connected helical valve spring 2 17 1",
+        "094_Valve spring lower seat 2 17 1",
+        "095_Valve spring retainer 2 17 1",
+        "096_Poppet valve 3 -17 -1",
+        "097_Connected helical valve spring 3 -17 -1",
+        "098_Valve spring lower seat 3 -17 -1",
+        "099_Valve spring retainer 3 -17 -1",
+        "100_Poppet valve 3 -17 1",
+        "101_Connected helical valve spring 3 -17 1",
+        "102_Valve spring lower seat 3 -17 1",
+        "103_Valve spring retainer 3 -17 1",
+        "104_Poppet valve 3 17 -1",
+        "105_Connected helical valve spring 3 17 -1",
+        "106_Valve spring lower seat 3 17 -1",
+        "107_Valve spring retainer 3 17 -1",
+        "108_Poppet valve 3 17 1",
+        "109_Connected helical valve spring 3 17 1",
+        "110_Valve spring lower seat 3 17 1",
+        "111_Valve spring retainer 3 17 1",
+        "112_Poppet valve 4 -17 -1",
+        "113_Connected helical valve spring 4 -17 -1",
+        "114_Valve spring lower seat 4 -17 -1",
+        "115_Valve spring retainer 4 -17 -1",
+        "116_Poppet valve 4 -17 1",
+        "117_Connected helical valve spring 4 -17 1",
+        "118_Valve spring lower seat 4 -17 1",
+        "119_Valve spring retainer 4 -17 1",
+        "120_Poppet valve 4 17 -1",
+        "121_Connected helical valve spring 4 17 -1",
+        "122_Valve spring lower seat 4 17 -1",
+        "123_Valve spring retainer 4 17 -1",
+        "124_Poppet valve 4 17 1",
+        "125_Connected helical valve spring 4 17 1",
+        "126_Valve spring lower seat 4 17 1",
+        "127_Valve spring retainer 4 17 1",
+        "128_Overhead camshaft -1",
+        "129_Overhead camshaft 1",
+        "130_Camshaft bearing bridge -205",
+        "131_Cam bearing fastener -205 -42",
+        "132_Cam bearing fastener -205 42",
+        "133_Camshaft bearing bridge -96",
+        "134_Cam bearing fastener -96 -42",
+        "135_Cam bearing fastener -96 42",
+        "136_Camshaft bearing bridge 0",
+        "137_Cam bearing fastener 0 -42",
+        "138_Cam bearing fastener 0 42",
+        "139_Camshaft bearing bridge 96",
+        "140_Cam bearing fastener 96 -42",
+        "141_Cam bearing fastener 96 42",
+        "142_Camshaft bearing bridge 205",
+        "143_Cam bearing fastener 205 -42",
+        "144_Cam bearing fastener 205 42"
+      ]
+    },
+    "valveCover": {
+      "label": "Valve cover and oil filler",
+      "group": "upperEngine",
+      "requires": [
+        "valvetrain"
+      ],
+      "meshes": [
+        "145_Hollow twin cam valve cover",
+        "146_Valve cover seated fastener -210 -108",
+        "147_Valve cover seated fastener -210 108",
+        "148_Valve cover seated fastener -105 -108",
+        "149_Valve cover seated fastener -105 108",
+        "150_Valve cover seated fastener 0 -108",
+        "151_Valve cover seated fastener 0 108",
+        "152_Valve cover seated fastener 105 -108",
+        "153_Valve cover seated fastener 105 108",
+        "154_Valve cover seated fastener 210 -108",
+        "155_Valve cover seated fastener 210 108",
+        "156_Oil filler neck",
+        "157_Oil filler closed cap"
+      ]
+    },
+    "timingCovers": {
+      "label": "Timing and rear end covers",
+      "group": "frontRearCovers",
+      "requires": [
+        "engineBlock"
+      ],
+      "meshes": [
+        "158_Closed timing or rear end housing -1",
+        "159_End housing bolt -1 -100 134",
+        "160_End housing bolt -1 -100 286",
+        "161_End housing bolt -1 -100 478",
+        "162_End housing bolt -1 100 134",
+        "163_End housing bolt -1 100 286",
+        "164_End housing bolt -1 100 478",
+        "165_Closed timing or rear end housing 1",
+        "166_End housing bolt 1 -100 134",
+        "167_End housing bolt 1 -100 286",
+        "168_End housing bolt 1 -100 478",
+        "169_End housing bolt 1 100 134",
+        "170_End housing bolt 1 100 286",
+        "171_End housing bolt 1 100 478"
+      ]
+    },
+    "flywheel": {
+      "label": "Flywheel assembly (manual-transmission reference)",
+      "group": "drivetrainReference",
+      "requires": [
+        "crankshaft"
+      ],
+      "meshes": [
+        "172_Flywheel disc and starter ring teeth",
+        "173_Flywheel central mounting flange",
+        "174_Flywheel hub fastener 0",
+        "175_Flywheel hub fastener 1",
+        "176_Flywheel hub fastener 2",
+        "177_Flywheel hub fastener 3",
+        "178_Flywheel hub fastener 4",
+        "179_Flywheel hub fastener 5"
+      ]
+    },
+    "crankPulley": {
+      "label": "Crankshaft accessory pulley",
+      "group": "accessoryDrive",
+      "requires": [
+        "crankshaft"
+      ],
+      "meshes": [
+        "180_Grooved crank accessory pulley",
+        "181_Crank pulley seated hub",
+        "182_Crank pulley retaining bolt"
+      ]
+    },
+    "alternator": {
+      "label": "Alternator assembly",
+      "group": "accessoryDrive",
+      "requires": [
+        "crankPulley"
+      ],
+      "meshes": [
+        "183_Finned alternator closed body",
+        "184_Alternator mounting bracket",
+        "185_Alternator shaft",
+        "187_Alternator belt-plane pulley"
+      ]
+    },
+    "accessoryBelt": {
+      "label": "Accessory drive belt",
+      "group": "accessoryDrive",
+      "requires": [
+        "crankPulley",
+        "alternator"
+      ],
+      "meshes": [
+        "186_Accessory drive tangent belt"
+      ]
+    },
+    "intakeManifold": {
+      "label": "Intake manifold and throttle inlet",
+      "group": "airIntake",
+      "requires": [
+        "cylinderHead"
+      ],
+      "meshes": [
+        "192_Manifold port flange -1 1",
+        "193_Curved intake runner 1",
+        "194_Manifold flange bolt -1 1 -23",
+        "195_Manifold flange bolt -1 1 23",
+        "196_Manifold port flange -1 2",
+        "197_Curved intake runner 2",
+        "198_Manifold flange bolt -1 2 -23",
+        "199_Manifold flange bolt -1 2 23",
+        "200_Manifold port flange -1 3",
+        "201_Curved intake runner 3",
+        "202_Manifold flange bolt -1 3 -23",
+        "203_Manifold flange bolt -1 3 23",
+        "204_Manifold port flange -1 4",
+        "205_Curved intake runner 4",
+        "206_Manifold flange bolt -1 4 -23",
+        "207_Manifold flange bolt -1 4 23",
+        "208_Intake plenum closed-end barrel",
+        "209_Throttle inlet neck"
+      ]
+    },
+    "exhaustManifold": {
+      "label": "Exhaust manifold and collector",
+      "group": "exhaust",
+      "requires": [
+        "cylinderHead"
+      ],
+      "meshes": [
+        "210_Manifold port flange 1 1",
+        "211_Curved exhaust runner 1",
+        "212_Manifold flange bolt 1 1 -23",
+        "213_Manifold flange bolt 1 1 23",
+        "214_Manifold port flange 1 2",
+        "215_Curved exhaust runner 2",
+        "216_Manifold flange bolt 1 2 -23",
+        "217_Manifold flange bolt 1 2 23",
+        "218_Manifold port flange 1 3",
+        "219_Curved exhaust runner 3",
+        "220_Manifold flange bolt 1 3 -23",
+        "221_Manifold flange bolt 1 3 23",
+        "222_Manifold port flange 1 4",
+        "223_Curved exhaust runner 4",
+        "224_Manifold flange bolt 1 4 -23",
+        "225_Manifold flange bolt 1 4 23",
+        "226_Exhaust collector closed-end barrel",
+        "227_Exhaust outlet neck"
+      ]
+    },
+    "oilFilter": {
+      "label": "Oil filter assembly",
+      "group": "lubrication",
+      "requires": [
+        "engineBlock"
+      ],
+      "meshes": [
+        "228_Oil filter angled mounting boss",
+        "229_Closed oil filter canister",
+        "230_Oil filter end rim"
+      ]
+    }
+  },
+  "unassignedMeshes": [],
+  "knownLimitations": [
+    "This is an already assembled CAD model. The parts are separate meshes but share their final installed positions; the simulator will need to hide/show component groups and animate them into place.",
+    "This model includes a flywheel, not an automatic-transmission flexplate or torque converter. Do not use its flywheel group for the automatic transmission version.",
+    "The model includes a crankshaft pulley, alternator, alternator bracket, alternator pulley and accessory belt. It does not include a water pump, power-steering pump, belt tensioner, or idler pulleys; those will need additional assets or new geometry.",
+    "The model has no detailed textures; the included GLB uses neutral CAD-style PBR materials assigned by component type."
+  ]
+}
