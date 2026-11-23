@@ -93,7 +93,7 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 }
 
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, installed, view }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, installed, view }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -140,6 +140,7 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
             installed={installed}
             showCrankshaft={showCrankshaft}
             showMainBearingCaps={showMainBearingCaps}
+            showPistonsRods={showPistonsRods}
           />
         </Bounds>
       </Suspense>
@@ -163,6 +164,7 @@ export default function EngineCADScene({
   onSelect,
   showCrankshaft = false,
   showMainBearingCaps = false,
+  showPistonsRods = false,
   view = 'isometric',
 }) {
   const [hovered, setHovered] = useState(false);
@@ -183,6 +185,7 @@ export default function EngineCADScene({
         setHovered={setHovered}
         showCrankshaft={showCrankshaft}
         showMainBearingCaps={showMainBearingCaps}
+        showPistonsRods={showPistonsRods}
         view={view}
       />
     </Canvas>
