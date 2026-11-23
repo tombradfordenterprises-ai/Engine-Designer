@@ -7,8 +7,14 @@ const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
 
 function BareB16Block({ selected, onSelect, setHovered }) {
   const { scene } = useGLTF(MODEL_URL);
-  const model = useMemo(() => {
+
+  // Clone the original CAD scene and calculate a real bounding box for the block.
+  // The invisible box below is a dedicated pointer target. A GLTF scene root is
+  // usually a Group, and Groups do not perform raycasts themselves.
+  const { model, hitbox } = useMemo(() => {
     const copy = scene.clone(true);
+    copy.updateMatrixWorld(true);
+
     copy.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = true;
@@ -19,7 +25,21 @@ function BareB16Block({ selected, onSelect, setHovered }) {
         node.material = node.material.clone();
       }
     });
-    return copy;
+
+    const bounds = new THREE.Box3().setFromObject(copy);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    bounds.getSize(size);
+    bounds.getCenter(center);
+
+    // Slightly expand the proxy so the block is easy to select without
+    // creating an excessively large invisible target.
+    size.multiplyScalar(1.015);
+
+    return {
+      model: copy,
+      hitbox: { size: [size.x, size.y, size.z], center: [center.x, center.y, center.z] }
+    };
   }, [scene]);
 
   useEffect(() => {
@@ -34,14 +54,40 @@ function BareB16Block({ selected, onSelect, setHovered }) {
     });
   }, [model, selected]);
 
+  const handleOver = (event) => {
+    event.stopPropagation();
+    setHovered(true);
+  };
+  const handleOut = (event) => {
+    event.stopPropagation();
+    setHovered(false);
+  };
+  const handleClick = (event) => {
+    event.stopPropagation();
+    onSelect('engineBlock');
+  };
+
   return (
-    <primitive
-      object={model}
-      dispose={null}
-      onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
-      onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
-      onClick={(event) => { event.stopPropagation(); onSelect('engineBlock'); }}
-    />
+    <group>
+      <primitive object={model} dispose={null} />
+      {/* A real Mesh with raycast geometry: unlike the GLTF scene Group,
+          this reliably receives React Three Fiber pointer events. */}
+      <mesh
+        position={hitbox.center}
+        onPointerOver={handleOver}
+        onPointerOut={handleOut}
+        onClick={handleClick}
+      >
+        <boxGeometry args={hitbox.size} />
+        <meshBasicMaterial
+          transparent
+          opacity={0}
+          colorWrite={false}
+          depthWrite={false}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </group>
   );
 }
 
@@ -54,7 +100,11 @@ function SceneContents({ selected, onSelect, setHovered }) {
       <directionalLight position={[-5, 3, -4]} intensity={0.85} />
       <Suspense fallback={null}>
         <Bounds fit clip observe margin={1.35}>
-          <BareB16Block selected={selected === 'engineBlock'} onSelect={onSelect} setHovered={setHovered} />
+          <BareB16Block
+            selected={selected === 'engineBlock'}
+            onSelect={onSelect}
+            setHovered={setHovered}
+          />
         </Bounds>
       </Suspense>
       <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={80} />
@@ -65,6 +115,7 @@ function SceneContents({ selected, onSelect, setHovered }) {
 
 export default function EngineCADScene({ selected, onSelect }) {
   const [hovered, setHovered] = useState(false);
+
   return (
     <Canvas
       shadows
