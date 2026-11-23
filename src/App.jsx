@@ -116,7 +116,7 @@ const INSTALL_RULES = {
     reason: 'Install the crankshaft first. The five main bearing cap assemblies are then fitted and secured beneath the crankshaft.'
   },
   pistonsRods: {
-    requires: ['crankshaft'],
+    requires: ['crankshaft', 'mainBearingCaps'],
     reason: 'The connecting rods need the crankshaft in place so their big ends can attach to the crank throws.'
   },
   headGasket: {
@@ -185,6 +185,7 @@ export default function App() {
   const [view, setView] = useState('isometric');
   const [showCrankshaft, setShowCrankshaft] = useState(false);
   const [showMainBearingCaps, setShowMainBearingCaps] = useState(false);
+  const [showPistonsRods, setShowPistonsRods] = useState(false);
   const [message, setMessage] = useState(
     'Honda B16 bare engine block loaded. Rotate the model and click the block to select it.'
   );
@@ -330,12 +331,26 @@ export default function App() {
         >
           Preview main bearings &amp; caps
         </button>
+        <button
+          className="part-preview-button"
+          type="button"
+          style={{ top: '128px' }}
+          onClick={() => {
+            setSelected('pistonsRods');
+            setShowPistonsRods(true);
+            setMessage('Four piston and connecting-rod assemblies previewed. Install the crankshaft and main bearing caps first, then click Install Part.');
+            setPanelOpen(true);
+          }}
+        >
+          Preview pistons &amp; rods
+        </button>
         <EngineCADScene
           selected={selected}
           installed={installed}
           onSelect={selectPart}
           showCrankshaft={showCrankshaft}
           showMainBearingCaps={showMainBearingCaps}
+          showPistonsRods={showPistonsRods}
           view={view}
         />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
