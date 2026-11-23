@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 
 const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
+const CRANKSHAFT_URL = '/models/crankshaft.glb';
 
 function BareB16Block({ selected, onSelect, setHovered }) {
   const { scene } = useGLTF(MODEL_URL);
@@ -91,7 +92,40 @@ function BareB16Block({ selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered }) {
+
+function CrankshaftPreview() {
+  const { scene } = useGLTF(CRANKSHAFT_URL);
+  const model = useMemo(() => {
+    const copy = scene.clone(true);
+    copy.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = true;
+      node.receiveShadow = true;
+      if (Array.isArray(node.material)) node.material = node.material.map((material) => material.clone());
+      else if (node.material) node.material = node.material.clone();
+    });
+    // Normalize the imported asset to a predictable preview size.
+    const bounds = new THREE.Box3().setFromObject(copy);
+    const size = new THREE.Vector3();
+    bounds.getSize(size);
+    const longest = Math.max(size.x, size.y, size.z) || 1;
+    copy.scale.setScalar(0.48 / longest);
+    copy.updateMatrixWorld(true);
+    const centeredBounds = new THREE.Box3().setFromObject(copy);
+    const center = new THREE.Vector3();
+    centeredBounds.getCenter(center);
+    copy.position.sub(center);
+    return copy;
+  }, [scene]);
+
+  return (
+    <group position={[0.78, 0.02, 0]}>
+      <primitive object={model} dispose={null} />
+    </group>
+  );
+}
+
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft }) {
   return (
     <>
       <ambientLight intensity={0.8} />
@@ -106,6 +140,7 @@ function SceneContents({ selected, onSelect, setHovered }) {
             setHovered={setHovered}
           />
         </Bounds>
+        {showCrankshaft && <CrankshaftPreview />}
       </Suspense>
       <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={80} />
       <Environment preset="studio" />
@@ -113,7 +148,7 @@ function SceneContents({ selected, onSelect, setHovered }) {
   );
 }
 
-export default function EngineCADScene({ selected, onSelect }) {
+export default function EngineCADScene({ selected, onSelect, showCrankshaft = false }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -125,9 +160,11 @@ export default function EngineCADScene({ selected, onSelect }) {
       style={{ cursor: hovered ? 'pointer' : 'grab' }}
     >
       <color attach="background" args={['#ffffff']} />
-      <SceneContents selected={selected} onSelect={onSelect} setHovered={setHovered} />
+      <SceneContents selected={selected} onSelect={onSelect} setHovered={setHovered} showCrankshaft={showCrankshaft} />
     </Canvas>
   );
 }
 
 useGLTF.preload(MODEL_URL);
+
+useGLTF.preload(CRANKSHAFT_URL);
