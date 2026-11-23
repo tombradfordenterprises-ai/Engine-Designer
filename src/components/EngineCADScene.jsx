@@ -93,7 +93,7 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 }
 
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, installed }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, installed }) {
   return (
     <>
       <ambientLight intensity={0.8} />
@@ -111,6 +111,7 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, install
           <EnginePartLayer
             installed={installed}
             showCrankshaft={showCrankshaft}
+            showMainBearingCaps={showMainBearingCaps}
           />
         </Bounds>
       </Suspense>
@@ -132,6 +133,7 @@ export default function EngineCADScene({
   installed = [],
   onSelect,
   showCrankshaft = false,
+  showMainBearingCaps = false,
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -150,6 +152,7 @@ export default function EngineCADScene({
         onSelect={onSelect}
         setHovered={setHovered}
         showCrankshaft={showCrankshaft}
+        showMainBearingCaps={showMainBearingCaps}
       />
     </Canvas>
   );
