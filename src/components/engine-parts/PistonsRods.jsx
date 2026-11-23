@@ -4,9 +4,9 @@ import { useFrame } from '@react-three/fiber';
 
 // Prototype positions are inferred from the current crankshaft/cap scene.
 // They are visual placeholders, not measured Honda B16 bore or crank-pin coordinates.
-const CYLINDER_X = [-45.0, -41.5, -38.0, -34.5];
+const CYLINDER_X = [-45.25, -41.75, -38.25, -34.75];
 const INSTALLED_Y = 11.05;
-const CENTER_Z = 131.0;
+const CENTER_Z = 130.0;
 const PREVIEW_OFFSET = new THREE.Vector3(17, 5, 12);
 
 const pistonMaterial = new THREE.MeshStandardMaterial({
@@ -64,10 +64,10 @@ function PistonRodUnit({ index, installed }) {
     >
       {/* Piston skirt and crown; cylinder axis is vertical (Y). */}
       <mesh position={[0, 0.0, 0]} material={pistonMaterial} castShadow receiveShadow>
-        <cylinderGeometry args={[0.96, 0.99, 1.25, 32]} />
+        <cylinderGeometry args={[1.38, 1.42, 1.25, 48]} />
       </mesh>
       <mesh position={[0, 0.68, 0]} material={pistonMaterial} castShadow receiveShadow>
-        <cylinderGeometry args={[0.98, 0.96, 0.16, 32]} />
+        <cylinderGeometry args={[1.40, 1.38, 0.16, 48]} />
       </mesh>
 
       {/* Three piston rings around the upper skirt. */}
@@ -79,7 +79,7 @@ function PistonRodUnit({ index, installed }) {
           material={ringMaterial}
           castShadow
         >
-          <torusGeometry args={[0.985, 0.035, 8, 32]} />
+          <torusGeometry args={[1.43, 0.035, 8, 48]} />
         </mesh>
       ))}
 
@@ -94,8 +94,8 @@ function PistonRodUnit({ index, installed }) {
       </mesh>
 
       {/* Connecting-rod beam descends from wrist pin toward the crank throw. */}
-      <mesh position={[0, -1.95, 0]} material={rodMaterial} castShadow receiveShadow>
-        <boxGeometry args={[0.42, 3.35, 0.32]} />
+      <mesh position={[0, -1.55, 0]} material={rodMaterial} castShadow receiveShadow>
+        <boxGeometry args={[0.42, 3.05, 0.32]} />
       </mesh>
 
       {/* Small-end and big-end rings, with the big end near the crankshaft. */}
@@ -108,20 +108,20 @@ function PistonRodUnit({ index, installed }) {
         <torusGeometry args={[0.36, 0.14, 12, 28]} />
       </mesh>
       <mesh
-        position={[0, -3.55, 0]}
+        position={[0, -3.05, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         material={rodMaterial}
         castShadow
       >
-        <torusGeometry args={[0.68, 0.18, 12, 32]} />
+        <torusGeometry args={[0.58, 0.16, 12, 32]} />
       </mesh>
       <mesh
-        position={[0, -3.55, 0]}
+        position={[0, -3.05, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         material={pinMaterial}
         castShadow
       >
-        <cylinderGeometry args={[0.43, 0.43, 0.34, 24]} />
+        <cylinderGeometry args={[0.38, 0.38, 0.34, 24]} />
       </mesh>
     </group>
   );
