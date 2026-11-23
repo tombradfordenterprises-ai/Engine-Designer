@@ -8,10 +8,10 @@ import './App.css';
 // [021] Component explanations correspond to the separate groups in the supplied CC0 CAD model.
 export const PARTS = {
   engineBlock: {
-    name: 'Engine block and crankcase', group: 'Foundation',
-    what: 'The cast engine block is the main structure of the inline-four. It contains the four cylinder liners and supports the crankshaft and cylinder head.',
+    name: 'Honda B16 engine block', group: 'Foundation',
+    what: 'The B16 block is the main aluminum-alloy structure of Honda’s 1.6-liter DOHC VTEC inline-four. It houses the four cylinders and supports the crankshaft and cylinder head.',
     why: 'It keeps the cylinders aligned and carries the loads produced by combustion and the rotating assembly.',
-    where: 'It forms the central body of the engine. The cylinder bores are at the top and the crankcase is below.'
+    where: 'It forms the lower central structure of the engine. The four cylinder bores are machined into the deck at the top, with the crankcase below.'
   },
   crankshaft: {
     name: 'Crankshaft', group: 'Rotating assembly',
@@ -174,7 +174,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState(
-    'The real CAD engine block is loaded. Select a component location on the model, then click Install Part.'
+    'Honda B16 bare engine block loaded. Rotate the model and click the block to select it.'
   );
 
   // [025] Finds the next uninstalled item in the recommended sequence.
@@ -279,7 +279,7 @@ export default function App() {
       <header className="topbar">
         <div>
           <div className="eyebrow">INTERACTIVE MECHANICAL WORKSHOP</div>
-          <h1>Inline Four <span>Engine Builder</span></h1>
+          <h1>Honda B16 <span>Engine Builder</span></h1>
         </div>
         <div className="progress-wrap">
           <div className="progress-label">
@@ -290,15 +290,15 @@ export default function App() {
         </div>
       </header>
 
-      {/* [032] The new CAD scene uses separate meshes from the supplied STEP-derived model. */}
+      {/* [032] Honda B16 bare-block CAD scene. */}
       <section className="workspace">
-        <div className="scene-hint"><span className="hint-dot" /> REAL CAD MODEL · HOVER TO HIGHLIGHT · CLICK A COMPONENT LOCATION</div>
+        <div className="scene-hint"><span className="hint-dot" /> HONDA B16 · BARE BLOCK · HOVER AND CLICK TO SELECT</div>
         <EngineCADScene selected={selected} installed={installed} onSelect={selectPart} view={view} />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.toUpperCase()} VIEW</div>
       </section>
 
-      {/* [033] Existing toolbar actions remain connected to the new CAD component groups. */}
+      {/* [033] Existing toolbar retained while B16 component groups are mapped. */}
       <Toolbar
         selected={selected}
         installed={installed}
