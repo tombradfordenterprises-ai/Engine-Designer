@@ -5,7 +5,6 @@ import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import EnginePartLayer from './EnginePartLayer.jsx';
 
 const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
-const CRANKSHAFT_URL = '/models/crankshaft.glb';
 
 function BareB16Block({ selected, onSelect, setHovered }) {
   const { scene } = useGLTF(MODEL_URL);
@@ -94,38 +93,6 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 }
 
 
-function CrankshaftPreview() {
-  const { scene } = useGLTF(CRANKSHAFT_URL);
-  const model = useMemo(() => {
-    const copy = scene.clone(true);
-    copy.traverse((node) => {
-      if (!node.isMesh) return;
-      node.castShadow = true;
-      node.receiveShadow = true;
-      if (Array.isArray(node.material)) node.material = node.material.map((material) => material.clone());
-      else if (node.material) node.material = node.material.clone();
-    });
-    // Normalize the imported asset to a predictable preview size.
-    const bounds = new THREE.Box3().setFromObject(copy);
-    const size = new THREE.Vector3();
-    bounds.getSize(size);
-    const longest = Math.max(size.x, size.y, size.z) || 1;
-    copy.scale.setScalar(0.48 / longest);
-    copy.updateMatrixWorld(true);
-    const centeredBounds = new THREE.Box3().setFromObject(copy);
-    const center = new THREE.Vector3();
-    centeredBounds.getCenter(center);
-    copy.position.sub(center);
-    return copy;
-  }, [scene]);
-
-  return (
-    <group position={[0.78, 0.02, 0]}>
-      <primitive object={model} dispose={null} />
-    </group>
-  );
-}
-
 function SceneContents({ selected, onSelect, setHovered, showCrankshaft, installed }) {
   return (
     <>
@@ -133,6 +100,7 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, install
       <hemisphereLight args={['#ffffff', '#747b84', 1.1]} />
       <directionalLight position={[5, 8, 6]} intensity={2.1} castShadow />
       <directionalLight position={[-5, 3, -4]} intensity={0.85} />
+
       <Suspense fallback={null}>
         <Bounds fit clip observe margin={1.35}>
           <BareB16Block
@@ -140,18 +108,32 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, install
             onSelect={onSelect}
             setHovered={setHovered}
           />
-          {showCrankshaft && <CrankshaftPreview />}
+          <EnginePartLayer
+            installed={installed}
+            showCrankshaft={showCrankshaft}
+          />
         </Bounds>
       </Suspense>
-      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={80} />
+
+      <OrbitControls
+        makeDefault
+        enableDamping
+        dampingFactor={0.08}
+        minDistance={0.6}
+        maxDistance={80}
+      />
       <Environment preset="studio" />
     </>
   );
 }
 
-export default function EngineCADScene({ selected, installed = [], onSelect, showCrankshaft = false }) {
+export default function EngineCADScene({
+  selected,
+  installed = [],
+  onSelect,
+  showCrankshaft = false,
+}) {
   const [hovered, setHovered] = useState(false);
-  const crankshaftVisible = showCrankshaft || installed.includes('crankshaft');
 
   return (
     <Canvas
@@ -162,11 +144,15 @@ export default function EngineCADScene({ selected, installed = [], onSelect, sho
       style={{ cursor: hovered ? 'pointer' : 'grab' }}
     >
       <color attach="background" args={['#ffffff']} />
-      <SceneContents selected={selected} onSelect={onSelect} setHovered={setHovered} showCrankshaft={crankshaftVisible} />
+      <SceneContents
+        selected={selected}
+        installed={installed}
+        onSelect={onSelect}
+        setHovered={setHovered}
+        showCrankshaft={showCrankshaft}
+      />
     </Canvas>
   );
 }
 
 useGLTF.preload(MODEL_URL);
-
-useGLTF.preload(CRANKSHAFT_URL);
