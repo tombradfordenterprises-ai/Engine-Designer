@@ -5,13 +5,16 @@ import { useGLTF } from '@react-three/drei';
 const CRANKSHAFT_URL = '/models/crankshaft.glb';
 
 /**
- * Reusable Honda B16 engine-part model component.
+ * Independent crankshaft preview component.
  *
- * This is currently a visual preview asset. Its position and scale are
- * provisional and will need calibration against the B16 block before we
- * treat it as a mechanically accurate installation.
+ * The supplied crankshaft GLB and isolated B16 block use different
+ * coordinate scales/origins. These provisional values put the crankshaft
+ * visibly beside the supplied block asset so we can verify the modular
+ * rendering pipeline. They are NOT a mechanically accurate B16 fitment.
  */
-export default function Crankshaft({ position = [0.78, 0.02, 0] }) {
+export default function Crankshaft({
+  position = [-22.25, 8.0, 130.5],
+}) {
   const { scene } = useGLTF(CRANKSHAFT_URL);
 
   const model = useMemo(() => {
@@ -30,19 +33,16 @@ export default function Crankshaft({ position = [0.78, 0.02, 0] }) {
       }
     });
 
-    // Normalize the imported asset to a predictable preview size.
-    const bounds = new THREE.Box3().setFromObject(copy);
-    const size = new THREE.Vector3();
-    bounds.getSize(size);
-
-    const longest = Math.max(size.x, size.y, size.z) || 1;
-    copy.scale.setScalar(0.48 / longest);
+    // The supplied crankshaft is about 0.589 units long, while the
+    // isolated B16 block asset is about 17.5 units wide.
+    // This provisional scale makes the preview visually comparable.
+    copy.scale.setScalar(28);
     copy.updateMatrixWorld(true);
 
-    // Center the model around its own origin before positioning it in the scene.
-    const centeredBounds = new THREE.Box3().setFromObject(copy);
+    // Center the model at the component origin before positioning it.
+    const bounds = new THREE.Box3().setFromObject(copy);
     const center = new THREE.Vector3();
-    centeredBounds.getCenter(center);
+    bounds.getCenter(center);
     copy.position.sub(center);
 
     return copy;
