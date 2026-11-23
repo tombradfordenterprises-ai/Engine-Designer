@@ -93,6 +93,52 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 }
 
 
+
+const HOTSPOTS = [
+  { id: 'crankshaft', label: 'Crankshaft', position: [-40.0, 8.0, 126.0], radius: 1.55, requires: [] },
+  { id: 'mainBearingCaps', label: 'Main bearings & caps', position: [-40.0, 6.7, 126.0], radius: 1.35, requires: ['crankshaft'] },
+  { id: 'pistonsRods', label: 'Pistons & rods', position: [-40.0, 12.85, 130.0], radius: 1.65, requires: ['crankshaft', 'mainBearingCaps'] },
+];
+
+function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
+  return (
+    <group name="installation-hotspots">
+      {HOTSPOTS.map((spot) => {
+        if (installed.includes(spot.id)) return null;
+        const unlocked = spot.requires.every((required) => installed.includes(required));
+        const active = selected === spot.id;
+        const color = unlocked ? (active ? '#1677b8' : '#54a9df') : '#b8c0c7';
+        return (
+          <group key={spot.id} position={spot.position}>
+            <mesh
+              onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+              onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+              onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
+            >
+              <sphereGeometry args={[spot.radius, 24, 16]} />
+              <meshStandardMaterial
+                color={color} emissive={color}
+                emissiveIntensity={active ? 0.42 : 0.2}
+                transparent opacity={unlocked ? (active ? 0.24 : 0.14) : 0.05}
+                depthWrite={false}
+              />
+            </mesh>
+            <mesh
+              rotation={[Math.PI / 2, 0, 0]}
+              onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+              onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+              onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
+            >
+              <torusGeometry args={[spot.radius * 0.82, 0.055, 8, 32]} />
+              <meshBasicMaterial color={color} transparent opacity={unlocked ? (active ? 0.95 : 0.72) : 0.22} />
+            </mesh>
+          </group>
+        );
+      })}
+    </group>
+  );
+}
+
 function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, installed, view }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
@@ -141,6 +187,12 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
             showCrankshaft={showCrankshaft}
             showMainBearingCaps={showMainBearingCaps}
             showPistonsRods={showPistonsRods}
+          />
+          <InstallationHotspots
+            installed={installed}
+            selected={selected}
+            onSelect={onSelect}
+            setHovered={setHovered}
           />
         </Bounds>
       </Suspense>
