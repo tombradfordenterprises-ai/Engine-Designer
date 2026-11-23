@@ -173,6 +173,7 @@ export default function App() {
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
+  const [showCrankshaft, setShowCrankshaft] = useState(false);
   const [message, setMessage] = useState(
     'Honda B16 bare engine block loaded. Rotate the model and click the block to select it.'
   );
@@ -309,6 +310,7 @@ export default function App() {
         onUndo={undo}
         onBack={() => {
           setSelected('engineBlock');
+          setShowCrankshaft(false);
           setMessage('Engine overview. Select a component location directly on the CAD model to continue.');
           setPanelOpen(false);
         }}
