@@ -1,20 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 
 const CRANKSHAFT_URL = '/models/crankshaft.glb';
 
-/**
- * Independent crankshaft preview component.
- *
- * The supplied crankshaft GLB and isolated B16 block use different
- * coordinate scales/origins. These provisional values put the crankshaft
- * visibly beside the supplied block asset so we can verify the modular
- * rendering pipeline. They are NOT a mechanically accurate B16 fitment.
- */
-export default function Crankshaft({
-  position = [-22.25, 8.0, 130.5],
-}) {
+// Provisional scene coordinates: preview beside the B16 block, then move
+// toward the lower crankcase. These are visual prototype coordinates,
+// not verified Honda B16 installation measurements.
+const PREVIEW_POSITION = new THREE.Vector3(-22.25, 8.0, 130.5);
+const INSTALLED_POSITION = new THREE.Vector3(-40.0, 8.0, 131.0);
+
+export default function Crankshaft({ installed = false }) {
+  const groupRef = useRef(null);
+  const progressRef = useRef(0);
   const { scene } = useGLTF(CRANKSHAFT_URL);
 
   const model = useMemo(() => {
@@ -33,13 +32,11 @@ export default function Crankshaft({
       }
     });
 
-    // The supplied crankshaft is about 0.589 units long, while the
-    // isolated B16 block asset is about 17.5 units wide.
-    // This provisional scale makes the preview visually comparable.
+    // Scale the imported crankshaft to a visible size relative to the block.
     copy.scale.setScalar(28);
     copy.updateMatrixWorld(true);
 
-    // Center the model at the component origin before positioning it.
+    // Center the model around its own origin.
     const bounds = new THREE.Box3().setFromObject(copy);
     const center = new THREE.Vector3();
     bounds.getCenter(center);
@@ -48,8 +45,27 @@ export default function Crankshaft({
     return copy;
   }, [scene]);
 
+  useFrame((_, delta) => {
+    if (!groupRef.current) return;
+
+    // Ease smoothly toward preview (0) or installed (1).
+    const target = installed ? 1 : 0;
+    const speed = Math.min(1, delta * 2.8);
+    progressRef.current += (target - progressRef.current) * speed;
+
+    // Smoothstep easing prevents a harsh start/stop.
+    const t = progressRef.current;
+    const eased = t * t * (3 - 2 * t);
+
+    groupRef.current.position.lerpVectors(
+      PREVIEW_POSITION,
+      INSTALLED_POSITION,
+      eased
+    );
+  });
+
   return (
-    <group position={position}>
+    <group ref={groupRef} position={PREVIEW_POSITION.toArray()}>
       <primitive object={model} dispose={null} />
     </group>
   );
