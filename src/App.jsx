@@ -19,6 +19,12 @@ export const PARTS = {
     why: 'Its rotation is the mechanical output that ultimately drives the transmission.',
     where: 'It sits inside the lower crankcase and is supported by the main bearing bridges.'
   },
+  mainBearingCaps: {
+    name: 'Main bearings and bearing caps', group: 'Rotating assembly',
+    what: 'Five main bearing locations support the crankshaft. The bearing shells provide the precision surfaces, while the caps secure the crankshaft from below.',
+    why: 'The main bearings support the crankshaft while allowing it to rotate with a controlled oil film.',
+    where: 'The bearing shells sit at the five main journal supports, with the lower caps fitted underneath the crankshaft.'
+  },
   pistonsRods: {
     name: 'Pistons and connecting rods', group: 'Rotating assembly',
     what: 'Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.',
@@ -105,6 +111,10 @@ const INSTALL_RULES = {
     requires: [],
     reason: 'The crankshaft is installed in the block and supported by the main bearing bridges.'
   },
+  mainBearingCaps: {
+    requires: ['crankshaft'],
+    reason: 'Install the crankshaft first. The five main bearing cap assemblies are then fitted and secured beneath the crankshaft.'
+  },
   pistonsRods: {
     requires: ['crankshaft'],
     reason: 'The connecting rods need the crankshaft in place so their big ends can attach to the crank throws.'
@@ -161,7 +171,7 @@ const INSTALL_RULES = {
 
 // [023] Recommended teaching order. Dependencies are checked separately, so valid alternate orders are allowed.
 const RECOMMENDED_SEQUENCE = [
-  'crankshaft', 'pistonsRods', 'oilPan', 'headGasket', 'cylinderHead',
+  'crankshaft', 'mainBearingCaps', 'pistonsRods', 'oilPan', 'headGasket', 'cylinderHead',
   'valvetrain', 'valveCover', 'timingCovers', 'crankPulley', 'alternator',
   'accessoryBelt', 'intakeManifold', 'exhaustManifold', 'oilFilter'
 ];
@@ -174,6 +184,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
   const [showCrankshaft, setShowCrankshaft] = useState(false);
+  const [showMainBearingCaps, setShowMainBearingCaps] = useState(false);
   const [message, setMessage] = useState(
     'Honda B16 bare engine block loaded. Rotate the model and click the block to select it.'
   );
@@ -306,7 +317,27 @@ export default function App() {
         >
           Preview crankshaft
         </button>
-        <EngineCADScene selected={selected} installed={installed} onSelect={selectPart} showCrankshaft={showCrankshaft} view={view} />
+        <button
+          className="part-preview-button"
+          type="button"
+          style={{ top: '88px' }}
+          onClick={() => {
+            setSelected('mainBearingCaps');
+            setShowMainBearingCaps(true);
+            setMessage('Main bearing and cap assembly preview loaded. Click Install Part to install all five caps in sequence.');
+            setPanelOpen(true);
+          }}
+        >
+          Preview main bearings &amp; caps
+        </button>
+        <EngineCADScene
+          selected={selected}
+          installed={installed}
+          onSelect={selectPart}
+          showCrankshaft={showCrankshaft}
+          showMainBearingCaps={showMainBearingCaps}
+          view={view}
+        />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.toUpperCase()} VIEW</div>
       </section>
