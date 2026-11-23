@@ -293,8 +293,20 @@ export default function App() {
 
       {/* [032] Honda B16 bare-block CAD scene. */}
       <section className="workspace">
-        <div className="scene-hint"><span className="hint-dot" /> HONDA B16 · BARE BLOCK · HOVER AND CLICK TO SELECT</div>
-        <EngineCADScene selected={selected} installed={installed} onSelect={selectPart} view={view} />
+        <div className="scene-hint"><span className="hint-dot" /> HONDA B16 · BARE BLOCK</div>
+        <button
+          className="part-preview-button"
+          type="button"
+          onClick={() => {
+            setSelected('crankshaft');
+            setShowCrankshaft(true);
+            setMessage('Crankshaft preview loaded beside the block. Its B16 fitment still needs calibration.');
+            setPanelOpen(true);
+          }}
+        >
+          Preview crankshaft
+        </button>
+        <EngineCADScene selected={selected} installed={installed} onSelect={selectPart} showCrankshaft={showCrankshaft} view={view} />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.toUpperCase()} VIEW</div>
       </section>
@@ -310,7 +322,6 @@ export default function App() {
         onUndo={undo}
         onBack={() => {
           setSelected('engineBlock');
-          setShowCrankshaft(false);
           setMessage('Engine overview. Select a component location directly on the CAD model to continue.');
           setPanelOpen(false);
         }}
