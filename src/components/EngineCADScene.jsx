@@ -187,16 +187,22 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
               center
               distanceFactor={18}
               zIndexRange={[100, 0]}
-              style={{ pointerEvents: 'none', whiteSpace: 'nowrap' }}
+              style={{ pointerEvents: 'auto', whiteSpace: 'nowrap', cursor: unlocked ? 'pointer' : 'not-allowed' }}
             >
-              <div style={{
+              <div
+                onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
+                onPointerDown={(event) => event.stopPropagation()}
+                title={unlocked ? `Select ${spot.label}` : 'Install the prerequisites first'}
+                style={{
                 display: 'flex', alignItems: 'center', gap: '7px',
                 padding: '6px 10px', borderRadius: '7px',
                 color: '#fff', background: unlocked ? 'rgba(10, 35, 54, .92)' : 'rgba(55, 62, 70, .88)',
                 border: `1px solid ${unlocked ? '#36baff' : '#9aa3ad'}`,
                 boxShadow: unlocked ? '0 0 12px rgba(32,170,255,.32)' : 'none',
-                font: '600 11px/1.2 Arial, sans-serif', letterSpacing: '.35px'
+                font: '600 11px/1.2 Arial, sans-serif', letterSpacing: '.35px',
+                userSelect: 'none'
               }}>
+
                 <span style={{
                   width: '19px', height: '19px', borderRadius: '50%',
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
