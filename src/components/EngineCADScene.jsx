@@ -126,7 +126,7 @@ function CrankshaftPreview() {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, installed }) {
   return (
     <>
       <ambientLight intensity={0.8} />
