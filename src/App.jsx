@@ -187,7 +187,7 @@ export default function App() {
   const [showMainBearingCaps, setShowMainBearingCaps] = useState(false);
   const [showPistonsRods, setShowPistonsRods] = useState(false);
   const [message, setMessage] = useState(
-    'Honda B16 bare engine block loaded. Rotate the model and click the block to select it.'
+    'Hover over a highlighted installation area and click it to select a component.'
   );
 
   // [025] Finds the next uninstalled item in the recommended sequence.
@@ -199,15 +199,27 @@ export default function App() {
   // [026] Handles selection from actual CAD meshes and installation hotspots.
   const selectPart = (id) => {
     setSelected(id);
+    setShowCrankshaft(id === 'crankshaft');
+    setShowMainBearingCaps(id === 'mainBearingCaps');
+    setShowPistonsRods(id === 'pistonsRods');
+
     if (id === 'engineBlock') {
-      setMessage('Engine block selected. This is the fixed foundation of the assembly.');
+      setMessage('Engine block selected. Choose a highlighted installation area to select a component.');
       return;
     }
     if (installed.includes(id)) {
-      setMessage(`${PARTS[id]?.name || 'This component'} is already installed. Select an uninstalled location to continue.`);
+      setMessage(`${PARTS[id]?.name || 'This component'} is already installed.`);
+      setPanelOpen(true);
       return;
     }
-    setMessage(`${PARTS[id]?.name || 'Component'} selected. Click Install Part to check its installation requirements.`);
+    const rule = INSTALL_RULES[id];
+    const missing = rule ? rule.requires.filter((requiredId) => !installed.includes(requiredId)) : [];
+    if (missing.length) {
+      setMessage(`This area is locked until ${missing.map((partId) => PARTS[partId].name).join(' and ')} are installed.`);
+    } else {
+      setMessage(`${PARTS[id]?.name || 'Component'} selected. Review the part, then click Install Part.`);
+    }
+    setPanelOpen(true);
   };
 
   // [027] Validates component dependencies before revealing the CAD meshes.
@@ -279,7 +291,7 @@ export default function App() {
       `Suggested assembly order: ${RECOMMENDED_SEQUENCE.map((id) => PARTS[id].name).join(' → ')}. ` +
       `Installed: ${installed.length} of ${INSTALLABLE_COUNT}. ` +
       (remaining.length ? `Remaining: ${remaining.join('; ')}. ` : 'This modeled assembly stage is complete. ') +
-      'Select a component on the CAD model and click Install Part. The simulator checks prerequisites before installing it.'
+      'Select a highlighted installation area on the CAD model, review the component, and click Install Part. The simulator checks prerequisites before installing it.'
     );
     setPanelOpen(true);
   };
@@ -306,44 +318,6 @@ export default function App() {
       {/* [032] Honda B16 bare-block CAD scene. */}
       <section className="workspace">
         <div className="scene-hint"><span className="hint-dot" /> HONDA B16 · BARE BLOCK</div>
-        <button
-          className="part-preview-button"
-          type="button"
-          onClick={() => {
-            setSelected('crankshaft');
-            setShowCrankshaft(true);
-            setMessage('Crankshaft preview loaded beside the block. Its B16 fitment still needs calibration.');
-            setPanelOpen(true);
-          }}
-        >
-          Preview crankshaft
-        </button>
-        <button
-          className="part-preview-button"
-          type="button"
-          style={{ top: '88px' }}
-          onClick={() => {
-            setSelected('mainBearingCaps');
-            setShowMainBearingCaps(true);
-            setMessage('Main bearing and cap assembly preview loaded. Click Install Part to install all five caps in sequence.');
-            setPanelOpen(true);
-          }}
-        >
-          Preview main bearings &amp; caps
-        </button>
-        <button
-          className="part-preview-button"
-          type="button"
-          style={{ top: '128px' }}
-          onClick={() => {
-            setSelected('pistonsRods');
-            setShowPistonsRods(true);
-            setMessage('Four piston and connecting-rod assemblies previewed. Install the crankshaft and main bearing caps first, then click Install Part.');
-            setPanelOpen(true);
-          }}
-        >
-          Preview pistons &amp; rods
-        </button>
         <EngineCADScene
           selected={selected}
           installed={installed}
