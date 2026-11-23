@@ -139,8 +139,8 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft }) {
             onSelect={onSelect}
             setHovered={setHovered}
           />
+          {showCrankshaft && <CrankshaftPreview />}
         </Bounds>
-        {showCrankshaft && <CrankshaftPreview />}
       </Suspense>
       <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={0.6} maxDistance={80} />
       <Environment preset="studio" />
@@ -148,8 +148,9 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft }) {
   );
 }
 
-export default function EngineCADScene({ selected, onSelect, showCrankshaft = false }) {
+export default function EngineCADScene({ selected, installed = [], onSelect, showCrankshaft = false }) {
   const [hovered, setHovered] = useState(false);
+  const crankshaftVisible = showCrankshaft || installed.includes('crankshaft');
 
   return (
     <Canvas
@@ -160,7 +161,7 @@ export default function EngineCADScene({ selected, onSelect, showCrankshaft = fa
       style={{ cursor: hovered ? 'pointer' : 'grab' }}
     >
       <color attach="background" args={['#ffffff']} />
-      <SceneContents selected={selected} onSelect={onSelect} setHovered={setHovered} showCrankshaft={showCrankshaft} />
+      <SceneContents selected={selected} onSelect={onSelect} setHovered={setHovered} showCrankshaft={crankshaftVisible} />
     </Canvas>
   );
 }
