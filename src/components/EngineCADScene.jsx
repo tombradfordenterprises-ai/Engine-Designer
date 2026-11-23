@@ -1,6 +1,6 @@
-import React, { Suspense, useMemo, useState, useEffect } from 'react';
+import React, { Suspense, useMemo, useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import EnginePartLayer from './EnginePartLayer.jsx';
 
@@ -93,7 +93,35 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 }
 
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, installed }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, installed, view }) {
+  const controlsRef = useRef(null);
+  const { camera } = useThree();
+
+  // Apply the selected camera preset while preserving the current zoom distance
+  // and the target established by Drei's Bounds fit.
+  useEffect(() => {
+    if (!controlsRef.current) return;
+
+    const target = controlsRef.current.target.clone();
+    const currentDistance = camera.position.distanceTo(target);
+    const distance = Math.max(currentDistance, 8);
+
+    const directions = {
+      isometric: new THREE.Vector3(1, 0.8, 1),
+      front: new THREE.Vector3(0, 0, 1),
+      top: new THREE.Vector3(0, 1, 0.001),
+      side: new THREE.Vector3(1, 0, 0),
+      bottom: new THREE.Vector3(0, -1, 0.001),
+    };
+
+    const direction = (directions[view] || directions.isometric).clone().normalize();
+    camera.position.copy(target).add(direction.multiplyScalar(distance));
+    camera.up.set(0, 1, 0);
+    camera.lookAt(target);
+    controlsRef.current.target.copy(target);
+    controlsRef.current.update();
+  }, [view, camera]);
+
   return (
     <>
       <ambientLight intensity={0.8} />
@@ -112,12 +140,12 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
             installed={installed}
             showCrankshaft={showCrankshaft}
             showMainBearingCaps={showMainBearingCaps}
-            showPistonsRods={showPistonsRods}
           />
         </Bounds>
       </Suspense>
 
       <OrbitControls
+        ref={controlsRef}
         makeDefault
         enableDamping
         dampingFactor={0.08}
@@ -135,7 +163,7 @@ export default function EngineCADScene({
   onSelect,
   showCrankshaft = false,
   showMainBearingCaps = false,
-  showPistonsRods = false,
+  view = 'isometric',
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -155,7 +183,7 @@ export default function EngineCADScene({
         setHovered={setHovered}
         showCrankshaft={showCrankshaft}
         showMainBearingCaps={showMainBearingCaps}
-        showPistonsRods={showPistonsRods}
+        view={view}
       />
     </Canvas>
   );
