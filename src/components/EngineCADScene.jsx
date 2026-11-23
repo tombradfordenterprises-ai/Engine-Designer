@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo, useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas, useThree, useFrame } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import EnginePartLayer from './EnginePartLayer.jsx';
 
@@ -63,11 +63,6 @@ function BareB16Block({ selected, onSelect, setHovered }) {
     event.stopPropagation();
     setHovered(false);
   };
-  const handleClick = (event) => {
-    event.stopPropagation();
-    onSelect('engineBlock');
-  };
-
   return (
     <group>
       <primitive object={model} dispose={null} />
@@ -77,7 +72,6 @@ function BareB16Block({ selected, onSelect, setHovered }) {
         position={hitbox.center}
         onPointerOver={handleOver}
         onPointerOut={handleOut}
-        onClick={handleClick}
       >
         <boxGeometry args={hitbox.size} />
         <meshBasicMaterial
@@ -94,118 +88,46 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 
 
 
-
-// Installation zones are placed using the same scene coordinates as the
-// working crankshaft, bearing-cap, and piston assemblies.
-const HOTSPOT_GROUPS = [
-  {
-    id: 'crankshaft',
-    label: 'Crankshaft',
-    positions: [[-40.0, 8.0, 126.0]],
-    requires: [],
-    radius: 1.05,
-  },
-  {
-    id: 'mainBearingCaps',
-    label: 'Main bearings & caps',
-    positions: [-46.0, -43.0, -40.0, -37.0, -34.0].map((x) => [x, 6.7, 131.0]),
-    requires: ['crankshaft'],
-    radius: 0.78,
-  },
-  {
-    id: 'pistonsRods',
-    label: 'Pistons & rods',
-    positions: [-45.25, -41.75, -38.25, -34.75].map((x) => [x, 12.85, 130.0]),
-    requires: ['crankshaft', 'mainBearingCaps'],
-    radius: 1.0,
-  },
+const HOTSPOTS = [
+  { id: 'crankshaft', label: 'Crankshaft', position: [-40.0, 8.0, 126.0], radius: 1.55, requires: [] },
+  { id: 'mainBearingCaps', label: 'Main bearings & caps', position: [-40.0, 6.7, 126.0], radius: 1.35, requires: ['crankshaft'] },
+  { id: 'pistonsRods', label: 'Pistons & rods', position: [-40.0, 12.85, 130.0], radius: 1.65, requires: ['crankshaft', 'mainBearingCaps'] },
 ];
-
-function InstallationHotspot({ id, position, radius, selected, onSelect, setHovered }) {
-  const [hovered, setLocalHovered] = useState(false);
-  const ringRef = useRef(null);
-  const active = selected === id;
-  const color = hovered || active ? '#00b7ff' : '#078fe8';
-
-  useFrame((_, delta) => {
-    if (!ringRef.current) return;
-    const target = hovered || active ? 1.18 : 1;
-    ringRef.current.scale.lerp(new THREE.Vector3(target, target, target), 1 - Math.exp(-delta * 13));
-  });
-
-  const enter = (event) => {
-    event.stopPropagation();
-    setLocalHovered(true);
-    setHovered(true);
-  };
-  const leave = (event) => {
-    event.stopPropagation();
-    setLocalHovered(false);
-    setHovered(false);
-  };
-  const click = (event) => {
-    event.stopPropagation();
-    onSelect(id);
-  };
-
-  return (
-    <group position={position} name={`${id}-installation-hotspot`}>
-      {/* Soft target disc provides a forgiving click area and a subtle glow. */}
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        onPointerOver={enter}
-        onPointerOut={leave}
-        onClick={click}
-      >
-        <circleGeometry args={[radius * 0.9, 40]} />
-        <meshBasicMaterial
-          color={color}
-          transparent
-          opacity={hovered || active ? 0.22 : 0.13}
-          depthWrite={false}
-          side={THREE.DoubleSide}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Bright blue ring sits directly on the relevant engine feature. */}
-      <group ref={ringRef}>
-        <mesh
-          rotation={[-Math.PI / 2, 0, 0]}
-          onPointerOver={enter}
-          onPointerOut={leave}
-          onClick={click}
-        >
-          <torusGeometry args={[radius * 0.72, 0.075, 10, 48]} />
-          <meshBasicMaterial
-            color={color}
-            transparent
-            opacity={hovered || active ? 1 : 0.9}
-            toneMapped={false}
-          />
-        </mesh>
-      </group>
-    </group>
-  );
-}
 
 function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   return (
     <group name="installation-hotspots">
-      {HOTSPOT_GROUPS.map((group) => {
-        if (installed.includes(group.id)) return null;
-        const unlocked = group.requires.every((required) => installed.includes(required));
-        if (!unlocked) return null;
-        return group.positions.map((position, index) => (
-          <InstallationHotspot
-            key={`${group.id}-${index}`}
-            id={group.id}
-            position={position}
-            radius={group.radius}
-            selected={selected}
-            onSelect={onSelect}
-            setHovered={setHovered}
-          />
-        ));
+      {HOTSPOTS.map((spot) => {
+        if (installed.includes(spot.id)) return null;
+        const unlocked = spot.requires.every((required) => installed.includes(required));
+        const active = selected === spot.id;
+        const color = unlocked ? (active ? '#1677b8' : '#54a9df') : '#b8c0c7';
+        return (
+          <group key={spot.id} position={spot.position}>
+            <mesh
+              onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+              onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+              onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
+            >
+              <sphereGeometry args={[spot.radius, 24, 16]} />
+              <meshStandardMaterial
+                color={color} emissive={color}
+                emissiveIntensity={active ? 0.42 : 0.2}
+                transparent opacity={unlocked ? (active ? 0.24 : 0.14) : 0.05}
+                depthWrite={false}
+              />
+            </mesh>
+            <mesh
+              rotation={[Math.PI / 2, 0, 0]}
+              onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+              onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+              onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
+            >
+              <torusGeometry args={[spot.radius * 0.82, 0.055, 8, 32]} />
+              <meshBasicMaterial color={color} transparent opacity={unlocked ? (active ? 0.95 : 0.72) : 0.22} />
+            </mesh>
+          </group>
+        );
       })}
     </group>
   );
