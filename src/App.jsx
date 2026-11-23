@@ -55,6 +55,12 @@ export const PARTS = {
     why: 'It protects the camshaft area from dirt and prevents oil from escaping.',
     where: 'It bolts over the camshafts at the very top of the engine.'
   },
+  oilPump: {
+    name: 'Oil pump assembly', group: 'Lubrication',
+    what: 'The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.',
+    why: 'A steady supply of pressurized oil lubricates the crankshaft bearings and other moving parts.',
+    where: 'The pump mounts to the timing-belt end of the B-series block, around the front of the crankshaft. The pickup tube will connect to the pump in a later assembly step.'
+  },
   oilPan: {
     name: 'Oil pan / sump', group: 'Lubrication',
     what: 'The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.',
@@ -135,8 +141,12 @@ const INSTALL_RULES = {
     requires: ['valvetrain'],
     reason: 'The valve cover encloses the camshafts and must be installed after the valvetrain.'
   },
+  oilPump: {
+    requires: ['crankshaft', 'mainBearingCaps', 'pistonsRods'],
+    reason: 'Install the rotating assembly first. The oil pump mounts at the timing-belt end of the block around the crankshaft nose.'
+  },
   oilPan: {
-    requires: ['crankshaft', 'pistonsRods'],
+    requires: ['oilPump', 'crankshaft', 'pistonsRods'],
     reason: 'Install the crankshaft and connecting rod assemblies before closing the bottom of the crankcase with the oil pan.'
   },
   timingCovers: {
@@ -171,7 +181,7 @@ const INSTALL_RULES = {
 
 // [023] Recommended teaching order. Dependencies are checked separately, so valid alternate orders are allowed.
 const RECOMMENDED_SEQUENCE = [
-  'crankshaft', 'mainBearingCaps', 'pistonsRods', 'oilPan', 'headGasket', 'cylinderHead',
+  'crankshaft', 'mainBearingCaps', 'pistonsRods', 'oilPump', 'oilPan', 'headGasket', 'cylinderHead',
   'valvetrain', 'valveCover', 'timingCovers', 'crankPulley', 'alternator',
   'accessoryBelt', 'intakeManifold', 'exhaustManifold', 'oilFilter'
 ];
@@ -186,6 +196,7 @@ export default function App() {
   const [showCrankshaft, setShowCrankshaft] = useState(false);
   const [showMainBearingCaps, setShowMainBearingCaps] = useState(false);
   const [showPistonsRods, setShowPistonsRods] = useState(false);
+  const [showOilPump, setShowOilPump] = useState(false);
   const [message, setMessage] = useState(
     'Hover over a highlighted installation area and click it to select a component.'
   );
@@ -202,6 +213,7 @@ export default function App() {
     setShowCrankshaft(id === 'crankshaft');
     setShowMainBearingCaps(id === 'mainBearingCaps');
     setShowPistonsRods(id === 'pistonsRods');
+    setShowOilPump(id === 'oilPump');
 
     if (id === 'engineBlock') {
       setMessage('Engine block selected. Choose a highlighted installation area to select a component.');
@@ -325,6 +337,7 @@ export default function App() {
           showCrankshaft={showCrankshaft}
           showMainBearingCaps={showMainBearingCaps}
           showPistonsRods={showPistonsRods}
+          showOilPump={showOilPump}
           view={view}
         />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
