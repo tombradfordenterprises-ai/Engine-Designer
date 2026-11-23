@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 // Prototype positions are inferred from the current crankshaft/cap scene.
 // They are visual placeholders, not measured Honda B16 bore or crank-pin coordinates.
 const CYLINDER_X = [-45.0, -41.5, -38.0, -34.5];
-const INSTALLED_Y = 15.0;
+const INSTALLED_Y = 11.05;
 const CENTER_Z = 131.0;
 const PREVIEW_OFFSET = new THREE.Vector3(17, 5, 12);
 
@@ -94,8 +94,8 @@ function PistonRodUnit({ index, installed }) {
       </mesh>
 
       {/* Connecting-rod beam descends from wrist pin toward the crank throw. */}
-      <mesh position={[0, -3.55, 0]} material={rodMaterial} castShadow receiveShadow>
-        <boxGeometry args={[0.42, 5.7, 0.32]} />
+      <mesh position={[0, -1.95, 0]} material={rodMaterial} castShadow receiveShadow>
+        <boxGeometry args={[0.42, 3.35, 0.32]} />
       </mesh>
 
       {/* Small-end and big-end rings, with the big end near the crankshaft. */}
@@ -108,7 +108,7 @@ function PistonRodUnit({ index, installed }) {
         <torusGeometry args={[0.36, 0.14, 12, 28]} />
       </mesh>
       <mesh
-        position={[0, -6.4, 0]}
+        position={[0, -3.55, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         material={rodMaterial}
         castShadow
@@ -116,7 +116,7 @@ function PistonRodUnit({ index, installed }) {
         <torusGeometry args={[0.68, 0.18, 12, 32]} />
       </mesh>
       <mesh
-        position={[0, -6.4, 0]}
+        position={[0, -3.55, 0]}
         rotation={[Math.PI / 2, 0, 0]}
         material={pinMaterial}
         castShadow
