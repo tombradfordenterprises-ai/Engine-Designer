@@ -2,6 +2,7 @@ import React, { Suspense, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import EnginePartLayer from './EnginePartLayer.jsx';
 
 const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
 const CRANKSHAFT_URL = '/models/crankshaft.glb';
