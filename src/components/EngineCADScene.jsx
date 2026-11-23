@@ -107,6 +107,13 @@ const HOTSPOTS = [
     requires: ['crankshaft'],
   },
   {
+    id: 'oilPump',
+    label: 'Oil pump assembly',
+    // Timing-belt end of the block, concentric with the crankshaft axis.
+    targets: [{ position: [-47.8, 8.0, 131.0], radius: 0.82 }],
+    requires: ['crankshaft', 'mainBearingCaps', 'pistonsRods'],
+  },
+  {
     id: 'pistonsRods',
     label: 'Pistons & rods',
     // Four targets follow the four prototype piston centerlines, above the deck.
@@ -170,7 +177,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, installed, view }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, showOilPump, installed, view }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -218,6 +225,7 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
             showCrankshaft={showCrankshaft}
             showMainBearingCaps={showMainBearingCaps}
             showPistonsRods={showPistonsRods}
+            showOilPump={showOilPump}
           />
           <InstallationHotspots
             installed={installed}
@@ -248,6 +256,7 @@ export default function EngineCADScene({
   showCrankshaft = false,
   showMainBearingCaps = false,
   showPistonsRods = false,
+  showOilPump = false,
   view = 'isometric',
 }) {
   const [hovered, setHovered] = useState(false);
@@ -269,6 +278,7 @@ export default function EngineCADScene({
         showCrankshaft={showCrankshaft}
         showMainBearingCaps={showMainBearingCaps}
         showPistonsRods={showPistonsRods}
+        showOilPump={showOilPump}
         view={view}
       />
     </Canvas>
