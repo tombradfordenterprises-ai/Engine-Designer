@@ -2,21 +2,21 @@ import React from 'react';
 import Crankshaft from './engine-parts/Crankshaft.jsx';
 
 /**
- * Central registry/render layer for separately maintained engine parts.
- *
- * Add future component imports here, then render each one when its preview
- * flag is active or its ID appears in the installed list.
+ * Central registry for independently maintained engine components.
+ * Each new engine part will get its own file and be registered here.
  */
 export default function EnginePartLayer({
   installed = [],
   showCrankshaft = false,
 }) {
-  const crankshaftVisible =
-    showCrankshaft || installed.includes('crankshaft');
+  const crankshaftInstalled = installed.includes('crankshaft');
+  const crankshaftVisible = showCrankshaft || crankshaftInstalled;
 
   return (
     <group name="engine-part-layer">
-      {crankshaftVisible && <Crankshaft />}
+      {crankshaftVisible && (
+        <Crankshaft installed={crankshaftInstalled} />
+      )}
     </group>
   );
 }
