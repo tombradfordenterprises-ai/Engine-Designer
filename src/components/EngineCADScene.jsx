@@ -1,7 +1,7 @@
 import React, { Suspense, useMemo, useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { Canvas, useThree } from '@react-three/fiber';
-import { Bounds, Environment, OrbitControls, useGLTF } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Bounds, Environment, Html, OrbitControls, useGLTF } from '@react-three/drei';
 import EnginePartLayer from './EnginePartLayer.jsx';
 
 const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
@@ -124,52 +124,87 @@ const HOTSPOTS = [
   },
 ];
 
+function PulsingTarget({ target, color, unlocked, active, onSelect, setHovered }) {
+  const pulseRef = useRef(null);
+  useFrame(({ clock }) => {
+    if (!pulseRef.current) return;
+    const pulse = 1 + Math.sin(clock.elapsedTime * 3.2) * 0.10;
+    pulseRef.current.scale.setScalar(pulse);
+  });
+
+  return (
+    <group position={target.position}>
+      <mesh
+        onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+        onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+        onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(); }}
+      >
+        <sphereGeometry args={[target.radius, 24, 16]} />
+        <meshBasicMaterial color={color} transparent opacity={unlocked ? (active ? 0.15 : 0.07) : 0.035} depthWrite={false} depthTest={false} />
+      </mesh>
+      <mesh
+        ref={pulseRef}
+        rotation={[Math.PI / 2, 0, 0]}
+        onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
+        onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
+        onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(); }}
+      >
+        <torusGeometry args={[target.radius * 0.72, 0.055, 8, 40]} />
+        <meshBasicMaterial color={color} transparent opacity={unlocked ? (active ? 1 : 0.95) : 0.48} depthWrite={false} depthTest={false} />
+      </mesh>
+      <mesh position={[0, 0.025, 0]}>
+        <sphereGeometry args={[0.11, 12, 8]} />
+        <meshBasicMaterial color={color} transparent opacity={unlocked ? 1 : 0.55} depthWrite={false} depthTest={false} />
+      </mesh>
+    </group>
+  );
+}
+
 function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   return (
     <group name="installation-hotspots">
-      {HOTSPOTS.map((spot) => {
+      {HOTSPOTS.map((spot, spotIndex) => {
         if (installed.includes(spot.id)) return null;
         const unlocked = spot.requires.every((required) => installed.includes(required));
         const active = selected === spot.id;
-        const color = unlocked ? (active ? '#087fc4' : '#35b8ff') : '#aeb8c2';
+        const color = unlocked ? (active ? '#087fc4' : '#20aaff') : '#89939e';
+        const anchor = spot.targets.reduce((sum, target) => sum.map((value, axis) => value + target.position[axis] / spot.targets.length), [0, 0, 0]);
         return (
           <group key={spot.id} name={`${spot.id}-targets`}>
             {spot.targets.map((target, index) => (
-              <group key={`${spot.id}-${index}`} position={target.position}>
-                {/* Soft center glow, with a small click target instead of a large opaque sphere. */}
-                <mesh
-                  onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
-                  onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
-                  onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
-                >
-                  <sphereGeometry args={[target.radius, 24, 16]} />
-                  <meshBasicMaterial
-                    color={color}
-                    transparent
-                    opacity={unlocked ? (active ? 0.12 : 0.055) : 0.025}
-                    depthWrite={false}
-                  />
-                </mesh>
-                <mesh
-                  rotation={[Math.PI / 2, 0, 0]}
-                  onPointerOver={(event) => { event.stopPropagation(); setHovered(true); }}
-                  onPointerOut={(event) => { event.stopPropagation(); setHovered(false); }}
-                  onClick={(event) => { event.stopPropagation(); if (unlocked) onSelect(spot.id); }}
-                >
-                  <torusGeometry args={[target.radius * 0.72, 0.045, 8, 40]} />
-                  <meshBasicMaterial
-                    color={color}
-                    transparent
-                    opacity={unlocked ? (active ? 1 : 0.9) : 0.28}
-                    depthWrite={false}
-                  />
-                </mesh>
-                <mesh position={[0, 0.025, 0]}>
-                  <sphereGeometry args={[0.095, 12, 8]} />
-                  <meshBasicMaterial color={color} transparent opacity={unlocked ? 0.95 : 0.3} />
-                </mesh>
-              </group>
+              <PulsingTarget
+                key={`${spot.id}-${index}`}
+                target={target}
+                color={color}
+                unlocked={unlocked}
+                active={active}
+                onSelect={() => onSelect(spot.id)}
+                setHovered={setHovered}
+              />
             ))}
+            <Html
+              position={[anchor[0], anchor[1] + 1.35, anchor[2]]}
+              center
+              distanceFactor={18}
+              zIndexRange={[100, 0]}
+              style={{ pointerEvents: 'none', whiteSpace: 'nowrap' }}
+            >
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: '7px',
+                padding: '6px 10px', borderRadius: '7px',
+                color: '#fff', background: unlocked ? 'rgba(10, 35, 54, .92)' : 'rgba(55, 62, 70, .88)',
+                border: `1px solid ${unlocked ? '#36baff' : '#9aa3ad'}`,
+                boxShadow: unlocked ? '0 0 12px rgba(32,170,255,.32)' : 'none',
+                font: '600 11px/1.2 Arial, sans-serif', letterSpacing: '.35px'
+              }}>
+                <span style={{
+                  width: '19px', height: '19px', borderRadius: '50%',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  background: unlocked ? '#159fe8' : '#78828d', fontWeight: 800
+                }}>{spotIndex + 1}</span>
+                <span>{spot.label.toUpperCase()} {spot.targets.length > 1 ? `(${spot.targets.length})` : ''}<small style={{ display: 'block', opacity: .78, fontSize: '9px', marginTop: '2px' }}>{unlocked ? (active ? 'SELECTED' : 'READY TO INSTALL') : 'LOCKED — INSTALL PREREQUISITES'}</small></span>
+              </div>
+            </Html>
           </group>
         );
       })}
