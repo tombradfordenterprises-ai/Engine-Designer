@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Bounds, Environment, Html, OrbitControls, useGLTF } from '@react-three/drei';
 import EnginePartLayer from './EnginePartLayer.jsx';
+import { enginePartList, enginePartRegistry } from '../data/enginePartRegistry.js';
 
 const MODEL_URL = '/models/b16_bare_block_dark_graphite.glb';
 
@@ -89,40 +90,14 @@ function BareB16Block({ selected, onSelect, setHovered }) {
 
 
 
-const HOTSPOTS = [
-  {
-    id: 'crankshaft',
-    label: 'Crankshaft',
-    // Centered on the crankshaft tunnel; the wider target represents the shaft axis.
-    targets: [{ position: [-40.0, 7.9, 130.5], radius: 1.05 }],
-    requires: [],
-  },
-  {
-    id: 'mainBearingCaps',
-    label: 'Main bearings & caps',
-    // Five individual targets follow the five prototype main-cap positions.
-    targets: [-46.0, -43.0, -40.0, -37.0, -34.0].map((x) => ({
-      position: [x, 6.7, 131.0], radius: 0.62,
-    })),
-    requires: ['crankshaft'],
-  },
-  {
-    id: 'oilPump',
-    label: 'Oil pump assembly',
-    // Timing-belt end of the block, concentric with the crankshaft axis.
-    targets: [{ position: [-47.8, 8.0, 131.0], radius: 0.82 }],
-    requires: ['crankshaft', 'mainBearingCaps', 'pistonsRods'],
-  },
-  {
-    id: 'pistonsRods',
-    label: 'Pistons & rods',
-    // Four targets follow the four prototype piston centerlines, above the deck.
-    targets: [-45.25, -41.75, -38.25, -34.75].map((x) => ({
-      position: [x, 12.18, 130.0], radius: 0.78,
-    })),
-    requires: ['crankshaft', 'mainBearingCaps'],
-  },
-];
+const HOTSPOTS = enginePartList
+  .filter((part) => part.hotspot?.targets?.length)
+  .map((part) => ({
+    id: part.id,
+    label: part.hotspot.label || part.name,
+    targets: part.hotspot.targets,
+    requires: part.requires || [],
+  }));
 
 function PulsingTarget({ target, color, unlocked, active, onSelect, setHovered }) {
   const pulseRef = useRef(null);
@@ -218,7 +193,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, showOilPump, installed, view, onInstallPart }) {
+function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -234,23 +209,19 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
     previousViewRef.current = view;
     if (!controlsRef.current) return;
     const installId = view.startsWith('install:') ? view.slice(8) : null;
-    const focusPoints = {
-      crankshaft: new THREE.Vector3(-40, 8, 131),
-      mainBearingCaps: new THREE.Vector3(-40, 7, 131),
-      pistonsRods: new THREE.Vector3(-40, 11, 130),
-      oilPump: new THREE.Vector3(-47.8, 8, 131),
-    };
-    const directions = {
-      isometric: new THREE.Vector3(1, 0.8, 1), front: new THREE.Vector3(0, 0, 1),
-      top: new THREE.Vector3(0, 1, 0.001), side: new THREE.Vector3(1, 0, 0), bottom: new THREE.Vector3(0, -1, 0.001),
-      crankshaft: new THREE.Vector3(0.9, 0.45, 1), mainBearingCaps: new THREE.Vector3(0.25, 0.85, 1),
-      pistonsRods: new THREE.Vector3(0.9, 1.1, 0.75), oilPump: new THREE.Vector3(-1.0, 0.5, 0.9),
+    const partMetadata = installId ? enginePartRegistry[installId] : null;
+    const viewDirections = {
+      isometric: new THREE.Vector3(1, 0.8, 1),
+      front: new THREE.Vector3(0, 0, 1),
+      top: new THREE.Vector3(0, 1, 0.001),
+      side: new THREE.Vector3(1, 0, 0),
+      bottom: new THREE.Vector3(0, -1, 0.001),
     };
     const controls = controlsRef.current;
-    const target = installId && focusPoints[installId] ? focusPoints[installId].clone() : controls.target.clone();
+    const target = partMetadata?.cameraFocus ? new THREE.Vector3(...partMetadata.cameraFocus) : controls.target.clone();
     const currentDistance = camera.position.distanceTo(controls.target);
     const distance = Math.max(18, Math.min(currentDistance || 55, 65));
-    const direction = (directions[installId || view] || directions.isometric).clone().normalize();
+    const direction = (partMetadata?.cameraDirection ? new THREE.Vector3(...partMetadata.cameraDirection) : (viewDirections[view] || viewDirections.isometric)).clone().normalize();
     cameraTransitionRef.current = {
       target,
       position: target.clone().add(direction.multiplyScalar(distance)),
@@ -288,11 +259,9 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
           />
           <EnginePartLayer
             installed={installed}
-            showCrankshaft={showCrankshaft}
-            showMainBearingCaps={showMainBearingCaps}
-            showPistonsRods={showPistonsRods}
-            showOilPump={showOilPump}
+            selectedPart={selected}
             onInstallPart={onInstallPart}
+            onSelectPart={onSelect}
           />
           <InstallationHotspots
             installed={installed}
@@ -320,10 +289,6 @@ export default function EngineCADScene({
   selected,
   installed = [],
   onSelect,
-  showCrankshaft = false,
-  showMainBearingCaps = false,
-  showPistonsRods = false,
-  showOilPump = false,
   view = 'isometric',
   onInstallPart = () => {},
 }) {
@@ -343,10 +308,6 @@ export default function EngineCADScene({
         installed={installed}
         onSelect={onSelect}
         setHovered={setHovered}
-        showCrankshaft={showCrankshaft}
-        showMainBearingCaps={showMainBearingCaps}
-        showPistonsRods={showPistonsRods}
-        showOilPump={showOilPump}
         view={view}
         onInstallPart={onInstallPart}
       />
