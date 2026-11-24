@@ -37,7 +37,7 @@ function ImportedCylinderHeadMesh() {
     return copy;
   }, [scene]);
 
-  return <primitive object={model} scale={SCENE_SCALE} dispose={null} />;
+  return <primitive object={model} scale={SCENE_SCALE} rotation={[0, Math.PI / 2, 0]} dispose={null} />;
 }
 
 export default function CylinderHead({ installed = false }) {
