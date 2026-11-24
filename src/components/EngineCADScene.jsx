@@ -203,7 +203,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart }) {
+function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -257,7 +257,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
     <>
       <ambientLight intensity={0.8} />
       <hemisphereLight args={['#ffffff', '#747b84', 1.1]} />
-      <directionalLight position={[5, 8, 6]} intensity={2.1} castShadow />
+      <directionalLight position={[5, 8, 6]} intensity={isMobile ? 1.55 : 2.1} castShadow={!isMobile} />
       <directionalLight position={[-5, 3, -4]} intensity={0.85} />
 
       <Suspense fallback={null}>
@@ -290,7 +290,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
         minDistance={0.6}
         maxDistance={80}
       />
-      <Environment preset="studio" />
+      {!isMobile && <Environment preset="studio" />}
     </>
   );
 }
@@ -303,14 +303,38 @@ export default function EngineCADScene({
   onInstallPart = () => {},
 }) {
   const [hovered, setHovered] = useState(false);
+  // Mobile browsers can lose the WebGL context when high-DPI rendering,
+  // shadow maps, and the studio environment are combined with CAD meshes.
+  // Use a lighter renderer on narrow/coarse-pointer devices while preserving
+  // the full desktop presentation.
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 700px), (pointer: coarse)').matches
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 700px), (pointer: coarse)');
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener?.('change', update);
+    window.addEventListener('resize', update, { passive: true });
+    return () => {
+      query.removeEventListener?.('change', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
 
   return (
     <Canvas
-      shadows
+      shadows={!isMobile}
       camera={{ position: [2.8, 2.2, 3.4], fov: 38, near: 0.01, far: 500 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: false }}
-      style={{ cursor: hovered ? 'pointer' : 'grab' }}
+      dpr={isMobile ? 1 : [1, 1.5]}
+      gl={{
+        antialias: !isMobile,
+        alpha: false,
+        powerPreference: isMobile ? 'low-power' : 'default',
+        precision: isMobile ? 'mediump' : 'highp',
+      }}
+      style={{ cursor: hovered ? 'pointer' : 'grab', touchAction: 'pan-y' }}
     >
       <color attach="background" args={['#ffffff']} />
       <SceneContents
@@ -320,6 +344,7 @@ export default function EngineCADScene({
         setHovered={setHovered}
         view={view}
         onInstallPart={onInstallPart}
+        isMobile={isMobile}
       />
     </Canvas>
   );
