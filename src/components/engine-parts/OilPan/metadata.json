@@ -2,16 +2,16 @@
   "id": "oilPan",
   "name": "Oil pan / sump",
   "group": "Lubrication",
-  "what": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
-  "why": "The oil pump draws oil from the sump and sends it to bearings and other moving parts.",
-  "where": "It bolts to the underside of the crankcase.",
+  "what": "The oil pan (sump) is the sealed reservoir at the bottom of the engine. It collects returning oil and provides a supply for the oil-pump pickup.",
+  "why": "The sump keeps a reserve of oil available to the pickup. Its shape and internal volume help oil return and collect while the engine is running; the pickup must remain supplied during normal vehicle operation.",
+  "where": "It seals to the underside of the crankcase, below the crankshaft and oil-pump pickup, using a perimeter flange and gasket or sealant specified for the engine.",
   "installable": true,
   "recommendedOrder": 7,
   "requires": [
     "oilPickup",
     "oilPanGasket"
   ],
-  "installationReason": "Fit the oil pan after the pickup and sealing bead are in place.",
+  "installationReason": "Install the pan after the oil-pump pickup and pan gasket are in place. Check that the pickup is correctly positioned and that the sealing surfaces are clean before fastening the pan.",
   "hotspot": {
     "label": "Oil pan / sump",
     "targets": [
@@ -48,11 +48,11 @@
     1
   ],
   "guide": {
-    "overview": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
-    "operation": "Detailed operating principle and step-by-step operation of the oil pan / sump in the Honda B16 engine will be researched and added here.",
-    "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pan / sump will be documented here.",
-    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
-    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pan / sump will be documented here.",
-    "failureModes": "Common oil pan / sump failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+    "overview": "The oil pan, also called the sump, closes the bottom of the crankcase and stores the engine oil that drains back from the engine. The teaching model highlights the pan shell, deeper collection area, perimeter sealing flange, fasteners, pressed ribs, and drain plug.",
+    "operation": "Oil returning from the cylinder head and bearing areas drains into the sump. The oil-pump pickup draws oil from the reservoir and feeds the pump, which sends pressurized oil through the engine lubrication system. The drain plug provides a service access point for removing the oil during an oil change.",
+    "construction": "This educational model shows a formed pan body with a deeper sump section, a broad upper mounting flange, a perimeter gasket edge, evenly spaced fasteners, reinforcing ribs and pressed contours, plus a reinforced drain-plug boss, washer, and plug. These details communicate the part layout; the geometry is illustrative rather than a verified factory B16 drawing.",
+    "specifications": "Exact pan capacity, dimensions, material, fastener torque, sealing method, and service limits depend on the specific B16 engine variant and must be taken from the matching Honda service information. No factory measurements are assumed by this model.",
+    "inspection": "During inspection, look for dents that could reduce clearance to the oil-pump pickup, cracks, corrosion, damaged drain-plug threads, a distorted sealing flange, and oil leaks around the pan joint and drain plug. Clean and inspect the mating surfaces before refitting.",
+    "failureModes": "Common problems include impact damage from road debris or improper jacking, a leaking or damaged drain plug, stripped drain-plug threads, a warped sealing flange, and leaks caused by incorrect gasket or sealant application. A dent near the pickup can also restrict oil supply."
   }
 }
