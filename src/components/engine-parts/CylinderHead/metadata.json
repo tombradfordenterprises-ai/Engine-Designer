@@ -2,7 +2,7 @@
   "id": "cylinderHead",
   "name": "Cylinder head",
   "group": "Cylinder head",
-  "what": "The DOHC cylinder head closes the cylinders and carries the combustion chambers, four-valve-per-cylinder layout, intake and exhaust ports, camshaft bearing structures, spark-plug wells, and coolant and oil passages.",
+  "what": "The DOHC aluminum cylinder head forms the combustion chambers and carries the twin camshaft galleries, bearing saddles, spark-plug wells, valve gear supports, intake and exhaust ports, and oil and coolant passages.",
   "why": "It forms the upper combustion-chamber surfaces and supports the valvetrain that controls gas exchange. Its ports and passages route intake charge, exhaust gas, coolant, and lubricating oil.",
   "where": "It mounts to the block over the head gasket. The combustion chambers face the pistons; the camshaft and valve hardware mount on the upper side.",
   "installable": true,
@@ -49,9 +49,9 @@
   "guide": {
     "overview": "The B16 cylinder head is an aluminum-alloy DOHC, four-valve-per-cylinder casting. It forms the roof of each combustion chamber and contains the intake and exhaust ports, valve guides and seats, spark-plug wells, camshaft bearing supports, and oil and coolant passages.",
     "operation": "The intake and exhaust valves are actuated by the twin camshafts through the valvetrain. The intake ports feed the cylinders, combustion occurs between the head chambers and piston crowns, and exhaust ports route spent gases away. Coolant circulates through water jackets, while pressurized oil feeds the camshaft and valvetrain areas.",
-    "construction": "The teaching model distinguishes the main aluminum casting, machined deck, four combustion-chamber areas, valve-seat locations, twin camshaft support rails, spark-plug wells, port flanges, head-bolt bosses, and external casting ribs. Exact casting revisions and material specifications vary by B16 version and will be added after verification.",
-    "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
-    "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
+    "construction": "The detailed teaching model shows twin recessed camshaft galleries, repeated cam-bearing pedestals and machined journal seats, central spark-plug tunnels, transverse support webs, valve-cover fastener holes, oil-feed details, end cam-seal bosses, side casting ribs, and intake/exhaust port mouths. These features are visual references rather than verified factory dimensions or a scan of a specific B16 casting.",
+    "specifications": "Exact B16 variant-specific casting dimensions, cam journal sizes, material data, torque values, and service limits remain unverified and are not represented as factory specifications.",
+    "inspection": "Inspect the camshaft bearing saddles and cap locations for scoring, damage, and correct alignment; check oil-feed passages for blockage; inspect spark-plug tube areas and the head surface for cracks or damage. Use the service manual for measurement limits and procedures.",
     "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
   }
 }
