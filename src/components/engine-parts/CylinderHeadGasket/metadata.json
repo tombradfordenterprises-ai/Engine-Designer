@@ -1,0 +1,69 @@
+{
+  "id": "headGasket",
+  "name": "Cylinder head gasket",
+  "group": "Cylinder head",
+  "what": "The head gasket seals the joint between the engine block and cylinder head, containing combustion pressure while separating oil and coolant passages.",
+  "why": "A sound seal is essential for compression, cooling-system integrity, and oil circulation.",
+  "where": "It sits on the machined deck surface at the top of the block, aligned with the cylinder bores and fluid passages.",
+  "installable": true,
+  "recommendedOrder": 8,
+  "requires": [
+    "pistonsRods"
+  ],
+  "installationReason": "Place the head gasket on the clean, prepared block deck after the bottom-end piston and rod assemblies are installed. Align all cylinder and fluid openings before lowering the head.",
+  "hotspot": {
+    "label": "Cylinder head gasket",
+    "targets": [
+      {
+        "position": [
+          -40.0,
+          12.18,
+          130.0
+        ],
+        "radius": 1.15
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -40.0,
+      20.0,
+      140.5
+    ],
+    "size": [
+      17.4,
+      0.6,
+      10.8
+    ]
+  },
+  "installedHitbox": {
+    "position": [
+      -40.0,
+      12.18,
+      136.15
+    ],
+    "size": [
+      16.8,
+      0.55,
+      0.55
+    ]
+  },
+  "cameraFocus": [
+    -40.0,
+    12.2,
+    130.0
+  ],
+  "cameraDirection": [
+    0.15,
+    0.75,
+    1.0
+  ],
+  "guide": {
+    "overview": "The cylinder head gasket forms the sealed interface between the block deck and cylinder head. It surrounds each cylinder opening and seals the oil and coolant passages that cross the joint.",
+    "operation": "When the engine runs, the gasket must contain high combustion pressure while preventing coolant and lubricating oil from crossing into the wrong passages. Its sealing layers and fire-ring areas accommodate the small surface irregularities and thermal movement of the mating castings.",
+    "construction": "Placeholder: construction details, material grades, manufacturing features, and component variations will be documented after source verification.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
+    "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
+    "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
+  }
+}
