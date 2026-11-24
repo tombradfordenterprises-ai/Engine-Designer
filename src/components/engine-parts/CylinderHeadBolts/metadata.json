@@ -1,0 +1,129 @@
+{
+  "id": "headBolts",
+  "name": "Cylinder head bolts",
+  "group": "Cylinder head",
+  "what": "The cylinder head bolts clamp the head and gasket to the engine block.",
+  "why": "Their specified clamping load helps maintain the combustion seal and prevents coolant or oil leakage at the head joint.",
+  "where": "They pass through the cylinder head and thread into the engine block at the head-bolt locations.",
+  "installable": true,
+  "recommendedOrder": 10,
+  "requires": [
+    "cylinderHead"
+  ],
+  "installationReason": "Install the head bolts after the head is seated. Tightening sequence, lubrication, and torque procedure must follow verified service information; values are intentionally not supplied yet.",
+  "hotspot": {
+    "label": "Cylinder head bolts",
+    "targets": [
+      {
+        "position": [
+          -46.8,
+          15.45,
+          126.75
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -43.4,
+          15.45,
+          126.75
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -40.0,
+          15.45,
+          126.75
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -36.6,
+          15.45,
+          126.75
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -33.2,
+          15.45,
+          126.75
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -46.8,
+          15.45,
+          134.25
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -43.4,
+          15.45,
+          134.25
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -40.0,
+          15.45,
+          134.25
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -36.6,
+          15.45,
+          134.25
+        ],
+        "radius": 0.38
+      },
+      {
+        "position": [
+          -33.2,
+          15.45,
+          134.25
+        ],
+        "radius": 0.38
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -40.0,
+      21.7,
+      140.5
+    ],
+    "size": [
+      15.0,
+      0.8,
+      8.2
+    ]
+  },
+  "cameraFocus": [
+    -40.0,
+    15.1,
+    130.5
+  ],
+  "cameraDirection": [
+    0.25,
+    0.9,
+    1.0
+  ],
+  "guide": {
+    "overview": "The ten cylinder head bolts provide the clamping force that holds the head against the block through the head gasket.",
+    "operation": "The bolts are tightened in a prescribed sequence and in stages to develop an even clamping load across the head. Correct procedure is important because uneven or incorrect clamping can distort components or compromise the gasket seal.",
+    "construction": "Placeholder: construction details, material grades, manufacturing features, and component variations will be documented after source verification.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
+    "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
+    "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
+  }
+}
