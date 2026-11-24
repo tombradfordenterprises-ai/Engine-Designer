@@ -97,6 +97,7 @@ const HOTSPOTS = enginePartList
     label: part.hotspot.label || part.name,
     targets: part.hotspot.targets,
     requires: part.requires || [],
+    recommendedOrder: part.recommendedOrder ?? 9999,
   }));
 
 function PulsingTarget({ target, color, unlocked, active, onSelect, setHovered }) {
@@ -136,12 +137,19 @@ function PulsingTarget({ target, color, unlocked, active, onSelect, setHovered }
 }
 
 function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
+  // Keep the scene visually clear: show one installation label at a time,
+  // following the next available part in the recommended assembly order.
+  const nextSpot = HOTSPOTS
+    .filter((spot) => !installed.includes(spot.id) && spot.requires.every((required) => installed.includes(required)))
+    .sort((a, b) => a.recommendedOrder - b.recommendedOrder)[0];
+
   return (
     <group name="installation-hotspots">
-      {HOTSPOTS.map((spot, spotIndex) => {
+      {HOTSPOTS.map((spot) => {
         if (installed.includes(spot.id)) return null;
         const unlocked = spot.requires.every((required) => installed.includes(required));
         const active = selected === spot.id;
+        const showLabel = nextSpot?.id === spot.id;
         const color = unlocked ? (active ? '#087fc4' : '#20aaff') : '#89939e';
         const anchor = spot.targets.reduce((sum, target) => sum.map((value, axis) => value + target.position[axis] / spot.targets.length), [0, 0, 0]);
         return (
@@ -157,7 +165,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
                 setHovered={setHovered}
               />
             ))}
-            <Html
+            {showLabel && <Html
               position={[anchor[0], anchor[1] + 1.35, anchor[2]]}
               center
               distanceFactor={18}
@@ -182,10 +190,10 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
                   width: '19px', height: '19px', borderRadius: '50%',
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   background: unlocked ? '#159fe8' : '#78828d', fontWeight: 800
-                }}>{spotIndex + 1}</span>
+                }}>{spot.recommendedOrder}</span>
                 <span>{spot.label.toUpperCase()} {spot.targets.length > 1 ? `(${spot.targets.length})` : ''}<small style={{ display: 'block', opacity: .78, fontSize: '9px', marginTop: '2px' }}>{unlocked ? (active ? 'SELECTED' : 'READY TO INSTALL') : 'LOCKED — INSTALL PREREQUISITES'}</small></span>
               </div>
-            </Html>
+            </Html>}
           </group>
         );
       })}
