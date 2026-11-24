@@ -1,0 +1,865 @@
+{
+  "engineId": "B16",
+  "engineName": "Honda B16 inline-four",
+  "catalogVersion": 1,
+  "description": "Engine-specific parts catalog. Placeholder assets are intentional and can be replaced without changing application logic.",
+  "parts": [
+    {
+      "id": "engineBlock",
+      "name": "Honda B16 engine block",
+      "group": "Foundation",
+      "what": "The B16 block is the main aluminum-alloy structure of Honda\u2019s 1.6-liter DOHC VTEC inline-four. It houses the four cylinders and supports the crankshaft and cylinder head.",
+      "why": "It keeps the cylinders aligned and carries the loads produced by combustion and the rotating assembly.",
+      "where": "It forms the lower central structure of the engine. The four cylinder bores are machined into the deck at the top, with the crankcase below.",
+      "requires": [],
+      "asset": "/models/b16_bare_block_dark_graphite.glb",
+      "assetStatus": "model",
+      "installable": false,
+      "sequence": 1
+    },
+    {
+      "id": "crankshaft",
+      "name": "Crankshaft",
+      "group": "Rotating assembly",
+      "what": "The crankshaft converts the pistons\u2019 up-and-down movement into rotation.",
+      "why": "Its rotation is the mechanical output that ultimately drives the transmission.",
+      "where": "It sits inside the lower crankcase and is supported by the main bearing bridges.",
+      "requires": [],
+      "asset": "/models/crankshaft.glb",
+      "assetStatus": "model",
+      "installable": true,
+      "sequence": 2,
+      "installationReason": "The crankshaft is installed in the block and supported by the main bearing bridges."
+    },
+    {
+      "id": "mainBearingCaps",
+      "name": "Main bearings and bearing caps",
+      "group": "Rotating assembly",
+      "what": "Five main bearing locations support the crankshaft. The bearing shells provide the precision surfaces, while the caps secure the crankshaft from below.",
+      "why": "The main bearings support the crankshaft while allowing it to rotate with a controlled oil film.",
+      "where": "The bearing shells sit at the five main journal supports, with the lower caps fitted underneath the crankshaft.",
+      "requires": [
+        "crankshaft"
+      ],
+      "asset": "/models/engines/B16/parts/mainBearingCaps.glb",
+      "assetStatus": "procedural-placeholder",
+      "installable": true,
+      "sequence": 3,
+      "installationReason": "Install the crankshaft first. The five main bearing cap assemblies are then fitted and secured beneath the crankshaft.",
+      "placeholderFile": true,
+      "fallbackRenderer": "procedural"
+    },
+    {
+      "id": "pistonsRods",
+      "name": "Pistons and connecting rods",
+      "group": "Rotating assembly",
+      "what": "Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.",
+      "why": "Combustion pressure pushes the pistons down, and the connecting rods transfer that force to the crankshaft.",
+      "where": "The pistons fit into the four cylinder bores, with their connecting rods extending down to the crankshaft.",
+      "requires": [
+        "crankshaft",
+        "mainBearingCaps"
+      ],
+      "asset": "/models/engines/B16/parts/pistonsRods.glb",
+      "assetStatus": "procedural-placeholder",
+      "installable": true,
+      "sequence": 4,
+      "installationReason": "The connecting rods need the crankshaft and main bearing caps in place so their big ends can attach to the crank throws.",
+      "placeholderFile": true,
+      "fallbackRenderer": "procedural"
+    },
+    {
+      "id": "oilPump",
+      "name": "Oil pump assembly",
+      "group": "Lubrication",
+      "what": "The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.",
+      "why": "A steady supply of pressurized oil lubricates the crankshaft bearings and other moving parts.",
+      "where": "The pump mounts to the timing-belt end of the B-series block, around the front of the crankshaft.",
+      "requires": [
+        "crankshaft",
+        "mainBearingCaps",
+        "pistonsRods"
+      ],
+      "asset": "/models/engines/B16/parts/oilPump.glb",
+      "assetStatus": "procedural-placeholder",
+      "installable": true,
+      "sequence": 5,
+      "installationReason": "Install the rotating assembly first. The oil pump mounts at the timing-belt end of the block around the crankshaft nose.",
+      "placeholderFile": true,
+      "fallbackRenderer": "procedural"
+    },
+    {
+      "id": "oilPickup",
+      "name": "Oil pickup tube and screen",
+      "group": "Lubrication",
+      "what": "The pickup tube draws oil from the sump through a screened inlet.",
+      "why": "The screen helps keep larger debris from entering the oil pump.",
+      "where": "It connects to the oil pump and extends down into the oil pan.",
+      "requires": [
+        "oilPump"
+      ],
+      "asset": "/models/engines/B16/parts/oilPickup.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 6,
+      "placeholderFile": true
+    },
+    {
+      "id": "oilPan",
+      "name": "Oil pan / sump",
+      "group": "Lubrication",
+      "what": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
+      "why": "The oil pump draws oil from the sump and sends it to bearings and other moving parts.",
+      "where": "It bolts to the underside of the crankcase.",
+      "requires": [
+        "oilPump",
+        "crankshaft",
+        "pistonsRods"
+      ],
+      "asset": "/models/engines/B16/parts/oilPan.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 7,
+      "installationReason": "Install the crankshaft and connecting rod assemblies before closing the bottom of the crankcase with the oil pan.",
+      "placeholderFile": true
+    },
+    {
+      "id": "oilPanGasket",
+      "name": "Oil pan gasket / sealant",
+      "group": "Lubrication",
+      "what": "The oil pan seal closes the joint between the sump and crankcase.",
+      "why": "It helps prevent engine oil from leaking at the pan flange.",
+      "where": "It sits between the oil pan flange and the bottom of the block.",
+      "requires": [
+        "oilPan"
+      ],
+      "asset": "/models/engines/B16/parts/oilPanGasket.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 8,
+      "placeholderFile": true
+    },
+    {
+      "id": "headGasket",
+      "name": "Cylinder head gasket",
+      "group": "Cylinder head",
+      "what": "The head gasket is a thin, carefully sealed layer between the engine block and cylinder head.",
+      "why": "It seals combustion pressure and keeps coolant and engine oil passages separated.",
+      "where": "It sits on the machined deck surface at the top of the engine block.",
+      "requires": [
+        "pistonsRods"
+      ],
+      "asset": "/models/engines/B16/parts/headGasket.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 9,
+      "installationReason": "Install the piston and rod assemblies before sealing the top of the block with the head gasket.",
+      "placeholderFile": true
+    },
+    {
+      "id": "cylinderHead",
+      "name": "Cylinder head",
+      "group": "Cylinder head",
+      "what": "The cylinder head closes the top of the cylinders and contains the combustion chambers and valve passages.",
+      "why": "It seals the cylinders and routes incoming air and outgoing exhaust gases.",
+      "where": "It bolts to the top of the engine block over the head gasket.",
+      "requires": [
+        "headGasket"
+      ],
+      "asset": "/models/engines/B16/parts/cylinderHead.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 10,
+      "installationReason": "The cylinder head sits on the head gasket. The gasket must be in place first.",
+      "placeholderFile": true
+    },
+    {
+      "id": "headBolts",
+      "name": "Cylinder head bolts",
+      "group": "Cylinder head",
+      "what": "Head bolts clamp the cylinder head and gasket to the engine block.",
+      "why": "Correct clamping load helps maintain the combustion and fluid seals.",
+      "where": "They pass through the cylinder head into the block\u2019s threaded holes.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/headBolts.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 11,
+      "placeholderFile": true
+    },
+    {
+      "id": "valvesSprings",
+      "name": "Valves and valve springs",
+      "group": "Valvetrain",
+      "what": "The intake and exhaust valves open and close the ports; springs return them to their seats.",
+      "why": "They control the flow of air-fuel mixture and exhaust through each cylinder.",
+      "where": "They install in the cylinder head\u2019s valve guides and spring seats.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/valvesSprings.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 12,
+      "placeholderFile": true
+    },
+    {
+      "id": "camshafts",
+      "name": "Intake and exhaust camshafts",
+      "group": "Valvetrain",
+      "what": "The two overhead camshafts operate the intake and exhaust valves.",
+      "why": "Their lobes determine valve lift and timing.",
+      "where": "They sit in the cylinder head above the valves.",
+      "requires": [
+        "valvesSprings"
+      ],
+      "asset": "/models/engines/B16/parts/camshafts.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 13,
+      "placeholderFile": true
+    },
+    {
+      "id": "rockerVtec",
+      "name": "Rocker arms and VTEC assembly",
+      "group": "Valvetrain",
+      "what": "The rocker assembly transfers camshaft motion to the valves and includes the VTEC switching mechanism.",
+      "why": "It controls valve motion and enables the engine\u2019s variable-lift operating mode.",
+      "where": "It mounts along the camshaft and valve assemblies in the cylinder head.",
+      "requires": [
+        "camshafts"
+      ],
+      "asset": "/models/engines/B16/parts/rockerVtec.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 14,
+      "placeholderFile": true
+    },
+    {
+      "id": "camCaps",
+      "name": "Camshaft caps",
+      "group": "Valvetrain",
+      "what": "Camshaft caps retain and support the camshafts in the cylinder head.",
+      "why": "They maintain camshaft alignment and bearing clearance.",
+      "where": "They bolt over the camshaft journals on the cylinder head.",
+      "requires": [
+        "camshafts"
+      ],
+      "asset": "/models/engines/B16/parts/camCaps.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 15,
+      "placeholderFile": true
+    },
+    {
+      "id": "camGears",
+      "name": "Camshaft gears",
+      "group": "Timing system",
+      "what": "Cam gears connect the timing belt to the camshafts.",
+      "why": "They keep camshaft rotation synchronized with the crankshaft.",
+      "where": "They mount on the ends of the intake and exhaust camshafts.",
+      "requires": [
+        "camshafts"
+      ],
+      "asset": "/models/engines/B16/parts/camGears.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 16,
+      "placeholderFile": true
+    },
+    {
+      "id": "waterPump",
+      "name": "Water pump",
+      "group": "Cooling system",
+      "what": "The water pump circulates coolant through the engine and radiator.",
+      "why": "Coolant flow carries heat away from the engine.",
+      "where": "It mounts at the timing-belt end of the engine.",
+      "requires": [
+        "crankshaft"
+      ],
+      "asset": "/models/engines/B16/parts/waterPump.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 17,
+      "placeholderFile": true
+    },
+    {
+      "id": "timingTensioner",
+      "name": "Timing belt tensioner",
+      "group": "Timing system",
+      "what": "The tensioner maintains the correct tension in the timing belt.",
+      "why": "Correct tension helps prevent belt slip and timing errors.",
+      "where": "It mounts beside the timing belt path.",
+      "requires": [
+        "waterPump",
+        "camGears"
+      ],
+      "asset": "/models/engines/B16/parts/timingTensioner.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 18,
+      "placeholderFile": true
+    },
+    {
+      "id": "timingBelt",
+      "name": "Timing belt",
+      "group": "Timing system",
+      "what": "The timing belt synchronizes crankshaft and camshaft rotation.",
+      "why": "It keeps valve events synchronized with piston movement.",
+      "where": "It loops around the crankshaft gear, cam gears and tensioner.",
+      "requires": [
+        "camGears",
+        "timingTensioner"
+      ],
+      "asset": "/models/engines/B16/parts/timingBelt.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 19,
+      "placeholderFile": true
+    },
+    {
+      "id": "timingCovers",
+      "name": "Timing belt covers",
+      "group": "Engine covers",
+      "what": "The timing covers enclose the timing belt and pulleys.",
+      "why": "They help protect the timing components from debris.",
+      "where": "They attach around the front timing drive.",
+      "requires": [
+        "timingBelt"
+      ],
+      "asset": "/models/engines/B16/parts/timingCovers.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 20,
+      "installationReason": "Install the timing drive components before fitting the protective covers.",
+      "placeholderFile": true
+    },
+    {
+      "id": "intakeManifold",
+      "name": "Intake manifold",
+      "group": "Air intake",
+      "what": "The intake manifold distributes incoming air to the four cylinders.",
+      "why": "It helps each cylinder receive the air needed for combustion.",
+      "where": "It bolts to one side of the cylinder head and routes air through four runners.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/intakeManifold.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 21,
+      "installationReason": "The intake manifold bolts to the cylinder head and must align with its intake ports.",
+      "placeholderFile": true
+    },
+    {
+      "id": "fuelRail",
+      "name": "Fuel rail and injectors",
+      "group": "Fuel system",
+      "what": "The fuel rail supplies pressurized fuel to the injectors.",
+      "why": "The injectors meter fuel into the intake ports.",
+      "where": "The rail mounts along the intake manifold and holds one injector per cylinder.",
+      "requires": [
+        "intakeManifold"
+      ],
+      "asset": "/models/engines/B16/parts/fuelRail.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 22,
+      "placeholderFile": true
+    },
+    {
+      "id": "throttleBody",
+      "name": "Throttle body",
+      "group": "Air intake",
+      "what": "The throttle body regulates how much air enters the intake manifold.",
+      "why": "It responds to driver throttle input and controls engine airflow.",
+      "where": "It attaches to the inlet of the intake manifold.",
+      "requires": [
+        "intakeManifold"
+      ],
+      "asset": "/models/engines/B16/parts/throttleBody.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 23,
+      "placeholderFile": true
+    },
+    {
+      "id": "exhaustManifold",
+      "name": "Exhaust manifold",
+      "group": "Exhaust",
+      "what": "The exhaust manifold collects hot gases leaving the four cylinders.",
+      "why": "It routes exhaust from each cylinder into a common outlet.",
+      "where": "It bolts to the opposite side of the cylinder head and aligns with the exhaust ports.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/exhaustManifold.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 24,
+      "installationReason": "The exhaust manifold bolts to the cylinder head and must align with its exhaust ports.",
+      "placeholderFile": true
+    },
+    {
+      "id": "distributor",
+      "name": "Distributor and ignition components",
+      "group": "Ignition",
+      "what": "The distributor routes high-voltage ignition to the correct spark plug in firing order.",
+      "why": "It helps ignite the air-fuel mixture at the correct time.",
+      "where": "It mounts at the end of the cylinder head/camshaft drive.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/distributor.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 25,
+      "placeholderFile": true
+    },
+    {
+      "id": "alternator",
+      "name": "Alternator assembly",
+      "group": "Electrical system",
+      "what": "The alternator converts mechanical rotation into electrical power.",
+      "why": "It supplies electrical power while the engine runs and recharges the vehicle battery.",
+      "where": "It mounts on a bracket at the front accessory drive and is driven by the belt.",
+      "requires": [
+        "crankPulley"
+      ],
+      "asset": "/models/engines/B16/parts/alternator.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 26,
+      "installationReason": "The alternator is driven by the accessory belt, so the crankshaft pulley must be installed first.",
+      "placeholderFile": true
+    },
+    {
+      "id": "starter",
+      "name": "Starter motor",
+      "group": "Electrical system",
+      "what": "The starter motor cranks the engine during startup.",
+      "why": "It turns the crankshaft until combustion can sustain engine operation.",
+      "where": "It mounts to the transmission bellhousing at the engine block.",
+      "requires": [
+        "transmissionCase"
+      ],
+      "asset": "/models/engines/B16/parts/starter.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 27,
+      "placeholderFile": true
+    },
+    {
+      "id": "accessoryBrackets",
+      "name": "Accessory brackets",
+      "group": "Accessory drive",
+      "what": "Brackets support accessories and maintain their alignment.",
+      "why": "They hold the alternator and other driven components in the correct position.",
+      "where": "They bolt to the engine block at accessory mounting bosses.",
+      "requires": [
+        "crankPulley"
+      ],
+      "asset": "/models/engines/B16/parts/accessoryBrackets.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 28,
+      "placeholderFile": true
+    },
+    {
+      "id": "accessoryPulleysBelts",
+      "name": "Accessory pulleys and belts",
+      "group": "Accessory drive",
+      "what": "Pulleys and belts transfer crankshaft rotation to engine accessories.",
+      "why": "They drive the alternator and other belt-driven components.",
+      "where": "They mount on the crankshaft and accessory shafts.",
+      "requires": [
+        "accessoryBrackets"
+      ],
+      "asset": "/models/engines/B16/parts/accessoryPulleysBelts.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 29,
+      "placeholderFile": true
+    },
+    {
+      "id": "coolantHoses",
+      "name": "Coolant hoses and thermostat housing",
+      "group": "Cooling system",
+      "what": "The hoses route coolant between the engine and cooling system; the thermostat housing contains the thermostat connection.",
+      "why": "They manage coolant circulation and engine temperature.",
+      "where": "They connect to the cylinder head, block and radiator circuit.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/coolantHoses.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 30,
+      "placeholderFile": true
+    },
+    {
+      "id": "flywheel",
+      "name": "Flywheel",
+      "group": "Transmission",
+      "what": "The flywheel provides rotating mass and a friction surface for the clutch.",
+      "why": "It transfers crankshaft torque into the manual clutch assembly.",
+      "where": "It bolts to the rear of the crankshaft.",
+      "requires": [
+        "crankshaft"
+      ],
+      "asset": "/models/engines/B16/parts/flywheel.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 31,
+      "placeholderFile": true
+    },
+    {
+      "id": "clutchDisc",
+      "name": "Clutch disc",
+      "group": "Transmission",
+      "what": "The clutch disc transfers torque from the flywheel to the transmission input shaft.",
+      "why": "It allows the engine to be coupled to or disconnected from the transmission.",
+      "where": "It sits between the flywheel and pressure plate.",
+      "requires": [
+        "flywheel"
+      ],
+      "asset": "/models/engines/B16/parts/clutchDisc.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 32,
+      "placeholderFile": true
+    },
+    {
+      "id": "pressurePlate",
+      "name": "Clutch pressure plate",
+      "group": "Transmission",
+      "what": "The pressure plate clamps the clutch disc against the flywheel.",
+      "why": "It transmits engine torque through friction when engaged.",
+      "where": "It bolts to the flywheel over the clutch disc.",
+      "requires": [
+        "clutchDisc"
+      ],
+      "asset": "/models/engines/B16/parts/pressurePlate.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 33,
+      "placeholderFile": true
+    },
+    {
+      "id": "releaseBearingFork",
+      "name": "Release bearing and clutch fork",
+      "group": "Transmission",
+      "what": "The release bearing and fork disengage the clutch when the pedal is pressed.",
+      "why": "They allow smooth gear changes by releasing clutch clamp force.",
+      "where": "They operate at the front of the transmission bellhousing.",
+      "requires": [
+        "pressurePlate"
+      ],
+      "asset": "/models/engines/B16/parts/releaseBearingFork.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 34,
+      "placeholderFile": true
+    },
+    {
+      "id": "transmissionBellhousing",
+      "name": "Transmission bellhousing",
+      "group": "Transmission",
+      "what": "The bellhousing joins the transmission to the engine and encloses the clutch.",
+      "why": "It aligns the transmission input shaft with the crankshaft.",
+      "where": "It bolts to the rear of the engine block.",
+      "requires": [
+        "flywheel"
+      ],
+      "asset": "/models/engines/B16/parts/transmissionBellhousing.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 35,
+      "placeholderFile": true
+    },
+    {
+      "id": "transmissionCase",
+      "name": "5-speed transmission casing",
+      "group": "Transmission",
+      "what": "The transmission case houses the gears, shafts and differential.",
+      "why": "It supports and protects the gearbox components.",
+      "where": "It bolts to the bellhousing and encloses the geartrain.",
+      "requires": [
+        "transmissionBellhousing"
+      ],
+      "asset": "/models/engines/B16/parts/transmissionCase.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 36,
+      "placeholderFile": true
+    },
+    {
+      "id": "transmissionGears",
+      "name": "Transmission gears and shafts",
+      "group": "Transmission",
+      "what": "Gear pairs and shafts provide the selected gear ratios.",
+      "why": "They convert engine speed and torque to suit vehicle speed and load.",
+      "where": "They are supported inside the transmission case.",
+      "requires": [
+        "transmissionCase"
+      ],
+      "asset": "/models/engines/B16/parts/transmissionGears.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 37,
+      "placeholderFile": true
+    },
+    {
+      "id": "synchronizers",
+      "name": "Synchronizers and shift forks",
+      "group": "Transmission",
+      "what": "Synchronizers match gear speeds while shift forks move the sliding components.",
+      "why": "They help engage gears smoothly without gear clash.",
+      "where": "They install on the transmission shafts inside the case.",
+      "requires": [
+        "transmissionGears"
+      ],
+      "asset": "/models/engines/B16/parts/synchronizers.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 38,
+      "placeholderFile": true
+    },
+    {
+      "id": "differential",
+      "name": "Differential assembly",
+      "group": "Drivetrain",
+      "what": "The differential splits torque between the drive axles while allowing different wheel speeds.",
+      "why": "It allows the driven wheels to rotate at different speeds in a turn.",
+      "where": "It is housed in the transaxle case.",
+      "requires": [
+        "transmissionCase",
+        "transmissionGears"
+      ],
+      "asset": "/models/engines/B16/parts/differential.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 39,
+      "placeholderFile": true
+    },
+    {
+      "id": "transmissionSideCover",
+      "name": "Transmission side cover",
+      "group": "Transmission",
+      "what": "The side cover closes the transmission case opening.",
+      "why": "It retains and protects internal transmission components.",
+      "where": "It bolts to the side of the transmission case.",
+      "requires": [
+        "differential"
+      ],
+      "asset": "/models/engines/B16/parts/transmissionSideCover.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 40,
+      "placeholderFile": true
+    },
+    {
+      "id": "axlesCv",
+      "name": "Axles and CV joints",
+      "group": "Drivetrain",
+      "what": "The axles transfer torque from the differential to the driven wheels.",
+      "why": "CV joints transmit torque while accommodating suspension movement and steering angle.",
+      "where": "They connect to the differential outputs and wheel hubs.",
+      "requires": [
+        "differential"
+      ],
+      "asset": "/models/engines/B16/parts/axlesCv.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 41,
+      "placeholderFile": true
+    },
+    {
+      "id": "engineMounts",
+      "name": "Engine mounts",
+      "group": "Mounting",
+      "what": "Engine mounts secure the engine to the vehicle chassis.",
+      "why": "They support engine weight and isolate vibration.",
+      "where": "They attach to mounting bosses on the engine and chassis.",
+      "requires": [
+        "engineBlock"
+      ],
+      "asset": "/models/engines/B16/parts/engineMounts.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 42,
+      "placeholderFile": true
+    },
+    {
+      "id": "transmissionMounts",
+      "name": "Transmission mounts",
+      "group": "Mounting",
+      "what": "Transmission mounts support the gearbox and connect it to the chassis.",
+      "why": "They control drivetrain movement and vibration.",
+      "where": "They attach to the transmission case and chassis.",
+      "requires": [
+        "transmissionCase"
+      ],
+      "asset": "/models/engines/B16/parts/transmissionMounts.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 43,
+      "placeholderFile": true
+    },
+    {
+      "id": "sensorsHarness",
+      "name": "Sensors and wiring harness",
+      "group": "Electrical system",
+      "what": "Sensors monitor engine conditions and the harness connects electrical components to the ECU.",
+      "why": "They provide the signals and power needed for engine management.",
+      "where": "The harness routes around the engine and connects to sensors, injectors and ignition components.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/sensorsHarness.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 44,
+      "placeholderFile": true
+    },
+    {
+      "id": "sparkPlugs",
+      "name": "Spark plugs",
+      "group": "Ignition",
+      "what": "Spark plugs ignite the compressed air-fuel mixture in each cylinder.",
+      "why": "They initiate combustion.",
+      "where": "They thread into the cylinder head, one per cylinder.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/sparkPlugs.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 45,
+      "placeholderFile": true
+    },
+    {
+      "id": "fluids",
+      "name": "Engine fluids",
+      "group": "Final assembly",
+      "what": "Engine oil and coolant fill their respective circuits.",
+      "why": "The fluids lubricate moving parts and carry away heat.",
+      "where": "Oil fills the sump; coolant fills the engine cooling passages and connected circuit.",
+      "requires": [
+        "oilPan",
+        "waterPump"
+      ],
+      "asset": "/models/engines/B16/parts/fluids.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 46,
+      "placeholderFile": true
+    },
+    {
+      "id": "finalInspection",
+      "name": "Final inspection",
+      "group": "Final assembly",
+      "what": "A final inspection checks assembly completeness, fasteners, clearances and fluid readiness.",
+      "why": "It helps catch assembly issues before operation.",
+      "where": "It is the final verification stage after all required components are installed.",
+      "requires": [
+        "fluids",
+        "sensorsHarness",
+        "sparkPlugs"
+      ],
+      "asset": "/models/engines/B16/parts/finalInspection.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 47,
+      "placeholderFile": true
+    },
+    {
+      "id": "oilFilter",
+      "name": "Oil filter assembly",
+      "group": "Lubrication",
+      "what": "The oil filter removes contaminants from the engine oil.",
+      "why": "Filtering debris helps protect bearings and other precision moving surfaces.",
+      "where": "It mounts to an angled boss on the side of the engine block.",
+      "requires": [
+        "engineBlock"
+      ],
+      "asset": "/models/engines/B16/parts/oilFilter.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 48,
+      "installationReason": "The oil filter mounts to the side of the engine block.",
+      "placeholderFile": true
+    },
+    {
+      "id": "crankPulley",
+      "name": "Crankshaft accessory pulley",
+      "group": "Accessory drive",
+      "what": "The grooved crankshaft pulley is driven directly by the crankshaft.",
+      "why": "It transfers crankshaft rotation to the accessory belt.",
+      "where": "It mounts at the front end of the crankshaft.",
+      "requires": [
+        "crankshaft"
+      ],
+      "asset": "/models/engines/B16/parts/crankPulley.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 49,
+      "installationReason": "The crankshaft pulley mounts on the crankshaft nose outside the front cover.",
+      "placeholderFile": true
+    },
+    {
+      "id": "accessoryBelt",
+      "name": "Accessory drive belt",
+      "group": "Accessory drive",
+      "what": "The accessory belt transfers rotation from the crankshaft pulley to the alternator pulley.",
+      "why": "It allows the crankshaft to drive engine accessories.",
+      "where": "It loops around the crankshaft pulley and alternator pulley.",
+      "requires": [
+        "crankPulley",
+        "alternator"
+      ],
+      "asset": "/models/engines/B16/parts/accessoryBelt.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 50,
+      "installationReason": "The accessory belt must route around the installed crankshaft and alternator pulleys.",
+      "placeholderFile": true
+    },
+    {
+      "id": "valvetrain",
+      "name": "Valvetrain and dual overhead camshafts",
+      "group": "Valvetrain",
+      "what": "The two overhead camshafts operate the intake and exhaust valves.",
+      "why": "Their lobes determine valve lift and timing.",
+      "where": "They sit in the cylinder head above the valves.",
+      "requires": [
+        "cylinderHead"
+      ],
+      "asset": "/models/engines/B16/parts/valvetrain.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 51,
+      "installationReason": "The valves, springs, and camshafts are installed in the cylinder head.",
+      "placeholderFile": true
+    },
+    {
+      "id": "valveCover",
+      "name": "Valve cover",
+      "group": "Upper engine",
+      "what": "Head bolts clamp the cylinder head and gasket to the engine block.",
+      "why": "Correct clamping load helps maintain the combustion and fluid seals.",
+      "where": "They pass through the cylinder head into the block\u2019s threaded holes.",
+      "requires": [
+        "valvetrain"
+      ],
+      "asset": "/models/engines/B16/parts/valveCover.glb",
+      "assetStatus": "placeholder",
+      "installable": false,
+      "sequence": 52,
+      "installationReason": "The valve cover encloses the camshafts and must be installed after the valvetrain.",
+      "placeholderFile": true
+    }
+  ]
+}

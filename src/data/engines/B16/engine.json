@@ -1,0 +1,39 @@
+{
+  "id": "B16",
+  "name": "Honda B16",
+  "catalog": "./parts.json",
+  "modelRoot": "/models/engines/B16/parts/",
+  "existingModels": {
+    "engineBlock": "/models/b16_bare_block_dark_graphite.glb",
+    "crankshaft": "/models/crankshaft.glb"
+  },
+  "visualImplementations": {
+    "mainBearingCaps": "procedural",
+    "pistonsRods": "procedural",
+    "oilPump": "procedural"
+  },
+  "cameraFocus": {
+    "crankshaft": [
+      -40,
+      8,
+      131
+    ],
+    "mainBearingCaps": [
+      -40,
+      7,
+      131
+    ],
+    "pistonsRods": [
+      -40,
+      11,
+      130
+    ],
+    "oilPump": [
+      -47.8,
+      8,
+      131
+    ]
+  },
+  "partsDirectory": "/models/engines/B16/parts/",
+  "catalogEntryCount": 52
+}
