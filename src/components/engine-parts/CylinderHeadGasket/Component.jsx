@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
-// Educational prototype geometry. Placement is aligned to the existing B16 scene;
-// it is not a dimensionally verified OEM gasket model.
+// Educational gasket prototype resized to sit inside the imported head's
+// approximately 17.46 x 9.48 scene-unit footprint. Hole layout remains illustrative;
+// verify exact B16 variant-specific gasket geometry before treating it as OEM-accurate.
 const INSTALLED = new THREE.Vector3(-40.0, 12.0, 130.5);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 
@@ -21,21 +22,21 @@ const fireRingMaterial = new THREE.MeshStandardMaterial({
 
 function createGasketGeometry() {
   const shape = new THREE.Shape();
-  shape.moveTo(-8.6, -5.25);
-  shape.lineTo(8.6, -4.75);
-  shape.lineTo(8.6, 4.75);
-  shape.lineTo(-8.6, 4.75);
+  shape.moveTo(-8.25, -4.45);
+  shape.lineTo(8.25, -4.45);
+  shape.lineTo(8.25, 4.45);
+  shape.lineTo(-8.25, 4.45);
   shape.closePath();
 
   // Four cylinder openings, centered on the existing piston/rod assembly.
   [-5.25, -1.75, 1.75, 5.25].forEach((x) => {
     const hole = new THREE.Path();
-    hole.absellipse(x, -0.5, 1.48, 1.48, 0, Math.PI * 2, true, 0);
+    hole.absellipse(x, 0, 1.48, 1.48, 0, Math.PI * 2, true, 0);
     shape.holes.push(hole);
   });
 
   // Small illustrative fluid-passage openings.
-  [[-7.6, -3.25], [-7.6, 3.25], [7.6, -3.25], [7.6, 3.25], [0, -4.15], [0, 4.15]].forEach(([x, y]) => {
+  [[-7.25, -3.55], [-7.25, 3.55], [7.25, -3.55], [7.25, 3.55], [0, -3.9], [0, 3.9]].forEach(([x, y]) => {
     const hole = new THREE.Path();
     hole.absellipse(x, y, 0.32, 0.32, 0, Math.PI * 2, true, 0);
     shape.holes.push(hole);
@@ -77,7 +78,7 @@ export default function CylinderHeadGasket({ installed = false }) {
       {[-5.25, -1.75, 1.75, 5.25].map((x) => (
         <mesh
           key={x}
-          position={[x, 0.135, -0.5]}
+          position={[x, 0.135, 0]}
           rotation={[Math.PI / 2, 0, 0]}
           material={fireRingMaterial}
           castShadow
