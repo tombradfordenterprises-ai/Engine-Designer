@@ -36,11 +36,19 @@ export default function Crankshaft({ installed = false }) {
     copy.scale.setScalar(28);
     copy.updateMatrixWorld(true);
 
-    // Center the model around its own origin.
+    // Center the imported geometry around its own origin.
     const bounds = new THREE.Box3().setFromObject(copy);
     const center = new THREE.Vector3();
     bounds.getCenter(center);
     copy.position.sub(center);
+
+    // The source GLB's larger crank-flange end faces the opposite end from
+    // the exposed crankshaft opening in this engine-block scene. Reverse the
+    // shaft around its vertical axis while keeping its longitudinal X axis.
+    // This brings the larger flange toward the visible opening; the pulley /
+    // flywheel remains a separate future component.
+    copy.rotation.y = Math.PI;
+    copy.updateMatrixWorld(true);
 
     return copy;
   }, [scene]);
