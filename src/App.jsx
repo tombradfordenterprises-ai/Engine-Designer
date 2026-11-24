@@ -165,8 +165,9 @@ export default function App() {
         <div className="progress-wrap">
           <div className="progress-label">
             <span>ASSEMBLY</span>
-            <strong>{installed.length}/{INSTALLABLE_COUNT} PARTS</strong>
+            <strong>{installed.length}/{INSTALLABLE_COUNT} MODELED PARTS</strong>
           </div>
+          <div className="catalog-count">52 PARTS IN B16 CATALOG</div>
           <div className="progress-track"><div style={{ width: `${progress}%` }} /></div>
         </div>
       </header>
