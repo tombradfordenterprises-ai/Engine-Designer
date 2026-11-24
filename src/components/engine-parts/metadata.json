@@ -1,0 +1,55 @@
+{
+  "id": "crankshaft",
+  "name": "Crankshaft",
+  "group": "Rotating assembly",
+  "what": "The crankshaft converts the pistons’ up-and-down movement into rotation.",
+  "why": "Its rotation is the mechanical output that ultimately drives the transmission.",
+  "where": "It sits inside the lower crankcase and is supported by the main bearing bridges.",
+  "installable": true,
+  "recommendedOrder": 1,
+  "requires": [],
+  "installationReason": "The crankshaft is installed in the block and supported by the main bearing bridges.",
+  "hotspot": {
+    "label": "Crankshaft",
+    "targets": [
+      {
+        "position": [
+          -40.0,
+          7.9,
+          130.5
+        ],
+        "radius": 1.05
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -22.25,
+      8,
+      130.5
+    ],
+    "size": [
+      18,
+      3.2,
+      3.2
+    ]
+  },
+  "cameraFocus": [
+    -40,
+    8,
+    131
+  ],
+  "cameraDirection": [
+    0.9,
+    0.45,
+    1
+  ],
+  "guide": {
+    "overview": "The crankshaft converts the pistons’ up-and-down movement into rotation.",
+    "operation": "Detailed operating principle and step-by-step operation of the crankshaft in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the crankshaft will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the crankshaft will be documented here.",
+    "failureModes": "Common crankshaft failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
