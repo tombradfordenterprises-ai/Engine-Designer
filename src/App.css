@@ -265,3 +265,11 @@ h1 span { color: #87919a; font-weight: 450; }
   .guide-window-body { padding: 11px 13px 13px 22px; }
   .guide-section p, .guide-intro { font-size: 11px; line-height: 1.55; }
 }
+
+
+/* Mobile viewport sizing: account for the browser's changing address/tool bars. */
+@media (max-width: 700px) {
+  .app-shell { height: 100dvh; min-height: 0; }
+  .workspace { min-height: 0; }
+  .status-message { max-width: calc(100% - 28px); white-space: normal; text-align: center; }
+}
