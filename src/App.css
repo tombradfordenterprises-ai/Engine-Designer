@@ -70,3 +70,20 @@ h1 span { color: #87919a; font-weight: 450; }
 @media (max-width: 640px) {
   .part-preview-button { top: 38px; left: 15px; padding: 7px 10px; font-size: 10px; }
 }
+
+/* Compact component card keeps the 3D assembly visible during previews and installation. */
+.info-panel { left: auto; right: 22px; bottom: 96px; width: min(390px, calc(100% - 44px)); max-height: 38%; overflow: auto; padding: 14px 16px 13px; border: 1px solid #dfe5e9; border-radius: 12px; box-shadow: 0 8px 28px rgba(30,45,55,.13); transform: translateY(calc(100% + 36px)); }
+.info-panel.is-open { transform: translateY(0); }
+.info-panel.is-expanded { max-height: 65%; }
+.panel-header { margin-bottom: 10px; }
+.panel-header h2 { font-size: 16px; }
+.explanation-grid { display: block; }
+.explanation-grid article { padding-left: 9px; }
+.explanation-grid article span { font-size: 8px; }
+.explanation-grid p { margin-top: 4px; font-size: 11px; line-height: 1.4; }
+.panel-actions { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:11px; }
+.more-button,.install-button { border:1px solid #cbd5dc; border-radius:7px; padding:7px 11px; font-size:11px; font-weight:700; cursor:pointer; }
+.more-button { color:#52616c; background:#fff; }
+.install-button { color:#fff; background:#236b96; border-color:#236b96; }
+.install-button:disabled { background:#87939b; border-color:#87939b; cursor:default; }
+@media (max-width:640px) { .info-panel { right:10px; bottom:82px; width:min(330px,calc(100% - 20px)); max-height:38%; padding:11px 12px; } .info-panel.is-expanded { max-height:62%; } }
