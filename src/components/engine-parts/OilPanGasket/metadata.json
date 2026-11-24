@@ -1,0 +1,57 @@
+{
+  "id": "oilPanGasket",
+  "name": "Oil pan gasket / sealant",
+  "group": "Lubrication",
+  "what": "The oil pan seal closes the joint between the sump and crankcase.",
+  "why": "It helps prevent engine oil from leaking at the pan flange.",
+  "where": "It sits between the oil pan flange and the bottom of the block.",
+  "installable": true,
+  "recommendedOrder": 6,
+  "requires": [
+    "oilPickup"
+  ],
+  "installationReason": "Apply the sealing bead to the clean pan rail after the pickup is in place and before fitting the oil pan.",
+  "hotspot": {
+    "label": "Oil pan sealing bead",
+    "targets": [
+      {
+        "position": [
+          -39.75,
+          4.2,
+          130.5
+        ],
+        "radius": 1.15
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -39.75,
+      11.12,
+      139.5
+    ],
+    "size": [
+      17,
+      1,
+      9
+    ]
+  },
+  "cameraFocus": [
+    -39.75,
+    4.12,
+    130.5
+  ],
+  "cameraDirection": [
+    0.1,
+    -0.55,
+    1
+  ],
+  "guide": {
+    "overview": "The oil pan seal closes the joint between the sump and crankcase.",
+    "operation": "Detailed operating principle and step-by-step operation of the oil pan gasket / sealant in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pan gasket / sealant will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pan gasket / sealant will be documented here.",
+    "failureModes": "Common oil pan gasket / sealant failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
