@@ -8,20 +8,28 @@
       "id": "engineBlock",
       "name": "Honda B16 engine block",
       "group": "Foundation",
-      "what": "The B16 block is the main aluminum-alloy structure of Honda\u2019s 1.6-liter DOHC VTEC inline-four. It houses the four cylinders and supports the crankshaft and cylinder head.",
+      "what": "The B16 block is the main aluminum-alloy structure of Honda’s 1.6-liter DOHC VTEC inline-four. It houses the four cylinders and supports the crankshaft and cylinder head.",
       "why": "It keeps the cylinders aligned and carries the loads produced by combustion and the rotating assembly.",
       "where": "It forms the lower central structure of the engine. The four cylinder bores are machined into the deck at the top, with the crankcase below.",
       "requires": [],
       "asset": "/models/b16_bare_block_dark_graphite.glb",
       "assetStatus": "model",
       "installable": false,
-      "sequence": 1
+      "sequence": 1,
+      "guide": {
+        "overview": "The B16 block is the main aluminum-alloy structure of Honda’s 1.6-liter DOHC VTEC inline-four. It houses the four cylinders and supports the crankshaft and cylinder head.",
+        "operation": "Detailed operating principle and step-by-step operation of the honda b16 engine block in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the honda b16 engine block will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the honda b16 engine block will be documented here.",
+        "failureModes": "Common honda b16 engine block failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "crankshaft",
       "name": "Crankshaft",
       "group": "Rotating assembly",
-      "what": "The crankshaft converts the pistons\u2019 up-and-down movement into rotation.",
+      "what": "The crankshaft converts the pistons’ up-and-down movement into rotation.",
       "why": "Its rotation is the mechanical output that ultimately drives the transmission.",
       "where": "It sits inside the lower crankcase and is supported by the main bearing bridges.",
       "requires": [],
@@ -29,7 +37,15 @@
       "assetStatus": "model",
       "installable": true,
       "sequence": 2,
-      "installationReason": "The crankshaft is installed in the block and supported by the main bearing bridges."
+      "installationReason": "The crankshaft is installed in the block and supported by the main bearing bridges.",
+      "guide": {
+        "overview": "The crankshaft converts the pistons’ up-and-down movement into rotation.",
+        "operation": "Detailed operating principle and step-by-step operation of the crankshaft in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the crankshaft will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the crankshaft will be documented here.",
+        "failureModes": "Common crankshaft failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "mainBearingCaps",
@@ -47,7 +63,15 @@
       "sequence": 3,
       "installationReason": "Install the crankshaft first. The five main bearing cap assemblies are then fitted and secured beneath the crankshaft.",
       "placeholderFile": true,
-      "fallbackRenderer": "procedural"
+      "fallbackRenderer": "procedural",
+      "guide": {
+        "overview": "Five main bearing locations support the crankshaft. The bearing shells provide the precision surfaces, while the caps secure the crankshaft from below.",
+        "operation": "Detailed operating principle and step-by-step operation of the main bearings and bearing caps in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the main bearings and bearing caps will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the main bearings and bearing caps will be documented here.",
+        "failureModes": "Common main bearings and bearing caps failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "pistonsRods",
@@ -66,7 +90,15 @@
       "sequence": 4,
       "installationReason": "The connecting rods need the crankshaft and main bearing caps in place so their big ends can attach to the crank throws.",
       "placeholderFile": true,
-      "fallbackRenderer": "procedural"
+      "fallbackRenderer": "procedural",
+      "guide": {
+        "overview": "Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.",
+        "operation": "Detailed operating principle and step-by-step operation of the pistons and connecting rods in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the pistons and connecting rods will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the pistons and connecting rods will be documented here.",
+        "failureModes": "Common pistons and connecting rods failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "oilPump",
@@ -86,7 +118,15 @@
       "sequence": 5,
       "installationReason": "Install the rotating assembly first. The oil pump mounts at the timing-belt end of the block around the crankshaft nose.",
       "placeholderFile": true,
-      "fallbackRenderer": "procedural"
+      "fallbackRenderer": "procedural",
+      "guide": {
+        "overview": "The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.",
+        "operation": "Detailed operating principle and step-by-step operation of the oil pump assembly in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pump assembly will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pump assembly will be documented here.",
+        "failureModes": "Common oil pump assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "oilPickup",
@@ -99,29 +139,19 @@
         "oilPump"
       ],
       "asset": "/models/engines/B16/parts/oilPickup.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 6,
-      "placeholderFile": true
-    },
-    {
-      "id": "oilPan",
-      "name": "Oil pan / sump",
-      "group": "Lubrication",
-      "what": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
-      "why": "The oil pump draws oil from the sump and sends it to bearings and other moving parts.",
-      "where": "It bolts to the underside of the crankcase.",
-      "requires": [
-        "oilPump",
-        "crankshaft",
-        "pistonsRods"
-      ],
-      "asset": "/models/engines/B16/parts/oilPan.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
-      "sequence": 7,
-      "installationReason": "Install the crankshaft and connecting rod assemblies before closing the bottom of the crankcase with the oil pan.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "installationReason": "The pickup tube connects to the oil pump and its screened inlet sits inside the oil pan sump.",
+      "guide": {
+        "overview": "The pickup tube draws oil from the sump through a screened inlet.",
+        "operation": "Detailed operating principle and step-by-step operation of the oil pickup tube and screen in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pickup tube and screen will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pickup tube and screen will be documented here.",
+        "failureModes": "Common oil pickup tube and screen failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "oilPanGasket",
@@ -131,13 +161,48 @@
       "why": "It helps prevent engine oil from leaking at the pan flange.",
       "where": "It sits between the oil pan flange and the bottom of the block.",
       "requires": [
-        "oilPan"
+        "oilPickup"
       ],
       "asset": "/models/engines/B16/parts/oilPanGasket.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
+      "sequence": 7,
+      "placeholderFile": true,
+      "installationReason": "Apply the sealing bead to the clean pan rail after the pickup is in place and before fitting the oil pan.",
+      "guide": {
+        "overview": "The oil pan seal closes the joint between the sump and crankcase.",
+        "operation": "Detailed operating principle and step-by-step operation of the oil pan gasket / sealant in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pan gasket / sealant will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pan gasket / sealant will be documented here.",
+        "failureModes": "Common oil pan gasket / sealant failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
+    },
+    {
+      "id": "oilPan",
+      "name": "Oil pan / sump",
+      "group": "Lubrication",
+      "what": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
+      "why": "The oil pump draws oil from the sump and sends it to bearings and other moving parts.",
+      "where": "It bolts to the underside of the crankcase.",
+      "requires": [
+        "oilPickup",
+        "oilPanGasket"
+      ],
+      "asset": "/models/engines/B16/parts/oilPan.glb",
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 8,
-      "placeholderFile": true
+      "installationReason": "Fit the oil pan after the pickup and sealing bead are in place.",
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
+        "operation": "Detailed operating principle and step-by-step operation of the oil pan / sump in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pan / sump will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pan / sump will be documented here.",
+        "failureModes": "Common oil pan / sump failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "headGasket",
@@ -154,7 +219,15 @@
       "installable": false,
       "sequence": 9,
       "installationReason": "Install the piston and rod assemblies before sealing the top of the block with the head gasket.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The head gasket is a thin, carefully sealed layer between the engine block and cylinder head.",
+        "operation": "Detailed operating principle and step-by-step operation of the cylinder head gasket in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the cylinder head gasket will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the cylinder head gasket will be documented here.",
+        "failureModes": "Common cylinder head gasket failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "cylinderHead",
@@ -171,7 +244,15 @@
       "installable": false,
       "sequence": 10,
       "installationReason": "The cylinder head sits on the head gasket. The gasket must be in place first.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The cylinder head closes the top of the cylinders and contains the combustion chambers and valve passages.",
+        "operation": "Detailed operating principle and step-by-step operation of the cylinder head in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the cylinder head will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the cylinder head will be documented here.",
+        "failureModes": "Common cylinder head failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "headBolts",
@@ -179,7 +260,7 @@
       "group": "Cylinder head",
       "what": "Head bolts clamp the cylinder head and gasket to the engine block.",
       "why": "Correct clamping load helps maintain the combustion and fluid seals.",
-      "where": "They pass through the cylinder head into the block\u2019s threaded holes.",
+      "where": "They pass through the cylinder head into the block’s threaded holes.",
       "requires": [
         "cylinderHead"
       ],
@@ -187,7 +268,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 11,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Head bolts clamp the cylinder head and gasket to the engine block.",
+        "operation": "Detailed operating principle and step-by-step operation of the cylinder head bolts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the cylinder head bolts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the cylinder head bolts will be documented here.",
+        "failureModes": "Common cylinder head bolts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "valvesSprings",
@@ -195,7 +284,7 @@
       "group": "Valvetrain",
       "what": "The intake and exhaust valves open and close the ports; springs return them to their seats.",
       "why": "They control the flow of air-fuel mixture and exhaust through each cylinder.",
-      "where": "They install in the cylinder head\u2019s valve guides and spring seats.",
+      "where": "They install in the cylinder head’s valve guides and spring seats.",
       "requires": [
         "cylinderHead"
       ],
@@ -203,7 +292,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 12,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The intake and exhaust valves open and close the ports; springs return them to their seats.",
+        "operation": "Detailed operating principle and step-by-step operation of the valves and valve springs in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the valves and valve springs will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the valves and valve springs will be documented here.",
+        "failureModes": "Common valves and valve springs failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "camshafts",
@@ -219,14 +316,22 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 13,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The two overhead camshafts operate the intake and exhaust valves.",
+        "operation": "Detailed operating principle and step-by-step operation of the intake and exhaust camshafts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the intake and exhaust camshafts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the intake and exhaust camshafts will be documented here.",
+        "failureModes": "Common intake and exhaust camshafts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "rockerVtec",
       "name": "Rocker arms and VTEC assembly",
       "group": "Valvetrain",
       "what": "The rocker assembly transfers camshaft motion to the valves and includes the VTEC switching mechanism.",
-      "why": "It controls valve motion and enables the engine\u2019s variable-lift operating mode.",
+      "why": "It controls valve motion and enables the engine’s variable-lift operating mode.",
       "where": "It mounts along the camshaft and valve assemblies in the cylinder head.",
       "requires": [
         "camshafts"
@@ -235,7 +340,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 14,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The rocker assembly transfers camshaft motion to the valves and includes the VTEC switching mechanism.",
+        "operation": "Detailed operating principle and step-by-step operation of the rocker arms and vtec assembly in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the rocker arms and vtec assembly will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the rocker arms and vtec assembly will be documented here.",
+        "failureModes": "Common rocker arms and vtec assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "camCaps",
@@ -251,7 +364,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 15,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Camshaft caps retain and support the camshafts in the cylinder head.",
+        "operation": "Detailed operating principle and step-by-step operation of the camshaft caps in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the camshaft caps will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the camshaft caps will be documented here.",
+        "failureModes": "Common camshaft caps failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "camGears",
@@ -267,7 +388,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 16,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Cam gears connect the timing belt to the camshafts.",
+        "operation": "Detailed operating principle and step-by-step operation of the camshaft gears in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the camshaft gears will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the camshaft gears will be documented here.",
+        "failureModes": "Common camshaft gears failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "waterPump",
@@ -283,7 +412,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 17,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The water pump circulates coolant through the engine and radiator.",
+        "operation": "Detailed operating principle and step-by-step operation of the water pump in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the water pump will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the water pump will be documented here.",
+        "failureModes": "Common water pump failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "timingTensioner",
@@ -300,7 +437,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 18,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The tensioner maintains the correct tension in the timing belt.",
+        "operation": "Detailed operating principle and step-by-step operation of the timing belt tensioner in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the timing belt tensioner will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the timing belt tensioner will be documented here.",
+        "failureModes": "Common timing belt tensioner failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "timingBelt",
@@ -317,7 +462,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 19,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The timing belt synchronizes crankshaft and camshaft rotation.",
+        "operation": "Detailed operating principle and step-by-step operation of the timing belt in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the timing belt will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the timing belt will be documented here.",
+        "failureModes": "Common timing belt failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "timingCovers",
@@ -334,7 +487,15 @@
       "installable": false,
       "sequence": 20,
       "installationReason": "Install the timing drive components before fitting the protective covers.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The timing covers enclose the timing belt and pulleys.",
+        "operation": "Detailed operating principle and step-by-step operation of the timing belt covers in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the timing belt covers will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the timing belt covers will be documented here.",
+        "failureModes": "Common timing belt covers failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "intakeManifold",
@@ -351,7 +512,15 @@
       "installable": false,
       "sequence": 21,
       "installationReason": "The intake manifold bolts to the cylinder head and must align with its intake ports.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The intake manifold distributes incoming air to the four cylinders.",
+        "operation": "Detailed operating principle and step-by-step operation of the intake manifold in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the intake manifold will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the intake manifold will be documented here.",
+        "failureModes": "Common intake manifold failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "fuelRail",
@@ -367,7 +536,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 22,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The fuel rail supplies pressurized fuel to the injectors.",
+        "operation": "Detailed operating principle and step-by-step operation of the fuel rail and injectors in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the fuel rail and injectors will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the fuel rail and injectors will be documented here.",
+        "failureModes": "Common fuel rail and injectors failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "throttleBody",
@@ -383,7 +560,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 23,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The throttle body regulates how much air enters the intake manifold.",
+        "operation": "Detailed operating principle and step-by-step operation of the throttle body in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the throttle body will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the throttle body will be documented here.",
+        "failureModes": "Common throttle body failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "exhaustManifold",
@@ -400,7 +585,15 @@
       "installable": false,
       "sequence": 24,
       "installationReason": "The exhaust manifold bolts to the cylinder head and must align with its exhaust ports.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The exhaust manifold collects hot gases leaving the four cylinders.",
+        "operation": "Detailed operating principle and step-by-step operation of the exhaust manifold in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the exhaust manifold will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the exhaust manifold will be documented here.",
+        "failureModes": "Common exhaust manifold failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "distributor",
@@ -416,7 +609,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 25,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The distributor routes high-voltage ignition to the correct spark plug in firing order.",
+        "operation": "Detailed operating principle and step-by-step operation of the distributor and ignition components in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the distributor and ignition components will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the distributor and ignition components will be documented here.",
+        "failureModes": "Common distributor and ignition components failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "alternator",
@@ -433,7 +634,15 @@
       "installable": false,
       "sequence": 26,
       "installationReason": "The alternator is driven by the accessory belt, so the crankshaft pulley must be installed first.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The alternator converts mechanical rotation into electrical power.",
+        "operation": "Detailed operating principle and step-by-step operation of the alternator assembly in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the alternator assembly will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the alternator assembly will be documented here.",
+        "failureModes": "Common alternator assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "starter",
@@ -449,7 +658,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 27,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The starter motor cranks the engine during startup.",
+        "operation": "Detailed operating principle and step-by-step operation of the starter motor in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the starter motor will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the starter motor will be documented here.",
+        "failureModes": "Common starter motor failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "accessoryBrackets",
@@ -465,7 +682,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 28,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Brackets support accessories and maintain their alignment.",
+        "operation": "Detailed operating principle and step-by-step operation of the accessory brackets in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the accessory brackets will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the accessory brackets will be documented here.",
+        "failureModes": "Common accessory brackets failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "accessoryPulleysBelts",
@@ -481,7 +706,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 29,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Pulleys and belts transfer crankshaft rotation to engine accessories.",
+        "operation": "Detailed operating principle and step-by-step operation of the accessory pulleys and belts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the accessory pulleys and belts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the accessory pulleys and belts will be documented here.",
+        "failureModes": "Common accessory pulleys and belts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "coolantHoses",
@@ -497,7 +730,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 30,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The hoses route coolant between the engine and cooling system; the thermostat housing contains the thermostat connection.",
+        "operation": "Detailed operating principle and step-by-step operation of the coolant hoses and thermostat housing in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the coolant hoses and thermostat housing will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the coolant hoses and thermostat housing will be documented here.",
+        "failureModes": "Common coolant hoses and thermostat housing failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "flywheel",
@@ -513,7 +754,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 31,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The flywheel provides rotating mass and a friction surface for the clutch.",
+        "operation": "Detailed operating principle and step-by-step operation of the flywheel in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the flywheel will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the flywheel will be documented here.",
+        "failureModes": "Common flywheel failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "clutchDisc",
@@ -529,7 +778,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 32,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The clutch disc transfers torque from the flywheel to the transmission input shaft.",
+        "operation": "Detailed operating principle and step-by-step operation of the clutch disc in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the clutch disc will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the clutch disc will be documented here.",
+        "failureModes": "Common clutch disc failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "pressurePlate",
@@ -545,7 +802,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 33,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The pressure plate clamps the clutch disc against the flywheel.",
+        "operation": "Detailed operating principle and step-by-step operation of the clutch pressure plate in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the clutch pressure plate will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the clutch pressure plate will be documented here.",
+        "failureModes": "Common clutch pressure plate failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "releaseBearingFork",
@@ -561,7 +826,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 34,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The release bearing and fork disengage the clutch when the pedal is pressed.",
+        "operation": "Detailed operating principle and step-by-step operation of the release bearing and clutch fork in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the release bearing and clutch fork will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the release bearing and clutch fork will be documented here.",
+        "failureModes": "Common release bearing and clutch fork failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "transmissionBellhousing",
@@ -577,7 +850,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 35,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The bellhousing joins the transmission to the engine and encloses the clutch.",
+        "operation": "Detailed operating principle and step-by-step operation of the transmission bellhousing in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the transmission bellhousing will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the transmission bellhousing will be documented here.",
+        "failureModes": "Common transmission bellhousing failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "transmissionCase",
@@ -593,7 +874,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 36,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The transmission case houses the gears, shafts and differential.",
+        "operation": "Detailed operating principle and step-by-step operation of the 5-speed transmission casing in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the 5-speed transmission casing will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the 5-speed transmission casing will be documented here.",
+        "failureModes": "Common 5-speed transmission casing failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "transmissionGears",
@@ -609,7 +898,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 37,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Gear pairs and shafts provide the selected gear ratios.",
+        "operation": "Detailed operating principle and step-by-step operation of the transmission gears and shafts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the transmission gears and shafts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the transmission gears and shafts will be documented here.",
+        "failureModes": "Common transmission gears and shafts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "synchronizers",
@@ -625,7 +922,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 38,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Synchronizers match gear speeds while shift forks move the sliding components.",
+        "operation": "Detailed operating principle and step-by-step operation of the synchronizers and shift forks in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the synchronizers and shift forks will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the synchronizers and shift forks will be documented here.",
+        "failureModes": "Common synchronizers and shift forks failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "differential",
@@ -642,7 +947,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 39,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The differential splits torque between the drive axles while allowing different wheel speeds.",
+        "operation": "Detailed operating principle and step-by-step operation of the differential assembly in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the differential assembly will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the differential assembly will be documented here.",
+        "failureModes": "Common differential assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "transmissionSideCover",
@@ -658,7 +971,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 40,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The side cover closes the transmission case opening.",
+        "operation": "Detailed operating principle and step-by-step operation of the transmission side cover in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the transmission side cover will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the transmission side cover will be documented here.",
+        "failureModes": "Common transmission side cover failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "axlesCv",
@@ -674,7 +995,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 41,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The axles transfer torque from the differential to the driven wheels.",
+        "operation": "Detailed operating principle and step-by-step operation of the axles and cv joints in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the axles and cv joints will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the axles and cv joints will be documented here.",
+        "failureModes": "Common axles and cv joints failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "engineMounts",
@@ -690,7 +1019,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 42,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Engine mounts secure the engine to the vehicle chassis.",
+        "operation": "Detailed operating principle and step-by-step operation of the engine mounts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the engine mounts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the engine mounts will be documented here.",
+        "failureModes": "Common engine mounts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "transmissionMounts",
@@ -706,7 +1043,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 43,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Transmission mounts support the gearbox and connect it to the chassis.",
+        "operation": "Detailed operating principle and step-by-step operation of the transmission mounts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the transmission mounts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the transmission mounts will be documented here.",
+        "failureModes": "Common transmission mounts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "sensorsHarness",
@@ -722,7 +1067,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 44,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Sensors monitor engine conditions and the harness connects electrical components to the ECU.",
+        "operation": "Detailed operating principle and step-by-step operation of the sensors and wiring harness in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the sensors and wiring harness will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the sensors and wiring harness will be documented here.",
+        "failureModes": "Common sensors and wiring harness failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "sparkPlugs",
@@ -738,7 +1091,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 45,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Spark plugs ignite the compressed air-fuel mixture in each cylinder.",
+        "operation": "Detailed operating principle and step-by-step operation of the spark plugs in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the spark plugs will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the spark plugs will be documented here.",
+        "failureModes": "Common spark plugs failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "fluids",
@@ -755,7 +1116,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 46,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Engine oil and coolant fill their respective circuits.",
+        "operation": "Detailed operating principle and step-by-step operation of the engine fluids in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the engine fluids will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the engine fluids will be documented here.",
+        "failureModes": "Common engine fluids failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "finalInspection",
@@ -773,7 +1142,15 @@
       "assetStatus": "placeholder",
       "installable": false,
       "sequence": 47,
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "A final inspection checks assembly completeness, fasteners, clearances and fluid readiness.",
+        "operation": "Detailed operating principle and step-by-step operation of the final inspection in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the final inspection will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the final inspection will be documented here.",
+        "failureModes": "Common final inspection failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "oilFilter",
@@ -790,7 +1167,15 @@
       "installable": false,
       "sequence": 48,
       "installationReason": "The oil filter mounts to the side of the engine block.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The oil filter removes contaminants from the engine oil.",
+        "operation": "Detailed operating principle and step-by-step operation of the oil filter assembly in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil filter assembly will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil filter assembly will be documented here.",
+        "failureModes": "Common oil filter assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "crankPulley",
@@ -807,7 +1192,15 @@
       "installable": false,
       "sequence": 49,
       "installationReason": "The crankshaft pulley mounts on the crankshaft nose outside the front cover.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The grooved crankshaft pulley is driven directly by the crankshaft.",
+        "operation": "Detailed operating principle and step-by-step operation of the crankshaft accessory pulley in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the crankshaft accessory pulley will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the crankshaft accessory pulley will be documented here.",
+        "failureModes": "Common crankshaft accessory pulley failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "accessoryBelt",
@@ -825,7 +1218,15 @@
       "installable": false,
       "sequence": 50,
       "installationReason": "The accessory belt must route around the installed crankshaft and alternator pulleys.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The accessory belt transfers rotation from the crankshaft pulley to the alternator pulley.",
+        "operation": "Detailed operating principle and step-by-step operation of the accessory drive belt in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the accessory drive belt will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the accessory drive belt will be documented here.",
+        "failureModes": "Common accessory drive belt failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "valvetrain",
@@ -842,7 +1243,15 @@
       "installable": false,
       "sequence": 51,
       "installationReason": "The valves, springs, and camshafts are installed in the cylinder head.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "The two overhead camshafts operate the intake and exhaust valves.",
+        "operation": "Detailed operating principle and step-by-step operation of the valvetrain and dual overhead camshafts in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the valvetrain and dual overhead camshafts will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the valvetrain and dual overhead camshafts will be documented here.",
+        "failureModes": "Common valvetrain and dual overhead camshafts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     },
     {
       "id": "valveCover",
@@ -850,7 +1259,7 @@
       "group": "Upper engine",
       "what": "Head bolts clamp the cylinder head and gasket to the engine block.",
       "why": "Correct clamping load helps maintain the combustion and fluid seals.",
-      "where": "They pass through the cylinder head into the block\u2019s threaded holes.",
+      "where": "They pass through the cylinder head into the block’s threaded holes.",
       "requires": [
         "valvetrain"
       ],
@@ -859,7 +1268,15 @@
       "installable": false,
       "sequence": 52,
       "installationReason": "The valve cover encloses the camshafts and must be installed after the valvetrain.",
-      "placeholderFile": true
+      "placeholderFile": true,
+      "guide": {
+        "overview": "Head bolts clamp the cylinder head and gasket to the engine block.",
+        "operation": "Detailed operating principle and step-by-step operation of the valve cover in the Honda B16 engine will be researched and added here.",
+        "construction": "Materials, manufacturing methods, subcomponents, and design features of the valve cover will be documented here.",
+        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the valve cover will be documented here.",
+        "failureModes": "Common valve cover failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+      }
     }
   ]
 }
