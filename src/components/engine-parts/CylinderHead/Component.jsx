@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 
 // Simplified teaching geometry positioned to the current B16 block.
 // This is a visual prototype, not factory CAD or a dimensionally accurate head.
-const INSTALLED = new THREE.Vector3(-40.0, 13.45, 130.5);
+const INSTALLED = new THREE.Vector3(-40.0, 13.75, 130.5);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 9, 12));
 
 const headMaterial = new THREE.MeshStandardMaterial({
