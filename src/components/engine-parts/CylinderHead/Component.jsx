@@ -5,7 +5,9 @@ import { useGLTF } from '@react-three/drei';
 
 // Imported GrabCAD VTEC-11_1 mesh. The source STEP/OBJ dimensions were
 // normalized from millimeters to meters and centered by the conversion step.
-// Scale 40 maps its ~436.5 mm length to the existing scene's ~17.5 units.
+// The source mesh long axis is already aligned with the engine block's X-axis.
+// Keep its original orientation: the piston centers run along X, matching the casting.
+// Scale 40 maps its ~436.5 mm length to the scene's ~17.5 units.
 // Position places its lower deck near the block's y=12.0 deck plane.
 // This is visual mesh geometry, not a watertight editable CAD solid.
 const MODEL_URL = '/models/b16_vtec_11_cylinder_head.glb';
