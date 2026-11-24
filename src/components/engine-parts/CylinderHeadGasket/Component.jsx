@@ -22,9 +22,9 @@ const fireRingMaterial = new THREE.MeshStandardMaterial({
 function createGasketGeometry() {
   const shape = new THREE.Shape();
   shape.moveTo(-8.6, -5.25);
-  shape.lineTo(8.6, -5.25);
-  shape.lineTo(8.6, 5.25);
-  shape.lineTo(-8.6, 5.25);
+  shape.lineTo(8.6, -4.75);
+  shape.lineTo(8.6, 4.75);
+  shape.lineTo(-8.6, 4.75);
   shape.closePath();
 
   // Four cylinder openings, centered on the existing piston/rod assembly.
@@ -35,7 +35,7 @@ function createGasketGeometry() {
   });
 
   // Small illustrative fluid-passage openings.
-  [[-7.6, -3.6], [-7.6, 3.6], [7.6, -3.6], [7.6, 3.6], [0, -4.65], [0, 4.65]].forEach(([x, y]) => {
+  [[-7.6, -3.25], [-7.6, 3.25], [7.6, -3.25], [7.6, 3.25], [0, -4.15], [0, 4.15]].forEach(([x, y]) => {
     const hole = new THREE.Path();
     hole.absellipse(x, y, 0.32, 0.32, 0, Math.PI * 2, true, 0);
     shape.holes.push(hole);
