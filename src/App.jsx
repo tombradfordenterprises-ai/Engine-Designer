@@ -5,28 +5,27 @@ import Toolbar from './components/Toolbar.jsx';
 import InfoPanel from './components/InfoPanel.jsx';
 import './App.css';
 import b16Catalog from './data/engines/B16/parts.json';
+import { enginePartList } from './data/enginePartRegistry.js';
 
 
-// [021] The B16 catalog is the single source for part descriptions and prerequisite data.
-export const PARTS = Object.fromEntries(
-  b16Catalog.parts.map((part) => [part.id, { name: part.name, group: part.group, what: part.what, why: part.why, where: part.where }])
+// The static catalog supplies the full 52-part roadmap; folder metadata registers modeled parts.
+const registeredMetadata = enginePartList.map(({ Component, ...metadata }) => metadata);
+const PARTS = Object.fromEntries(
+  [...b16Catalog.parts, ...registeredMetadata].map((part) => [part.id, part])
 );
-// [022] The block is the fixed foundation. Other groups become available when their prerequisites are installed.
 const INSTALL_RULES = Object.fromEntries(
-  b16Catalog.parts.map((part) => [part.id, {
+  Object.values(PARTS).map((part) => [part.id, {
     requires: part.requires || [],
     reason: part.installationReason || 'Install this component after its listed prerequisites are in place.'
   }])
 );
-
-// [023] Recommended teaching order. Dependencies are checked separately, so valid alternate orders are allowed.
-const RECOMMENDED_SEQUENCE = [
-  'crankshaft', 'mainBearingCaps', 'pistonsRods', 'oilPump', 'oilPan', 'headGasket', 'cylinderHead',
-  'valvetrain', 'valveCover', 'timingCovers', 'crankPulley', 'alternator',
-  'accessoryBelt', 'intakeManifold', 'exhaustManifold', 'oilFilter'
-];
-const ACTIVE_PART_IDS = ['crankshaft', 'mainBearingCaps', 'pistonsRods', 'oilPump'];
+const RECOMMENDED_SEQUENCE = Object.values(PARTS)
+  .filter((part) => part.installable)
+  .sort((a, b) => (a.recommendedOrder ?? a.sequence ?? 9999) - (b.recommendedOrder ?? b.sequence ?? 9999))
+  .map((part) => part.id);
+const ACTIVE_PART_IDS = RECOMMENDED_SEQUENCE;
 const INSTALLABLE_COUNT = ACTIVE_PART_IDS.length;
+const CATALOG_COUNT = Object.keys(PARTS).length;
 
 // [024] App owns installation state so progress, the toolbar, and the CAD scene stay synchronized.
 export default function App() {
@@ -34,10 +33,6 @@ export default function App() {
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [view, setView] = useState('isometric');
-  const [showCrankshaft, setShowCrankshaft] = useState(false);
-  const [showMainBearingCaps, setShowMainBearingCaps] = useState(false);
-  const [showPistonsRods, setShowPistonsRods] = useState(false);
-  const [showOilPump, setShowOilPump] = useState(false);
   const [message, setMessage] = useState(
     'Hover over a highlighted installation area and click it to select a component.'
   );
@@ -51,10 +46,6 @@ export default function App() {
   // [026] Handles selection from actual CAD meshes and installation hotspots.
   const selectPart = (id) => {
     setSelected(id);
-    setShowCrankshaft(id === 'crankshaft');
-    setShowMainBearingCaps(id === 'mainBearingCaps');
-    setShowPistonsRods(id === 'pistonsRods');
-    setShowOilPump(id === 'oilPump');
 
     if (id === 'engineBlock') {
       setMessage('Engine block selected. Choose a highlighted installation area to select a component.');
@@ -167,7 +158,7 @@ export default function App() {
             <span>ASSEMBLY</span>
             <strong>{installed.length}/{INSTALLABLE_COUNT} MODELED PARTS</strong>
           </div>
-          <div className="catalog-count">52 PARTS IN B16 CATALOG</div>
+          <div className="catalog-count">{CATALOG_COUNT} PARTS IN B16 CATALOG</div>
           <div className="progress-track"><div style={{ width: `${progress}%` }} /></div>
         </div>
       </header>
@@ -179,10 +170,6 @@ export default function App() {
           selected={selected}
           installed={installed}
           onSelect={selectPart}
-          showCrankshaft={showCrankshaft}
-          showMainBearingCaps={showMainBearingCaps}
-          showPistonsRods={showPistonsRods}
-          showOilPump={showOilPump}
           view={view}
           onInstallPart={installPart}
         />
