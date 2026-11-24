@@ -7,6 +7,7 @@ h1 span { color: #87919a; font-weight: 450; }
 .progress-wrap { width: 190px; }
 .progress-label { display: flex; justify-content: space-between; color: #858e96; font-size: 9px; letter-spacing: .12em; font-weight: 750; margin-bottom: 8px; }
 .progress-label strong { color: #39434b; }
+.catalog-count { color: #9aa2a9; font-size: 8px; letter-spacing: .09em; text-align: right; margin: -4px 0 5px; }
 .progress-track { height: 4px; border-radius: 5px; background: #edf0f2; overflow: hidden; }
 .progress-track div { height: 100%; background: #5b9bc8; transition: width .35s ease; }
 
