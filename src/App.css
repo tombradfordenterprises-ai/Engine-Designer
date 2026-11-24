@@ -7,7 +7,6 @@ h1 span { color: #87919a; font-weight: 450; }
 .progress-wrap { width: 190px; }
 .progress-label { display: flex; justify-content: space-between; color: #858e96; font-size: 9px; letter-spacing: .12em; font-weight: 750; margin-bottom: 8px; }
 .progress-label strong { color: #39434b; }
-.catalog-count { color: #9aa2a9; font-size: 8px; letter-spacing: .09em; text-align: right; margin: -4px 0 5px; }
 .progress-track { height: 4px; border-radius: 5px; background: #edf0f2; overflow: hidden; }
 .progress-track div { height: 100%; background: #5b9bc8; transition: width .35s ease; }
 
@@ -88,3 +87,82 @@ h1 span { color: #87919a; font-weight: 450; }
 .install-button { color:#fff; background:#236b96; border-color:#236b96; }
 .install-button:disabled { background:#87939b; border-color:#87939b; cursor:default; }
 @media (max-width:640px) { .info-panel { right:10px; bottom:82px; width:min(330px,calc(100% - 20px)); max-height:38%; padding:11px 12px; } .info-panel.is-expanded { max-height:62%; } }
+
+/* Re-openable part card and detailed guide window. The guide sits directly above the card. */
+.info-panel-stack {
+  position: absolute;
+  z-index: 8;
+  right: 22px;
+  bottom: 96px;
+  width: min(390px, calc(100% - 44px));
+  max-height: calc(100% - 118px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.info-panel-stack .info-panel {
+  position: relative;
+  inset: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  max-height: 30vh;
+  flex: 0 1 auto;
+  overflow: auto;
+  pointer-events: auto;
+  transform: translateY(calc(100% + 36px));
+  opacity: 0;
+  visibility: hidden;
+  transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .22s ease, visibility .32s;
+}
+.info-panel-stack.is-open .info-panel {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.part-guide-window {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  max-height: 36vh;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background: rgba(255,255,255,.985);
+  border: 1px solid #d8e0e5;
+  border-radius: 12px;
+  box-shadow: 0 10px 32px rgba(30,45,55,.16);
+  pointer-events: auto;
+}
+.guide-window-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 15px 11px;
+  border-bottom: 1px solid #edf0f2;
+  background: #f8fafb;
+}
+.guide-kicker { color: #7f8d97; font-size: 8px; font-weight: 800; letter-spacing: .13em; }
+.guide-window-header h3 { margin: 4px 0 0; color: #26343d; font-size: 15px; letter-spacing: -.025em; }
+.guide-close-button { flex: 0 0 27px; width: 27px; height: 27px; border: 0; border-radius: 50%; background: #e9eef1; color: #53616a; font-size: 20px; line-height: 1; cursor: pointer; }
+.guide-window-body { overflow-y: auto; padding: 12px 15px 14px; }
+.guide-intro { margin: 0 0 12px; color: #586771; font-size: 11px; line-height: 1.5; }
+.guide-section { padding: 9px 0; border-top: 1px solid #eef1f3; }
+.guide-section h4 { margin: 0 0 5px; color: #71808a; font-size: 8px; font-weight: 800; letter-spacing: .12em; }
+.guide-section p { margin: 0; color: #394851; font-size: 11px; line-height: 1.5; }
+.guide-data-note { margin-top: 10px; padding: 8px 9px; border-radius: 6px; background: #f2f6f8; color: #6c7a83; font-size: 9px; line-height: 1.45; }
+.guide-button { border: 1px solid #cbd5dc; border-radius: 7px; padding: 7px 11px; color: #245b7b; background: #f3f8fb; font-size: 11px; font-weight: 700; cursor: pointer; }
+.guide-button:hover, .guide-button.is-active { background: #e4f1f8; border-color: #a9c8dc; }
+.info-panel-stack .panel-actions { justify-content: space-between; }
+@media (max-width: 640px) {
+  .info-panel-stack { right: 10px; bottom: 82px; width: min(330px, calc(100% - 20px)); max-height: calc(100% - 98px); }
+  .info-panel-stack .info-panel { max-height: 27vh; padding: 11px 12px; }
+  .part-guide-window { max-height: 34vh; }
+  .guide-window-header { padding: 10px 11px 9px; }
+  .guide-window-header h3 { font-size: 13px; }
+  .guide-window-body { padding: 9px 11px 11px; }
+  .guide-section p, .guide-intro { font-size: 10px; }
+  .guide-button, .more-button, .install-button { padding: 7px 9px; font-size: 10px; }
+}
