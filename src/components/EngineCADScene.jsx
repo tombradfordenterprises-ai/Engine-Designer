@@ -225,8 +225,13 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
   // A one-shot camera transition is triggered by a new view or installation.
   // Once the transition finishes, OrbitControls remains fully free for the user.
   const cameraTransitionRef = useRef(null);
+  const previousViewRef = useRef(view);
 
   useEffect(() => {
+    // Bounds performs the initial camera fit once the GLB has loaded. Do not
+    // start a competing transition toward OrbitControls' default origin.
+    if (previousViewRef.current === view) return;
+    previousViewRef.current = view;
     if (!controlsRef.current) return;
     const installId = view.startsWith('install:') ? view.slice(8) : null;
     const focusPoints = {
