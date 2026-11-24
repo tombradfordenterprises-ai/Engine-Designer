@@ -13,7 +13,7 @@ export default function Toolbar({
   onBack
 }) {
   const isAlreadyInstalled = installed.includes(selected);
-  const installTitle = selected === 'block'
+  const installTitle = selected === 'engineBlock'
     ? 'Select a component installation location first'
     : isAlreadyInstalled
       ? 'This component is already installed'
