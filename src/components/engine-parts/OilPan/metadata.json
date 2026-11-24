@@ -1,0 +1,58 @@
+{
+  "id": "oilPan",
+  "name": "Oil pan / sump",
+  "group": "Lubrication",
+  "what": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
+  "why": "The oil pump draws oil from the sump and sends it to bearings and other moving parts.",
+  "where": "It bolts to the underside of the crankcase.",
+  "installable": true,
+  "recommendedOrder": 7,
+  "requires": [
+    "oilPickup",
+    "oilPanGasket"
+  ],
+  "installationReason": "Fit the oil pan after the pickup and sealing bead are in place.",
+  "hotspot": {
+    "label": "Oil pan / sump",
+    "targets": [
+      {
+        "position": [
+          -39.75,
+          1.65,
+          130.5
+        ],
+        "radius": 1.35
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -39.75,
+      12.45,
+      142.5
+    ],
+    "size": [
+      17,
+      3,
+      9
+    ]
+  },
+  "cameraFocus": [
+    -39.75,
+    3.0,
+    130.5
+  ],
+  "cameraDirection": [
+    0.1,
+    -0.65,
+    1
+  ],
+  "guide": {
+    "overview": "The oil pan is the reservoir that holds engine oil when it is not circulating through the engine.",
+    "operation": "Detailed operating principle and step-by-step operation of the oil pan / sump in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pan / sump will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pan / sump will be documented here.",
+    "failureModes": "Common oil pan / sump failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
