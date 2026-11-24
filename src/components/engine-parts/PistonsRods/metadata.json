@@ -1,0 +1,82 @@
+{
+  "id": "pistonsRods",
+  "name": "Pistons and connecting rods",
+  "group": "Rotating assembly",
+  "what": "Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.",
+  "why": "Combustion pressure pushes the pistons down, and the connecting rods transfer that force to the crankshaft.",
+  "where": "The pistons fit into the four cylinder bores, with their connecting rods extending down to the crankshaft.",
+  "installable": true,
+  "recommendedOrder": 3,
+  "requires": [
+    "crankshaft",
+    "mainBearingCaps"
+  ],
+  "installationReason": "The connecting rods need the crankshaft and main bearing caps in place so their big ends can attach to the crank throws.",
+  "hotspot": {
+    "label": "Pistons & rods",
+    "targets": [
+      {
+        "position": [
+          -45.25,
+          12.18,
+          130.0
+        ],
+        "radius": 0.78
+      },
+      {
+        "position": [
+          -41.75,
+          12.18,
+          130.0
+        ],
+        "radius": 0.78
+      },
+      {
+        "position": [
+          -38.25,
+          12.18,
+          130.0
+        ],
+        "radius": 0.78
+      },
+      {
+        "position": [
+          -34.75,
+          12.18,
+          130.0
+        ],
+        "radius": 0.78
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -22,
+      16,
+      142
+    ],
+    "size": [
+      14,
+      8,
+      5.5
+    ]
+  },
+  "cameraFocus": [
+    -40,
+    11,
+    130
+  ],
+  "cameraDirection": [
+    0.9,
+    1.1,
+    0.75
+  ],
+  "guide": {
+    "overview": "Four pistons slide inside the cylinder liners. Connecting rods link each piston to a crankshaft throw.",
+    "operation": "Detailed operating principle and step-by-step operation of the pistons and connecting rods in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the pistons and connecting rods will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the pistons and connecting rods will be documented here.",
+    "failureModes": "Common pistons and connecting rods failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
