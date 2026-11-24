@@ -1,0 +1,89 @@
+{
+  "id": "mainBearingCaps",
+  "name": "Main bearings and bearing caps",
+  "group": "Rotating assembly",
+  "what": "Five main bearing locations support the crankshaft. The bearing shells provide the precision surfaces, while the caps secure the crankshaft from below.",
+  "why": "The main bearings support the crankshaft while allowing it to rotate with a controlled oil film.",
+  "where": "The bearing shells sit at the five main journal supports, with the lower caps fitted underneath the crankshaft.",
+  "installable": true,
+  "recommendedOrder": 2,
+  "requires": [
+    "crankshaft"
+  ],
+  "installationReason": "Install the crankshaft first. The five main bearing cap assemblies are then fitted and secured beneath the crankshaft.",
+  "hotspot": {
+    "label": "Main bearings & caps",
+    "targets": [
+      {
+        "position": [
+          -46,
+          6.7,
+          131.0
+        ],
+        "radius": 0.62
+      },
+      {
+        "position": [
+          -43,
+          6.7,
+          131.0
+        ],
+        "radius": 0.62
+      },
+      {
+        "position": [
+          -40,
+          6.7,
+          131.0
+        ],
+        "radius": 0.62
+      },
+      {
+        "position": [
+          -37,
+          6.7,
+          131.0
+        ],
+        "radius": 0.62
+      },
+      {
+        "position": [
+          -34,
+          6.7,
+          131.0
+        ],
+        "radius": 0.62
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -40,
+      15.7,
+      141
+    ],
+    "size": [
+      15,
+      3.8,
+      5.2
+    ]
+  },
+  "cameraFocus": [
+    -40,
+    7,
+    131
+  ],
+  "cameraDirection": [
+    0.25,
+    0.85,
+    1
+  ],
+  "guide": {
+    "overview": "Five main bearing locations support the crankshaft. The bearing shells provide the precision surfaces, while the caps secure the crankshaft from below.",
+    "operation": "Detailed operating principle and step-by-step operation of the main bearings and bearing caps in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the main bearings and bearing caps will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the main bearings and bearing caps will be documented here.",
+    "failureModes": "Common main bearings and bearing caps failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
