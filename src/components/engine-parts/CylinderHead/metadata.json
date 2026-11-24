@@ -2,9 +2,9 @@
   "id": "cylinderHead",
   "name": "Cylinder head",
   "group": "Cylinder head",
-  "what": "The cylinder head closes the top of the cylinders and houses the combustion chambers, intake and exhaust ports, and valvetrain.",
-  "why": "It forms the upper part of each combustion chamber and controls the movement of air-fuel mixture into the cylinders and exhaust gases out.",
-  "where": "It mounts on top of the block, resting on the cylinder head gasket and aligning with the cylinder bores and fluid passages.",
+  "what": "The DOHC cylinder head closes the cylinders and carries the combustion chambers, four-valve-per-cylinder layout, intake and exhaust ports, camshaft bearing structures, spark-plug wells, and coolant and oil passages.",
+  "why": "It forms the upper combustion-chamber surfaces and supports the valvetrain that controls gas exchange. Its ports and passages route intake charge, exhaust gas, coolant, and lubricating oil.",
+  "where": "It mounts to the block over the head gasket. The combustion chambers face the pistons; the camshaft and valve hardware mount on the upper side.",
   "installable": true,
   "recommendedOrder": 9,
   "requires": [
@@ -17,7 +17,7 @@
       {
         "position": [
           -40.0,
-          13.4,
+          13.55,
           130.5
         ],
         "radius": 1.15
@@ -38,7 +38,7 @@
   },
   "cameraFocus": [
     -40.0,
-    13.5,
+    13.65,
     130.5
   ],
   "cameraDirection": [
@@ -47,9 +47,9 @@
     1.0
   ],
   "guide": {
-    "overview": "The cylinder head is an aluminum-alloy casting mounted above the block. It forms the combustion-chamber roof and contains the intake and exhaust ports, valve guides, and the DOHC VTEC valvetrain architecture used by the B16 family.",
-    "operation": "The intake and exhaust valves are operated by the camshaft and valvetrain assemblies. Air enters through the intake ports, combustion occurs in the chambers above the pistons, and exhaust gases leave through the exhaust ports. The head also routes coolant and lubricating oil through dedicated passages.",
-    "construction": "Placeholder: construction details, material grades, manufacturing features, and component variations will be documented after source verification.",
+    "overview": "The B16 cylinder head is an aluminum-alloy DOHC, four-valve-per-cylinder casting. It forms the roof of each combustion chamber and contains the intake and exhaust ports, valve guides and seats, spark-plug wells, camshaft bearing supports, and oil and coolant passages.",
+    "operation": "The intake and exhaust valves are actuated by the twin camshafts through the valvetrain. The intake ports feed the cylinders, combustion occurs between the head chambers and piston crowns, and exhaust ports route spent gases away. Coolant circulates through water jackets, while pressurized oil feeds the camshaft and valvetrain areas.",
+    "construction": "The teaching model distinguishes the main aluminum casting, machined deck, four combustion-chamber areas, valve-seat locations, twin camshaft support rails, spark-plug wells, port flanges, head-bolt bosses, and external casting ribs. Exact casting revisions and material specifications vary by B16 version and will be added after verification.",
     "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
     "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
     "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
