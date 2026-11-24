@@ -1,0 +1,457 @@
+{
+  "engineId": "B16",
+  "sequenceType": "recommended; dependency rules are authoritative",
+  "steps": [
+    {
+      "step": 1,
+      "partId": "crankshaft",
+      "label": "Crankshaft",
+      "requires": [],
+      "status": "implemented"
+    },
+    {
+      "step": 2,
+      "partId": "mainBearingCaps",
+      "label": "Main bearings and bearing caps",
+      "requires": [
+        "crankshaft"
+      ],
+      "status": "implemented"
+    },
+    {
+      "step": 3,
+      "partId": "pistonsRods",
+      "label": "Pistons and connecting rods",
+      "requires": [
+        "crankshaft",
+        "mainBearingCaps"
+      ],
+      "status": "implemented"
+    },
+    {
+      "step": 4,
+      "partId": "oilPump",
+      "label": "Oil pump assembly",
+      "requires": [
+        "crankshaft",
+        "mainBearingCaps",
+        "pistonsRods"
+      ],
+      "status": "implemented"
+    },
+    {
+      "step": 5,
+      "partId": "oilPickup",
+      "label": "Oil pickup tube and screen",
+      "requires": [
+        "oilPump"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 6,
+      "partId": "oilPan",
+      "label": "Oil pan / sump",
+      "requires": [
+        "oilPump",
+        "crankshaft",
+        "pistonsRods"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 7,
+      "partId": "oilPanGasket",
+      "label": "Oil pan gasket / sealant",
+      "requires": [
+        "oilPan"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 8,
+      "partId": "headGasket",
+      "label": "Cylinder head gasket",
+      "requires": [
+        "pistonsRods"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 9,
+      "partId": "cylinderHead",
+      "label": "Cylinder head",
+      "requires": [
+        "headGasket"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 10,
+      "partId": "headBolts",
+      "label": "Cylinder head bolts",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 11,
+      "partId": "valvesSprings",
+      "label": "Valves and valve springs",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 12,
+      "partId": "camshafts",
+      "label": "Intake and exhaust camshafts",
+      "requires": [
+        "valvesSprings"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 13,
+      "partId": "rockerVtec",
+      "label": "Rocker arms and VTEC assembly",
+      "requires": [
+        "camshafts"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 14,
+      "partId": "camCaps",
+      "label": "Camshaft caps",
+      "requires": [
+        "camshafts"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 15,
+      "partId": "camGears",
+      "label": "Camshaft gears",
+      "requires": [
+        "camshafts"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 16,
+      "partId": "waterPump",
+      "label": "Water pump",
+      "requires": [
+        "crankshaft"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 17,
+      "partId": "timingTensioner",
+      "label": "Timing belt tensioner",
+      "requires": [
+        "waterPump",
+        "camGears"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 18,
+      "partId": "timingBelt",
+      "label": "Timing belt",
+      "requires": [
+        "camGears",
+        "timingTensioner"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 19,
+      "partId": "timingCovers",
+      "label": "Timing belt covers",
+      "requires": [
+        "timingBelt"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 20,
+      "partId": "intakeManifold",
+      "label": "Intake manifold",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 21,
+      "partId": "fuelRail",
+      "label": "Fuel rail and injectors",
+      "requires": [
+        "intakeManifold"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 22,
+      "partId": "throttleBody",
+      "label": "Throttle body",
+      "requires": [
+        "intakeManifold"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 23,
+      "partId": "exhaustManifold",
+      "label": "Exhaust manifold",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 24,
+      "partId": "distributor",
+      "label": "Distributor and ignition components",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 25,
+      "partId": "alternator",
+      "label": "Alternator assembly",
+      "requires": [
+        "crankPulley"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 26,
+      "partId": "starter",
+      "label": "Starter motor",
+      "requires": [
+        "transmissionCase"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 27,
+      "partId": "accessoryBrackets",
+      "label": "Accessory brackets",
+      "requires": [
+        "crankPulley"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 28,
+      "partId": "accessoryPulleysBelts",
+      "label": "Accessory pulleys and belts",
+      "requires": [
+        "accessoryBrackets"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 29,
+      "partId": "coolantHoses",
+      "label": "Coolant hoses and thermostat housing",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 30,
+      "partId": "flywheel",
+      "label": "Flywheel",
+      "requires": [
+        "crankshaft"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 31,
+      "partId": "clutchDisc",
+      "label": "Clutch disc",
+      "requires": [
+        "flywheel"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 32,
+      "partId": "pressurePlate",
+      "label": "Clutch pressure plate",
+      "requires": [
+        "clutchDisc"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 33,
+      "partId": "releaseBearingFork",
+      "label": "Release bearing and clutch fork",
+      "requires": [
+        "pressurePlate"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 34,
+      "partId": "transmissionBellhousing",
+      "label": "Transmission bellhousing",
+      "requires": [
+        "flywheel"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 35,
+      "partId": "transmissionCase",
+      "label": "5-speed transmission casing",
+      "requires": [
+        "transmissionBellhousing"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 36,
+      "partId": "transmissionGears",
+      "label": "Transmission gears and shafts",
+      "requires": [
+        "transmissionCase"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 37,
+      "partId": "synchronizers",
+      "label": "Synchronizers and shift forks",
+      "requires": [
+        "transmissionGears"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 38,
+      "partId": "differential",
+      "label": "Differential assembly",
+      "requires": [
+        "transmissionCase",
+        "transmissionGears"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 39,
+      "partId": "transmissionSideCover",
+      "label": "Transmission side cover",
+      "requires": [
+        "differential"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 40,
+      "partId": "axlesCv",
+      "label": "Axles and CV joints",
+      "requires": [
+        "differential"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 41,
+      "partId": "engineMounts",
+      "label": "Engine mounts",
+      "requires": [
+        "engineBlock"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 42,
+      "partId": "transmissionMounts",
+      "label": "Transmission mounts",
+      "requires": [
+        "transmissionCase"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 43,
+      "partId": "sensorsHarness",
+      "label": "Sensors and wiring harness",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 44,
+      "partId": "sparkPlugs",
+      "label": "Spark plugs",
+      "requires": [
+        "cylinderHead"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 45,
+      "partId": "fluids",
+      "label": "Engine fluids",
+      "requires": [
+        "oilPan",
+        "waterPump"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 46,
+      "partId": "finalInspection",
+      "label": "Final inspection",
+      "requires": [
+        "fluids",
+        "sensorsHarness",
+        "sparkPlugs"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 47,
+      "partId": "oilFilter",
+      "label": "Oil filter assembly",
+      "requires": [
+        "engineBlock"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 48,
+      "partId": "crankPulley",
+      "label": "Crankshaft accessory pulley",
+      "requires": [
+        "crankshaft"
+      ],
+      "status": "catalog-placeholder"
+    },
+    {
+      "step": 49,
+      "partId": "accessoryBelt",
+      "label": "Accessory drive belt",
+      "requires": [
+        "crankPulley",
+        "alternator"
+      ],
+      "status": "catalog-placeholder"
+    }
+  ]
+}
