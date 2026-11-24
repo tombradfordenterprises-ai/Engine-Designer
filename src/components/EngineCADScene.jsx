@@ -218,34 +218,54 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, showOilPump, installed, view }) {
+function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMainBearingCaps, showPistonsRods, showOilPump, installed, view, onInstallPart }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
-  // Apply the selected camera preset while preserving the current zoom distance
-  // and the target established by Drei's Bounds fit.
+  // A one-shot camera transition is triggered by a new view or installation.
+  // Once the transition finishes, OrbitControls remains fully free for the user.
+  const cameraTransitionRef = useRef(null);
+
   useEffect(() => {
     if (!controlsRef.current) return;
-
-    const target = controlsRef.current.target.clone();
-    const currentDistance = camera.position.distanceTo(target);
-    const distance = Math.max(currentDistance, 8);
-
-    const directions = {
-      isometric: new THREE.Vector3(1, 0.8, 1),
-      front: new THREE.Vector3(0, 0, 1),
-      top: new THREE.Vector3(0, 1, 0.001),
-      side: new THREE.Vector3(1, 0, 0),
-      bottom: new THREE.Vector3(0, -1, 0.001),
+    const installId = view.startsWith('install:') ? view.slice(8) : null;
+    const focusPoints = {
+      crankshaft: new THREE.Vector3(-40, 8, 131),
+      mainBearingCaps: new THREE.Vector3(-40, 7, 131),
+      pistonsRods: new THREE.Vector3(-40, 11, 130),
+      oilPump: new THREE.Vector3(-47.8, 8, 131),
     };
-
-    const direction = (directions[view] || directions.isometric).clone().normalize();
-    camera.position.copy(target).add(direction.multiplyScalar(distance));
-    camera.up.set(0, 1, 0);
-    camera.lookAt(target);
-    controlsRef.current.target.copy(target);
-    controlsRef.current.update();
+    const directions = {
+      isometric: new THREE.Vector3(1, 0.8, 1), front: new THREE.Vector3(0, 0, 1),
+      top: new THREE.Vector3(0, 1, 0.001), side: new THREE.Vector3(1, 0, 0), bottom: new THREE.Vector3(0, -1, 0.001),
+      crankshaft: new THREE.Vector3(0.9, 0.45, 1), mainBearingCaps: new THREE.Vector3(0.25, 0.85, 1),
+      pistonsRods: new THREE.Vector3(0.9, 1.1, 0.75), oilPump: new THREE.Vector3(-1.0, 0.5, 0.9),
+    };
+    const controls = controlsRef.current;
+    const target = installId && focusPoints[installId] ? focusPoints[installId].clone() : controls.target.clone();
+    const currentDistance = camera.position.distanceTo(controls.target);
+    const distance = Math.max(18, Math.min(currentDistance || 55, 65));
+    const direction = (directions[installId || view] || directions.isometric).clone().normalize();
+    cameraTransitionRef.current = {
+      target,
+      position: target.clone().add(direction.multiplyScalar(distance)),
+    };
   }, [view, camera]);
+
+  useFrame((_, delta) => {
+    const transition = cameraTransitionRef.current;
+    if (!transition || !controlsRef.current) return;
+    const blend = 1 - Math.exp(-delta * 2.4);
+    camera.position.lerp(transition.position, blend);
+    controlsRef.current.target.lerp(transition.target, blend);
+    controlsRef.current.update();
+    if (camera.position.distanceTo(transition.position) < 0.025 && controlsRef.current.target.distanceTo(transition.target) < 0.025) {
+      camera.position.copy(transition.position);
+      controlsRef.current.target.copy(transition.target);
+      cameraTransitionRef.current = null;
+      controlsRef.current.update();
+    }
+  });
 
   return (
     <>
@@ -267,6 +287,7 @@ function SceneContents({ selected, onSelect, setHovered, showCrankshaft, showMai
             showMainBearingCaps={showMainBearingCaps}
             showPistonsRods={showPistonsRods}
             showOilPump={showOilPump}
+            onInstallPart={onInstallPart}
           />
           <InstallationHotspots
             installed={installed}
@@ -299,6 +320,7 @@ export default function EngineCADScene({
   showPistonsRods = false,
   showOilPump = false,
   view = 'isometric',
+  onInstallPart = () => {},
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -321,6 +343,7 @@ export default function EngineCADScene({
         showPistonsRods={showPistonsRods}
         showOilPump={showOilPump}
         view={view}
+        onInstallPart={onInstallPart}
       />
     </Canvas>
   );
