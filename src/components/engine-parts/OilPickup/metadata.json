@@ -1,0 +1,57 @@
+{
+  "id": "oilPickup",
+  "name": "Oil pickup tube and screen",
+  "group": "Lubrication",
+  "what": "The pickup tube draws oil from the sump through a screened inlet.",
+  "why": "The screen helps keep larger debris from entering the oil pump.",
+  "where": "It connects to the oil pump and extends down into the oil pan.",
+  "installable": true,
+  "recommendedOrder": 5,
+  "requires": [
+    "oilPump"
+  ],
+  "installationReason": "The pickup tube connects to the oil pump and its screened inlet sits inside the oil pan sump.",
+  "hotspot": {
+    "label": "Oil pickup tube & screen",
+    "targets": [
+      {
+        "position": [
+          -42.8,
+          4.3,
+          130.1
+        ],
+        "radius": 1.05
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -45.0,
+      12.4,
+      140.4
+    ],
+    "size": [
+      6,
+      3,
+      3
+    ]
+  },
+  "cameraFocus": [
+    -42.8,
+    3.1,
+    130.1
+  ],
+  "cameraDirection": [
+    0.1,
+    -0.45,
+    1
+  ],
+  "guide": {
+    "overview": "The pickup tube draws oil from the sump through a screened inlet.",
+    "operation": "Detailed operating principle and step-by-step operation of the oil pickup tube and screen in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pickup tube and screen will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pickup tube and screen will be documented here.",
+    "failureModes": "Common oil pickup tube and screen failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
