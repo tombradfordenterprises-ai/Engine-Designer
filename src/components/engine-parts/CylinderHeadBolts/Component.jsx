@@ -2,9 +2,10 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
-// Ten simplified fasteners in two rows. Visual prototype only;
-// verify exact bolt dimensions and tightening procedure from service data.
-const INSTALLED = new THREE.Vector3(-40.0, 13.7, 130.5);
+// Ten simplified fasteners in two rows. Their heads are raised to the imported
+// casting's top face (world Y ~= 17.68); shanks extend down through the head.
+// Pattern is a visual alignment prototype, not verified factory hole coordinates.
+const INSTALLED = new THREE.Vector3(-40.0, 15.8, 130.5);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 const X_POSITIONS = [-6.8, -3.4, 0, 3.4, 6.8];
 const Z_POSITIONS = [-3.75, 3.75];
@@ -37,8 +38,8 @@ export default function CylinderHeadBolts({ installed = false }) {
       {X_POSITIONS.flatMap((x, xIndex) => Z_POSITIONS.map((z, rowIndex) => (
         <group key={`${xIndex}-${rowIndex}`} position={[x, 0, z]}>
           {/* Long shank passing through the head and into the block. */}
-          <mesh position={[0, -0.15, 0]} material={boltMaterial} castShadow>
-            <cylinderGeometry args={[0.22, 0.22, 3.1, 16]} />
+          <mesh position={[0, -1.55, 0]} material={boltMaterial} castShadow>
+            <cylinderGeometry args={[0.22, 0.22, 5.3, 16]} />
           </mesh>
           {/* Washer and external hex head. */}
           <mesh position={[0, 1.48, 0]} material={washerMaterial} castShadow>
