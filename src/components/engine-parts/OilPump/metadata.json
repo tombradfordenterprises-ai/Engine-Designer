@@ -1,0 +1,59 @@
+{
+  "id": "oilPump",
+  "name": "Oil pump assembly",
+  "group": "Lubrication",
+  "what": "The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.",
+  "why": "A steady supply of pressurized oil lubricates the crankshaft bearings and other moving parts.",
+  "where": "The pump mounts to the timing-belt end of the B-series block, around the front of the crankshaft.",
+  "installable": true,
+  "recommendedOrder": 4,
+  "requires": [
+    "crankshaft",
+    "mainBearingCaps",
+    "pistonsRods"
+  ],
+  "installationReason": "Install the rotating assembly first. The oil pump mounts at the timing-belt end of the block around the crankshaft nose.",
+  "hotspot": {
+    "label": "Oil pump assembly",
+    "targets": [
+      {
+        "position": [
+          -47.8,
+          8.0,
+          131.0
+        ],
+        "radius": 0.82
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -47.8,
+      16.5,
+      140
+    ],
+    "size": [
+      5,
+      5,
+      5
+    ]
+  },
+  "cameraFocus": [
+    -47.8,
+    8,
+    131
+  ],
+  "cameraDirection": [
+    -1.0,
+    0.5,
+    0.9
+  ],
+  "guide": {
+    "overview": "The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.",
+    "operation": "Detailed operating principle and step-by-step operation of the oil pump assembly in the Honda B16 engine will be researched and added here.",
+    "construction": "Materials, manufacturing methods, subcomponents, and design features of the oil pump assembly will be documented here.",
+    "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
+    "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the oil pump assembly will be documented here.",
+    "failureModes": "Common oil pump assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
+  }
+}
