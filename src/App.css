@@ -166,3 +166,102 @@ h1 span { color: #87919a; font-weight: 450; }
   .guide-section p, .guide-intro { font-size: 10px; }
   .guide-button, .more-button, .install-button { padding: 7px 9px; font-size: 10px; }
 }
+
+
+/* [080] Warm printed-paper treatment for the detailed component guide. */
+.part-guide-window {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(255,255,255,.78), transparent 46%),
+    radial-gradient(ellipse at 92% 90%, rgba(184,154,105,.10), transparent 48%),
+    repeating-linear-gradient(0deg, rgba(104,78,43,.018) 0px, rgba(104,78,43,.018) 1px, transparent 1px, transparent 4px),
+    #f6f0e2;
+  border: 1px solid #cbbd9f;
+  border-left: 8px solid #c7b58f;
+  border-radius: 5px 10px 10px 5px;
+  box-shadow:
+    inset 1px 0 0 rgba(255,255,255,.9),
+    inset 0 0 0 1px rgba(255,255,255,.42),
+    0 13px 34px rgba(53,43,27,.20);
+}
+.part-guide-window::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  width: 1px;
+  background: rgba(164,91,73,.24);
+  pointer-events: none;
+}
+.guide-window-header {
+  position: relative;
+  padding: 16px 19px 13px 27px;
+  border-bottom: 1px solid rgba(126,103,69,.28);
+  background: linear-gradient(180deg, rgba(255,255,255,.36), rgba(228,215,190,.22));
+}
+.guide-kicker {
+  color: #887653;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.guide-window-header h3 {
+  color: #352b20;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+.guide-close-button {
+  background: rgba(111,91,61,.10);
+  color: #66543a;
+  border: 1px solid rgba(111,91,61,.18);
+}
+.guide-close-button:hover { background: rgba(111,91,61,.18); }
+.guide-window-body {
+  padding: 15px 20px 18px 27px;
+  background: transparent;
+}
+.guide-intro {
+  color: #62533d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.65;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(126,103,69,.24);
+}
+.guide-section {
+  padding: 11px 0 10px;
+  border-top: 1px solid rgba(126,103,69,.18);
+}
+.guide-section h4 {
+  color: #806b48;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .13em;
+}
+.guide-section p {
+  color: #3e3428;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.guide-data-note {
+  color: #78684e;
+  background: rgba(172,146,105,.12);
+  border: 1px solid rgba(126,103,69,.16);
+  border-radius: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10px;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .guide-window-header { padding: 12px 13px 10px 22px; }
+  .guide-window-header h3 { font-size: 14px; }
+  .guide-window-body { padding: 11px 13px 13px 22px; }
+  .guide-section p, .guide-intro { font-size: 11px; line-height: 1.55; }
+}
