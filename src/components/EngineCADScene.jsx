@@ -154,7 +154,9 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
         const anchor = spot.targets.reduce((sum, target) => sum.map((value, axis) => value + target.position[axis] / spot.targets.length), [0, 0, 0]);
         return (
           <group key={spot.id} name={`${spot.id}-targets`}>
-            {spot.targets.map((target, index) => (
+            {/* Show only the next eligible part's markers. Locked and future
+                markers stay hidden so they do not float over the bare block. */}
+            {showLabel && spot.targets.map((target, index) => (
               <PulsingTarget
                 key={`${spot.id}-${index}`}
                 target={target}
