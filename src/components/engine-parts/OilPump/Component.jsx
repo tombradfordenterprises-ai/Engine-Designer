@@ -3,10 +3,11 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
 // Visual prototype coordinates based on the current engine scene. These are
-// not factory B16 CAD dimensions; the assembly is positioned at the timing end.
-// The timing-belt end is the block's +X end (near x=-31). Center the pump
-// rotor opening on the crankshaft centerline so the crank nose passes through it.
-const INSTALLED = new THREE.Vector3(-30.35, 5.5, 130.0);
+// not factory B16 CAD dimensions. The pump is placed at the OPPOSITE
+// longitudinal end of the block, beside the short protruding end feature.
+// The crankshaft runs on the X axis at y=5.5, z=130.0; keep the pump's
+// rotor opening concentric with that axis.
+const INSTALLED = new THREE.Vector3(-48.0, 5.5, 130.0);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8.5, 9.0));
 
 const housing = new THREE.MeshStandardMaterial({ color: '#69747d', metalness: 0.78, roughness: 0.3 });
