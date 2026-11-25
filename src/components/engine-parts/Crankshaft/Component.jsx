@@ -10,7 +10,10 @@ const CRANKSHAFT_URL = '/models/crankshaft.glb';
 // centerline used by the five main-bearing positions. These are visual
 // assembly coordinates, not verified Honda service dimensions.
 const PREVIEW_POSITION = new THREE.Vector3(-22.25, 8.0, 131.0);
-const INSTALLED_POSITION = new THREE.Vector3(-39.75, 8.0, 131.0);
+// The block's rear main-seal/tunnel opening is offset from the block's
+// overall bounding-box center. These Y/Z coordinates put the crankshaft
+// axis on the center of that circular opening in the imported block mesh.
+const INSTALLED_POSITION = new THREE.Vector3(-39.75, 5.5, 130.0);
 const MODEL_SCALE = new THREE.Vector3(30.5, 28, 28);
 
 export default function Crankshaft({ installed = false }) {
@@ -43,8 +46,8 @@ export default function Crankshaft({ installed = false }) {
 
     // The source mesh's broad flange is on local -X. Turn it toward the
     // block's visible +X end opening while keeping the shaft axis on X.
-    // The slight extra X scale lets the end extend just beyond the block
-    // end face, making the crank nose visibly pass through the tunnel opening.
+    // The slight extra X scale lets the end reach through the block end face.
+    // The installed group position aligns the shaft axis with the tunnel opening.
     copy.rotation.y = Math.PI;
     copy.updateMatrixWorld(true);
 
