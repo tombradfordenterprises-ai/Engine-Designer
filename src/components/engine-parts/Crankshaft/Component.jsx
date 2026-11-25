@@ -5,13 +5,11 @@ import { useGLTF } from '@react-three/drei';
 
 const CRANKSHAFT_URL = '/models/crankshaft.glb';
 
-// The imported mesh is approximately 589 mm long along its local X axis.
-// At this scene scale it spans the B16 block length and follows the same
-// centerline used by the five main-bearing positions. These are visual
-// assembly coordinates, not verified Honda service dimensions.
-const PREVIEW_POSITION = new THREE.Vector3(-22.25, 8.0, 131.0);
-const INSTALLED_POSITION = new THREE.Vector3(-39.75, 8.0, 131.0);
-const MODEL_SCALE = 28;
+// Provisional scene coordinates: preview beside the B16 block, then move
+// toward the lower crankcase. These are visual prototype coordinates,
+// not verified Honda B16 installation measurements.
+const PREVIEW_POSITION = new THREE.Vector3(-22.25, 8.0, 130.5);
+const INSTALLED_POSITION = new THREE.Vector3(-39.749, 8.002, 130.5);
 
 export default function Crankshaft({ installed = false }) {
   const groupRef = useRef(null);
@@ -23,8 +21,10 @@ export default function Crankshaft({ installed = false }) {
 
     copy.traverse((node) => {
       if (!node.isMesh) return;
+
       node.castShadow = true;
       node.receiveShadow = true;
+
       if (Array.isArray(node.material)) {
         node.material = node.material.map((material) => material.clone());
       } else if (node.material) {
@@ -32,17 +32,21 @@ export default function Crankshaft({ installed = false }) {
       }
     });
 
-    copy.scale.setScalar(MODEL_SCALE);
+    // Match the crankshaft's longitudinal span to the imported block.
+    // The source GLB is about 0.589 units long; the block spans about 17.50
+    // scene units along X. Keep the crankshaft's cross-section unchanged.
+    copy.scale.set(29.75, 28, 28);
     copy.updateMatrixWorld(true);
 
-    // Center the scaled imported geometry around the component origin.
+    // Center the imported geometry around its own origin.
     const bounds = new THREE.Box3().setFromObject(copy);
     const center = new THREE.Vector3();
     bounds.getCenter(center);
     copy.position.sub(center);
 
-    // The source mesh's broad flange is on local -X. Turn it toward the
-    // block's visible +X end opening while keeping the shaft axis on X.
+    // Keep the shaft on the block's longitudinal X axis. The 180-degree
+    // reversal presents the flange toward the visible end opening. The
+    // flywheel and accessory pulley remain separate components.
     copy.rotation.y = Math.PI;
     copy.updateMatrixWorld(true);
 
@@ -51,15 +55,25 @@ export default function Crankshaft({ installed = false }) {
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
+
+    // Ease smoothly toward preview (0) or installed (1).
     const target = installed ? 1 : 0;
-    progressRef.current += (target - progressRef.current) * Math.min(1, delta * 2.8);
+    const speed = Math.min(1, delta * 2.8);
+    progressRef.current += (target - progressRef.current) * speed;
+
+    // Smoothstep easing prevents a harsh start/stop.
     const t = progressRef.current;
     const eased = t * t * (3 - 2 * t);
-    groupRef.current.position.lerpVectors(PREVIEW_POSITION, INSTALLED_POSITION, eased);
+
+    groupRef.current.position.lerpVectors(
+      PREVIEW_POSITION,
+      INSTALLED_POSITION,
+      eased
+    );
   });
 
   return (
-    <group ref={groupRef} position={PREVIEW_POSITION.toArray()} name="b16-crankshaft-assembly">
+    <group ref={groupRef} position={PREVIEW_POSITION.toArray()}>
       <primitive object={model} dispose={null} />
     </group>
   );
