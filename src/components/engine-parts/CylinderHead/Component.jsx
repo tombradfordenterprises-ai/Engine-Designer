@@ -10,7 +10,7 @@ import { useGLTF } from '@react-three/drei';
 // This is visual mesh geometry, not a watertight editable CAD solid.
 const MODEL_URL = '/models/b16_vtec_11_cylinder_head.glb';
 const SCENE_SCALE = 40.073;
-const INSTALLED = new THREE.Vector3(-39.749, 13.867, 130.51);
+const INSTALLED = new THREE.Vector3(-39.858, 13.867, 130.51);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 9, 12));
 
 function ImportedCylinderHeadMesh() {
