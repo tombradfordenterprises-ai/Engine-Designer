@@ -5,10 +5,10 @@ import { useFrame } from '@react-three/fiber';
 // Ten simplified fasteners in two rows. Their heads are raised to the imported
 // casting's top face (world Y ~= 17.68); shanks extend down through the head.
 // Pattern is a visual alignment prototype, not verified factory hole coordinates.
-const INSTALLED = new THREE.Vector3(-40.0, 15.8, 130.5);
+const INSTALLED = new THREE.Vector3(-40.0, 15.8, 130.0);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 const X_POSITIONS = [-6.8, -3.4, 0, 3.4, 6.8];
-const Z_POSITIONS = [-3.75, 3.75];
+const Z_POSITIONS = [-3.25, 3.25];
 
 const boltMaterial = new THREE.MeshStandardMaterial({
   color: '#aeb8bf',
