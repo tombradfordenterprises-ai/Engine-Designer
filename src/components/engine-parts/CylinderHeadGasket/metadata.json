@@ -1,4 +1,3 @@
-
 {
   "id": "headGasket",
   "name": "Cylinder head gasket",
@@ -32,9 +31,9 @@
       130.5
     ],
     "size": [
-      16.7,
+      17.0,
       0.25,
-      7.1
+      9.0
     ]
   },
   "installedHitbox": {
@@ -44,9 +43,9 @@
       130.5
     ],
     "size": [
-      16.7,
+      17.0,
       0.25,
-      7.1
+      9.0
     ]
   },
   "cameraFocus": [
@@ -62,7 +61,7 @@
   "guide": {
     "overview": "The cylinder head gasket forms the sealed interface between the block deck and cylinder head. It surrounds each cylinder opening and seals the oil and coolant passages that cross the joint.",
     "operation": "When the engine runs, the gasket must contain high combustion pressure while preventing coolant and lubricating oil from crossing into the wrong passages. Its sealing layers and fire-ring areas accommodate the small surface irregularities and thermal movement of the mating castings.",
-    "construction": "Placeholder: construction details, material grades, manufacturing features, and component variations will be documented after source verification.",
+    "construction": "This visual prototype has a rounded 17.0 x 9.0 scene-unit footprint, four cylinder openings, and ten illustrative head-bolt clearance holes aligned to the current bolt layout. These are scene-fit dimensions, not verified Honda B16 factory gasket dimensions.",
     "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
     "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
     "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
