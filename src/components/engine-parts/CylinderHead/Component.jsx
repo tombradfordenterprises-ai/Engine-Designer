@@ -3,14 +3,14 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 
-// Imported GrabCAD VTEC-11_1 mesh. The source STEP/OBJ dimensions were
-// normalized from millimeters to meters and centered by the conversion step.
-// Scale 40.073 maps its ~436.5 mm length to the block's measured 17.498 scene units.
-// Position places its lower deck near the block's y=12.0 deck plane.
-// This is visual mesh geometry, not a watertight editable CAD solid.
+// Fit the actual lower deck face to the block's measured longitudinal edges.
+// The imported mesh's lower deck is slightly shorter than its overall bounding
+// box, so scale only along the engine length (X). The oil-pump end (X-min) is
+// held fixed while the opposite deck edge is extended to the block edge.
+// This is a visual fit to the supplied block mesh, not OEM-verified CAD.
 const MODEL_URL = '/models/b16_vtec_11_cylinder_head.glb';
-const SCENE_SCALE = 40.073;
-const INSTALLED = new THREE.Vector3(-39.858, 13.867, 130.51);
+const SCENE_SCALE = [41.1271, 40.073, 40.073];
+const INSTALLED = new THREE.Vector3(-39.6281, 13.867, 130.51);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 9, 12));
 
 function ImportedCylinderHeadMesh() {
