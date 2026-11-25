@@ -12,13 +12,13 @@
     "mainBearingCaps",
     "pistonsRods"
   ],
-  "installationReason": "Install the rotating assembly first. The oil pump mounts at the timing-belt end of the block around the crankshaft nose.",
+  "installationReason": "Install the rotating assembly first. The pump mounts at the timing-belt end, concentric with the crankshaft nose.",
   "hotspot": {
     "label": "Oil pump assembly",
     "targets": [
       {
         "position": [
-          -31.0,
+          -30.35,
           5.5,
           130.0
         ],
@@ -28,7 +28,7 @@
   },
   "hitbox": {
     "position": [
-      -31.0,
+      -30.35,
       5.5,
       130.0
     ],
@@ -39,12 +39,12 @@
     ]
   },
   "cameraFocus": [
-    -31.0,
+    -30.35,
     5.5,
     130.0
   ],
   "cameraDirection": [
-    -1.0,
+    1.0,
     0.5,
     0.9
   ],
