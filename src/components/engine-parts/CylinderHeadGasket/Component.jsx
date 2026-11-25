@@ -3,9 +3,9 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
-// Visual prototype footprint measured from the imported cylinder-head deck
-// mesh: approximately 17.02 x 7.42 scene units. The gasket is kept slightly
-// inside that outline; it is not an OEM gasket drawing or service dimension.
+// Visual prototype footprint tuned to the imported block/head deck envelope:
+// approximately 17.0 x 9.0 scene units. This is not an OEM gasket drawing
+// or factory service dimension.
 const INSTALLED = new THREE.Vector3(-40.0, 12.0, 130.5);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 
@@ -18,16 +18,16 @@ const fireRingMaterial = new THREE.MeshStandardMaterial({
 
 function createGasketGeometry() {
   const shape = new THREE.Shape();
-  // Rounded outer perimeter: 16.7 x 7.1, just inside the imported deck edge.
-  shape.moveTo(-7.9, -3.55);
-  shape.lineTo(7.9, -3.55);
-  shape.quadraticCurveTo(8.35, -3.55, 8.35, -3.10);
-  shape.lineTo(8.35, 3.10);
-  shape.quadraticCurveTo(8.35, 3.55, 7.9, 3.55);
-  shape.lineTo(-7.9, 3.55);
-  shape.quadraticCurveTo(-8.35, 3.55, -8.35, 3.10);
-  shape.lineTo(-8.35, -3.10);
-  shape.quadraticCurveTo(-8.35, -3.55, -7.9, -3.55);
+  // Rounded outer perimeter: 17.0 x 9.0, just inside the imported deck edge.
+  shape.moveTo(-8.05, -4.5);
+  shape.lineTo(8.05, -4.5);
+  shape.quadraticCurveTo(8.5, -4.5, 8.5, -4.05);
+  shape.lineTo(8.5, 4.05);
+  shape.quadraticCurveTo(8.5, 4.5, 8.05, 4.5);
+  shape.lineTo(-8.05, 4.5);
+  shape.quadraticCurveTo(-8.5, 4.5, -8.5, 4.05);
+  shape.lineTo(-8.5, -4.05);
+  shape.quadraticCurveTo(-8.5, -4.5, -8.05, -4.5);
   shape.closePath();
 
   // Four cylinder openings retain the established piston spacing.
@@ -37,11 +37,14 @@ function createGasketGeometry() {
     shape.holes.push(hole);
   });
 
-  // Small illustrative oil/coolant passages moved inside the narrower edge.
-  [[-7.55, -2.75], [-7.55, 2.75], [7.55, -2.75], [7.55, 2.75], [0, -3.05], [0, 3.05]].forEach(([x, y]) => {
-    const hole = new THREE.Path();
-    hole.absellipse(x, y, 0.24, 0.24, 0, Math.PI * 2, true, 0);
-    shape.holes.push(hole);
+  // Ten bolt-clearance holes follow the same 5-by-2 layout as the
+  // cylinder-head bolt locations in the current scene.
+  [-6.8, -3.4, 0, 3.4, 6.8].forEach((x) => {
+    [-3.75, 3.75].forEach((z) => {
+      const hole = new THREE.Path();
+      hole.absellipse(x, z, 0.28, 0.28, 0, Math.PI * 2, true, 0);
+      shape.holes.push(hole);
+    });
   });
 
   return new THREE.ExtrudeGeometry(shape, {
