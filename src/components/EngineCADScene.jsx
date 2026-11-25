@@ -261,7 +261,9 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
       <directionalLight position={[-5, 3, -4]} intensity={0.85} />
 
       <Suspense fallback={null}>
-        <Bounds fit clip observe margin={1.35}>
+        {/* Fit the camera once on initial load. Do not auto-refit when each
+            installed component mounts; that was overriding the user's orbit. */}
+        <Bounds fit clip margin={1.35}>
           <BareB16Block
             selected={selected === 'engineBlock'}
             onSelect={onSelect}
@@ -285,10 +287,20 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
       <OrbitControls
         ref={controlsRef}
         makeDefault
+        enabled
+        enableRotate
+        enablePan
+        enableZoom
         enableDamping
         dampingFactor={0.08}
         minDistance={0.6}
         maxDistance={80}
+        onStart={() => {
+          // A real user gesture takes priority over any automatic install view.
+          // Cancel the camera tween immediately so orbit/pan/zoom feel direct.
+          cameraTransitionRef.current = null;
+          if (controlsRef.current) controlsRef.current.enabled = true;
+        }}
       />
       {!isMobile && <Environment preset="studio" />}
     </>
@@ -334,7 +346,7 @@ export default function EngineCADScene({
         powerPreference: isMobile ? 'low-power' : 'default',
         precision: isMobile ? 'mediump' : 'highp',
       }}
-      style={{ cursor: hovered ? 'pointer' : 'grab', touchAction: 'pan-y' }}
+      style={{ cursor: hovered ? 'pointer' : 'grab', touchAction: 'none' }}
     >
       <color attach="background" args={['#ffffff']} />
       <SceneContents
