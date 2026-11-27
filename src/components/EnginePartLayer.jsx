@@ -5,8 +5,8 @@ import { enginePartList } from '../data/enginePartRegistry.js';
 /**
  * Generic renderer for all registered engine parts.
  * Each part folder is discovered automatically through enginePartRegistry.js.
- * Uninstalled previews remain clickable to install; installed components remain
- * clickable to reopen their information panel.
+ * The visible preview meshes and the invisible hitbox both receive clicks:
+ * previews install directly, while installed components reopen their guide.
  */
 export default function EnginePartLayer({
   installed = [],
@@ -28,7 +28,18 @@ export default function EnginePartLayer({
           : hitbox?.position;
 
         return (
-          <group key={part.id} name={`${part.id}-component`}>
+          <group
+            key={part.id}
+            name={`${part.id}-component`}
+            onClick={(event) => {
+              // GLTF/procedural preview geometry is often offset from its final
+              // installed hitbox. Handle clicks on the visible part itself so
+              // users do not have to find the invisible target or toolbar.
+              event.stopPropagation();
+              if (isInstalled) onSelectPart(part.id);
+              else onInstallPart(part.id);
+            }}
+          >
             {hitbox && clickPosition && (
               <mesh
                 position={clickPosition}
