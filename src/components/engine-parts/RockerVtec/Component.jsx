@@ -1,59 +1,88 @@
 import React, { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
 
-// One imported rocker arm is repeated across the four-cylinder B16 head.
-// The scene layout follows the existing valve/cam galleries: four cylinder
-// stations, two banks, and three rocker positions per station and bank.
-// These are visual fitment coordinates, not factory service dimensions.
-const ROCKER_URL = '/models/engines/B16/parts/B16%20Rocker%20arm%20IMG.glb';
+// Educational B16-style VTEC rocker representation.
+// Three rocker fingers are shown for each cylinder on each camshaft row:
+// primary, secondary, and the center high-lift rocker. Dimensions are
+// illustrative, not factory measurements or a service-accurate CAD model.
 const CYLINDER_X = [-45.5, -41.5, -37.5, -33.5];
 const ROW_Z = [127.5, 132.0];
 const FINGER_Z = [-0.30, 0, 0.30];
 const INSTALLED_Y = 17.35;
 const PREVIEW_OFFSET = new THREE.Vector3(0, 8, 11);
 
-// The source mesh bounds are approximately 1.00 x 0.40 x 0.83.
-// Rotate its long Z dimension onto the engine X axis and scale it to the
-// existing rocker-bank envelope. Centering is performed before this transform.
-function makeRockerCopies(scene) {
-  const source = scene.clone(true);
-  source.updateMatrixWorld(true);
-  const bounds = new THREE.Box3().setFromObject(source);
-  const center = new THREE.Vector3();
-  bounds.getCenter(center);
-  source.position.sub(center);
+const rockerMetal = new THREE.MeshStandardMaterial({
+  color: '#687681', metalness: 0.88, roughness: 0.27
+});
+const centerMetal = new THREE.MeshStandardMaterial({
+  color: '#87949e', metalness: 0.9, roughness: 0.24
+});
+const pinMetal = new THREE.MeshStandardMaterial({
+  color: '#c0c8ce', metalness: 0.94, roughness: 0.2
+});
+const darkMetal = new THREE.MeshStandardMaterial({
+  color: '#3f4a52', metalness: 0.82, roughness: 0.3
+});
 
-  const copies = [];
-  for (const x of CYLINDER_X) {
-    for (const z of ROW_Z) {
-      for (const offset of FINGER_Z) {
-        const model = source.clone(true);
-        model.traverse((node) => {
-          if (!node.isMesh) return;
-          node.castShadow = true;
-          node.receiveShadow = true;
-          if (Array.isArray(node.material)) {
-            node.material = node.material.map((material) => material.clone());
-          } else if (node.material) {
-            node.material = node.material.clone();
-          }
-        });
-        model.rotation.y = Math.PI / 2;
-        model.scale.set(1.9, 0.6, 0.27);
-        copies.push({ key: `${x}-${z}-${offset}`, position: [x, INSTALLED_Y, z + offset], model });
-      }
-    }
-  }
-  return copies;
+function RockerFinger({ x, y, z, center = false }) {
+  const material = center ? centerMetal : rockerMetal;
+  return (
+    <group position={[x, y, z]}>
+      {/* Long rocker body spanning the paired valve contact points. */}
+      <mesh material={material} castShadow receiveShadow>
+        <boxGeometry args={[1.62, 0.24, 0.22]} />
+      </mesh>
+      {/* Rounded-looking raised cam contact pad. */}
+      <mesh position={[0, 0.17, 0]} material={center ? pinMetal : darkMetal} castShadow>
+        <boxGeometry args={[0.48, 0.16, 0.25]} />
+      </mesh>
+      {/* Contact pads at the two valve ends. */}
+      {[-0.59, 0.59].map((dx) => (
+        <mesh key={dx} position={[dx, -0.14, 0]} material={pinMetal} castShadow>
+          <cylinderGeometry args={[0.105, 0.105, 0.09, 20]} />
+        </mesh>
+      ))}
+      {/* Center pivot boss. */}
+      <mesh position={[0, 0.01, 0]} rotation={[Math.PI / 2, 0, 0]} material={darkMetal} castShadow>
+        <cylinderGeometry args={[0.16, 0.16, 0.28, 24]} />
+      </mesh>
+      <mesh position={[0, 0.01, 0.17]} rotation={[Math.PI / 2, 0, 0]} material={pinMetal}>
+        <cylinderGeometry args={[0.075, 0.075, 0.055, 20]} />
+      </mesh>
+    </group>
+  );
+}
+
+function RockerBank({ centerX, centerZ }) {
+  return (
+    <group>
+      {FINGER_Z.map((offset, index) => (
+        <RockerFinger
+          key={offset}
+          x={centerX}
+          y={INSTALLED_Y + (index === 1 ? 0.025 : 0)}
+          z={centerZ + offset}
+          center={index === 1}
+        />
+      ))}
+      {/* Small VTEC oil-control/locking pin representation beside the rocker trio. */}
+      <mesh position={[centerX + 0.91, INSTALLED_Y + 0.03, centerZ]} rotation={[0, 0, Math.PI / 2]} material={pinMetal} castShadow>
+        <cylinderGeometry args={[0.09, 0.09, 0.42, 20]} />
+      </mesh>
+      <mesh position={[centerX - 0.91, INSTALLED_Y + 0.03, centerZ]} rotation={[0, 0, Math.PI / 2]} material={darkMetal} castShadow>
+        <cylinderGeometry args={[0.11, 0.11, 0.22, 20]} />
+      </mesh>
+    </group>
+  );
 }
 
 export default function RockerVtec({ installed = false }) {
   const group = useRef(null);
   const progress = useRef(0);
-  const { scene } = useGLTF(ROCKER_URL);
-  const rockers = useMemo(() => makeRockerCopies(scene), [scene]);
+  const banks = useMemo(() => CYLINDER_X.flatMap((centerX) =>
+    ROW_Z.map((centerZ) => ({ centerX, centerZ }))
+  ), []);
 
   useFrame((_, delta) => {
     if (!group.current) return;
@@ -65,13 +94,9 @@ export default function RockerVtec({ installed = false }) {
 
   return (
     <group ref={group} position={PREVIEW_OFFSET.toArray()} name="b16-rocker-arms-vtec-assembly">
-      {rockers.map(({ key, position, model }) => (
-        <group key={key} position={position}>
-          <primitive object={model} dispose={null} />
-        </group>
+      {banks.map(({ centerX, centerZ }, index) => (
+        <RockerBank key={index} centerX={centerX} centerZ={centerZ} />
       ))}
     </group>
   );
 }
-
-useGLTF.preload(ROCKER_URL);
