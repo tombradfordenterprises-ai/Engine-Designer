@@ -3,10 +3,15 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 
-// These two meshes are the supplied B16 camshaft OBJ conversions.
-// Their source coordinates are retained so they stay aligned with the supplied head.
-const INTAKE_URL = '/models/source-b16/camshaft-1.glb';
-const EXHAUST_URL = '/models/source-b16/camshaft-2.glb';
+// Each complete B16 camshaft is assembled from the three supplied source meshes.
+// The assembled OBJ shows the two camshaft centerlines separated by 4 units
+// along the model Z axis. Keep the original source coordinates and offset only
+// the second complete assembly to the other camshaft gallery.
+const CAMSHAFT_1_URL = '/models/source-b16/camshaft-1.glb';
+const CAMSHAFT_2_URL = '/models/source-b16/camshaft-2.glb';
+const CAMSHAFT_LOBES_URL = '/models/source-b16/camshaft-lobes.glb';
+const SECOND_CAMSHAFT_OFFSET = [0, 0, -4];
+
 const PREVIEW = new THREE.Vector3(0, 9, 12);
 const INSTALLED = new THREE.Vector3(0, 0, 0);
 
@@ -37,6 +42,16 @@ function CamshaftMesh({ url }) {
   return <primitive object={model} dispose={null} />;
 }
 
+function CompleteCamshaft() {
+  return (
+    <group name="complete-b16-camshaft">
+      <CamshaftMesh url={CAMSHAFT_1_URL} />
+      <CamshaftMesh url={CAMSHAFT_2_URL} />
+      <CamshaftMesh url={CAMSHAFT_LOBES_URL} />
+    </group>
+  );
+}
+
 export default function Camshafts({ installed = false }) {
   const group = useRef(null);
   const progress = useRef(0);
@@ -50,12 +65,15 @@ export default function Camshafts({ installed = false }) {
   });
 
   return (
-    <group ref={group} position={PREVIEW.toArray()} name="b16-intake-exhaust-camshafts">
-      <CamshaftMesh url={INTAKE_URL} />
-      <CamshaftMesh url={EXHAUST_URL} />
+    <group ref={group} position={PREVIEW.toArray()} name="b16-dual-camshaft-assembly">
+      <CompleteCamshaft />
+      <group position={SECOND_CAMSHAFT_OFFSET} name="second-complete-camshaft">
+        <CompleteCamshaft />
+      </group>
     </group>
   );
 }
 
-useGLTF.preload(INTAKE_URL);
-useGLTF.preload(EXHAUST_URL);
+useGLTF.preload(CAMSHAFT_1_URL);
+useGLTF.preload(CAMSHAFT_2_URL);
+useGLTF.preload(CAMSHAFT_LOBES_URL);
