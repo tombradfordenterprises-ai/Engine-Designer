@@ -54,12 +54,13 @@ function CompleteCamshaft() {
   );
 }
 
-export default function Camshafts({ installed = false }) {
+export default function Camshafts({ installed = false, rotating = false }) {
   const group = useRef(null);
   const progress = useRef(0);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!group.current) return;
+    group.current.rotation.x = rotating && installed ? -state.clock.elapsedTime * 0.36 : 0;
     progress.current = THREE.MathUtils.damp(progress.current, installed ? 1 : 0, 2.0, delta);
     const t = progress.current;
     const eased = t * t * (3 - 2 * t);

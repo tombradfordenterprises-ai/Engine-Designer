@@ -33,6 +33,7 @@ export default function App() {
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const [showHotspots, setShowHotspots] = useState(true);
+  const [engineRotating, setEngineRotating] = useState(false);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState(
     'Hover over a highlighted installation area and click it to select a component.'
@@ -118,6 +119,7 @@ export default function App() {
     }
     const removed = installed[installed.length - 1];
     const updated = installed.slice(0, -1);
+    if (!updated.includes('pistonsRods')) setEngineRotating(false);
     setInstalled(updated);
     setSelected(removed);
     setMessage(`${PARTS[removed].name} installation undone.`);
@@ -190,6 +192,9 @@ export default function App() {
         onUndo={undo}
         showHotspots={showHotspots}
         onToggleHotspots={() => setShowHotspots((visible) => !visible)}
+        engineRotating={engineRotating}
+        canRotateEngine={installed.includes('pistonsRods')}
+        onToggleEngineRotation={() => setEngineRotating((rotating) => !rotating)}
         onBack={() => {
           setSelected('engineBlock');
           setMessage('Engine overview. Select a component location directly on the CAD model to continue.');

@@ -13,6 +13,7 @@ export default function EnginePartLayer({
   selectedPart = 'engineBlock',
   onInstallPart = () => {},
   onSelectPart = () => {},
+  engineRotating = false,
 }) {
   return (
     <group name="engine-part-layer">
@@ -61,7 +62,7 @@ export default function EnginePartLayer({
                 />
               </mesh>
             )}
-            <PartComponent installed={isInstalled} />
+            <PartComponent installed={isInstalled} rotating={engineRotating && isInstalled} />
           </group>
         );
       })}
