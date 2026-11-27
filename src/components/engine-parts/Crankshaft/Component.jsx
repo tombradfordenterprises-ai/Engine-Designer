@@ -16,7 +16,7 @@ const PREVIEW_POSITION = new THREE.Vector3(-22.25, 8.0, 131.0);
 const INSTALLED_POSITION = new THREE.Vector3(-39.75, 5.5, 130.0);
 const MODEL_SCALE = new THREE.Vector3(30.5, 28, 28);
 
-export default function Crankshaft({ installed = false }) {
+export default function Crankshaft({ installed = false, rotating = false }) {
   const groupRef = useRef(null);
   const progressRef = useRef(0);
   const { scene } = useGLTF(CRANKSHAFT_URL);
@@ -52,8 +52,9 @@ export default function Crankshaft({ installed = false }) {
     return copy;
   }, [scene]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!groupRef.current) return;
+    groupRef.current.rotation.x = rotating && installed ? state.clock.elapsedTime * 0.72 : 0;
     const target = installed ? 1 : 0;
     progressRef.current += (target - progressRef.current) * Math.min(1, delta * 2.8);
     const t = progressRef.current;
