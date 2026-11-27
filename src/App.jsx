@@ -32,6 +32,7 @@ export default function App() {
   const [selected, setSelected] = useState('engineBlock');
   const [installed, setInstalled] = useState([]);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [showHotspots, setShowHotspots] = useState(true);
   const [view, setView] = useState('isometric');
   const [message, setMessage] = useState(
     'Hover over a highlighted installation area and click it to select a component.'
@@ -172,6 +173,7 @@ export default function App() {
           onSelect={selectPart}
           view={view}
           onInstallPart={installPart}
+          showHotspots={showHotspots}
         />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.startsWith('install:') ? 'INSTALLATION VIEW' : `${view.toUpperCase()} VIEW`}</div>
@@ -186,6 +188,8 @@ export default function App() {
         onExplain={() => setPanelOpen(true)}
         onView={changeView}
         onUndo={undo}
+        showHotspots={showHotspots}
+        onToggleHotspots={() => setShowHotspots((visible) => !visible)}
         onBack={() => {
           setSelected('engineBlock');
           setMessage('Engine overview. Select a component location directly on the CAD model to continue.');
