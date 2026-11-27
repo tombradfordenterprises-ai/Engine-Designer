@@ -286,7 +286,8 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
         {/* Fit the camera once on initial load. Do not auto-refit when each
             installed component mounts; that was overriding the user's orbit. */}
         <Bounds fit clip margin={1.35}>
-          <group ref={engineGroupRef} name="complete-engine-assembly-pivot">\n            <group ref={engineContentRef} name="complete-engine-assembly-content">
+          <group ref={engineGroupRef} name="complete-engine-assembly-pivot">
+            <group ref={engineContentRef} name="complete-engine-assembly-content">
           <BareB16Block
             selected={selected === 'engineBlock'}
             onSelect={onSelect}
@@ -306,7 +307,9 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             setHovered={setHovered}
             visible={showHotspots}
           />
-            </group>\n          </group>\n        </Bounds>
+            </group>
+          </group>
+        </Bounds>
       </Suspense>
 
       <OrbitControls
