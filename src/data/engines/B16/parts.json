@@ -335,25 +335,27 @@
       "id": "rockerVtec",
       "name": "Rocker arms and VTEC assembly",
       "group": "Valvetrain",
-      "what": "The rocker assembly transfers camshaft motion to the valves and includes the VTEC switching mechanism.",
-      "why": "It controls valve motion and enables the engine’s variable-lift operating mode.",
-      "where": "It mounts along the camshaft and valve assemblies in the cylinder head.",
+      "what": "The B16 VTEC valvetrain uses rocker arms to transfer cam-lobe motion to the valves. The VTEC mechanism hydraulically locks selected rocker arms together so the high-lift cam profile can control valve motion.",
+      "why": "The rocker arms transmit camshaft movement to the valves. VTEC changes which rocker profile controls the valves, allowing different lift and duration behavior.",
+      "where": "The rocker assemblies sit in the cylinder head between the camshaft lobes and valve stems, with separate intake and exhaust rocker groups.",
       "requires": [
         "camshafts"
       ],
       "asset": "/models/engines/B16/parts/rockerVtec.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 14,
       "placeholderFile": true,
       "guide": {
-        "overview": "The rocker assembly transfers camshaft motion to the valves and includes the VTEC switching mechanism.",
-        "operation": "Detailed operating principle and step-by-step operation of the rocker arms and vtec assembly in the Honda B16 engine will be researched and added here.",
-        "construction": "Materials, manufacturing methods, subcomponents, and design features of the rocker arms and vtec assembly will be documented here.",
-        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
-        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the rocker arms and vtec assembly will be documented here.",
-        "failureModes": "Common rocker arms and vtec assembly failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
-      }
+        "overview": "The B16 VTEC system uses rocker arms for the intake and exhaust valve groups. The center rocker follows the high-lift cam lobe; the VTEC locking mechanism can couple the rocker group so the high-lift profile controls valve motion.",
+        "operation": "At lower engine speeds, the primary and secondary rocker fingers follow their respective cam profiles. When commanded and sufficient oil pressure is available, a hydraulic pin slides to couple the rocker fingers. The linked group then follows the high-lift cam profile. Exact engagement strategy depends on the B16 variant.",
+        "construction": "This procedural educational model represents rocker fingers, cam-contact pads, valve-contact pads, pivot bosses, and simplified VTEC locking-pin details. It is not a factory CAD reproduction.",
+        "specifications": "Exact B16 variant-specific rocker dimensions, pin clearances, oil pressure thresholds, engagement rpm, and service limits are omitted because they have not been verified against a matching Honda service manual.",
+        "inspection": "Inspect rocker contact surfaces, pivots, locking pins, and oil passages for scoring, wear, sticking, or blocked oil feed. Confirm variant-specific limits using the correct Honda service information.",
+        "failureModes": "Possible issues include worn rocker contact surfaces, sticking or worn locking pins, restricted oil feed, and failure to engage VTEC. Symptoms and diagnostic thresholds depend on the exact B16 variant."
+      },
+      "installationReason": "Fit the rocker assemblies after the camshafts are in position. The procedural model illustrates the primary, secondary, and center high-lift rocker fingers and a simplified VTEC locking-pin detail.",
+      "fallbackRenderer": "procedural"
     },
     {
       "id": "camCaps",
