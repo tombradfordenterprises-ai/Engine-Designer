@@ -44,11 +44,9 @@ export default function Crankshaft({ installed = false }) {
     bounds.getCenter(center);
     copy.position.sub(center);
 
-    // The source mesh's broad flange is on local -X. Turn it toward the
-    // block's visible +X end opening while keeping the shaft axis on X.
-    // The slight extra X scale lets the end reach through the block end face.
-    // The installed group position aligns the shaft axis with the tunnel opening.
-    copy.rotation.y = Math.PI;
+    // Keep the source mesh orientation: its broad drilled flange is on local -X,
+    // facing the transmission side for flywheel/flexplate attachment. The timing-
+    // belt/oil-pump end is +X in this scene.
     copy.updateMatrixWorld(true);
 
     return copy;
