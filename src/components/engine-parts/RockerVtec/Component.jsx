@@ -89,11 +89,11 @@ export default function RockerVtec({ installed = false }) {
     progress.current = THREE.MathUtils.damp(progress.current, installed ? 1 : 0, 2.0, delta);
     const t = progress.current;
     const eased = t * t * (3 - 2 * t);
-    group.current.position.lerpVectors(PREVIEW, new THREE.Vector3(0, 0, 0), eased);
+    group.current.position.lerpVectors(PREVIEW_OFFSET, new THREE.Vector3(0, 0, 0), eased);
   });
 
   return (
-    <group ref={group} position={PREVIEW.toArray()} name="b16-rocker-arms-vtec-assembly">
+    <group ref={group} position={PREVIEW_OFFSET.toArray()} name="b16-rocker-arms-vtec-assembly">
       {banks.map(({ centerX, centerZ }, index) => (
         <RockerBank key={index} centerX={centerX} centerZ={centerZ} />
       ))}
