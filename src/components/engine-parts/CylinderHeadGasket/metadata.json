@@ -17,41 +17,41 @@
       {
         "position": [
           -40.0,
-          12.0,
-          130.0
+          12.08,
+          130.25
         ],
-        "radius": 1.15
+        "radius": 0.85
       }
     ]
   },
   "hitbox": {
     "position": [
       -40.0,
-      12.0,
-      130.0
+      12.018,
+      130.25
     ],
     "size": [
       16.0,
-      0.3,
-      7.2
+      0.12,
+      6.5
     ]
   },
   "installedHitbox": {
     "position": [
       -40.0,
-      12.12,
-      130.5
+      12.018,
+      130.25
     ],
     "size": [
-      16.7,
-      0.25,
-      7.1
+      16.0,
+      0.12,
+      6.5
     ]
   },
   "cameraFocus": [
     -40.0,
-    12.0,
-    130.0
+    12.1,
+    130.25
   ],
   "cameraDirection": [
     0.15,
@@ -61,7 +61,7 @@
   "guide": {
     "overview": "The cylinder head gasket forms the sealed interface between the block deck and cylinder head. It surrounds each cylinder opening and seals the oil and coolant passages that cross the joint.",
     "operation": "When the engine runs, the gasket must contain high combustion pressure while preventing coolant and lubricating oil from crossing into the wrong passages. Its sealing layers and fire-ring areas accommodate the small surface irregularities and thermal movement of the mating castings.",
-    "construction": "This visual prototype gasket is sized to the current block deck envelope and includes four cylinder openings and ten illustrative bolt-clearance holes. It is not an OEM gasket drawing or verified service dimension.",
+    "construction": "Converted directly from the user-supplied Head Gasket.obj in the same coordinate system as the supplied bare-block and cylinder-head models. Its measured outline is 16.0 units long by 6.5 units wide, with a thin profile positioned at the block deck (scene Y approximately 12.0). The model is used at its source size rather than stretched to the block's outside bounding box. Fit, material construction, and exact OEM B16 application remain unverified.",
     "specifications": "Placeholder: verified Honda B16 factory dimensions, material specifications, torque values, tolerances, and service limits will be added after source verification.",
     "inspection": "Placeholder: inspection methods, measurement points, wear limits, and service procedures will be researched and documented.",
     "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
