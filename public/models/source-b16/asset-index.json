@@ -1,0 +1,445 @@
+{
+  "coordinateMapping": "sceneX=sourceX; sceneY=sourceZ; sceneZ=-sourceY",
+  "assets": [
+    {
+      "source": ".obj",
+      "file": "unclassified-small-part.glb",
+      "vertices": 256,
+      "faces": 512,
+      "bounds_min": [
+        -35.35,
+        16.5,
+        129.4
+      ],
+      "bounds_max": [
+        -34.15,
+        17.5,
+        130.6
+      ],
+      "dimensions": [
+        1.2,
+        1.0,
+        1.2
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Alternator.obj",
+      "file": "alternator.glb",
+      "vertices": 8050,
+      "faces": 16220,
+      "bounds_min": [
+        -35.5,
+        2.0,
+        133.902
+      ],
+      "bounds_max": [
+        -29.5,
+        8.0,
+        140.098
+      ],
+      "dimensions": [
+        6.0,
+        6.0,
+        6.196
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Camshaft 1.obj",
+      "file": "camshaft-1.glb",
+      "vertices": 2240,
+      "faces": 2240,
+      "bounds_min": [
+        -46.5,
+        16.15,
+        131.65
+      ],
+      "bounds_max": [
+        -33.5,
+        16.85,
+        132.35
+      ],
+      "dimensions": [
+        13.0,
+        0.7,
+        0.7
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Camshaft 2.obj",
+      "file": "camshaft-2.glb",
+      "vertices": 1200,
+      "faces": 1836,
+      "bounds_min": [
+        -48.5,
+        16.0,
+        131.5
+      ],
+      "bounds_max": [
+        -30.0,
+        17.0,
+        132.5
+      ],
+      "dimensions": [
+        18.5,
+        1.0,
+        1.0
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Camshaft Bearing Cap.obj",
+      "file": "camshaft-bearing-cap.glb",
+      "vertices": 120,
+      "faces": 236,
+      "bounds_min": [
+        -47.5,
+        16.503,
+        126.75
+      ],
+      "bounds_max": [
+        -46.5,
+        17.498,
+        129.25
+      ],
+      "dimensions": [
+        1.0,
+        0.995,
+        2.5
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Camshaft Lobes.obj",
+      "file": "camshaft-lobes.glb",
+      "vertices": 3221,
+      "faces": 4762,
+      "bounds_min": [
+        -46.4,
+        15.745,
+        131.25
+      ],
+      "bounds_max": [
+        -33.6,
+        17.25,
+        132.755
+      ],
+      "dimensions": [
+        12.8,
+        1.505,
+        1.505
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Cold Air Intake.obj",
+      "file": "cold-air-intake.glb",
+      "vertices": 1030,
+      "faces": 2066,
+      "bounds_min": [
+        -36.698,
+        16.6294,
+        139.0211
+      ],
+      "bounds_max": [
+        -33.598,
+        20.597,
+        142.9887
+      ],
+      "dimensions": [
+        3.1,
+        3.9676,
+        3.9676
+      ],
+      "material": "dark"
+    },
+    {
+      "source": "Crankshaft (unused).obj",
+      "file": "crankshaft-unused-reference.glb",
+      "vertices": 2440,
+      "faces": 4876,
+      "bounds_min": [
+        -48.0,
+        3.5,
+        128.0
+      ],
+      "bounds_max": [
+        -30.0,
+        7.5,
+        132.0
+      ],
+      "dimensions": [
+        18.0,
+        4.0,
+        4.0
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Cylinder Head(1).obj",
+      "file": "cylinder-head-source.glb",
+      "vertices": 54196,
+      "faces": 109380,
+      "bounds_min": [
+        -48.5,
+        12.0,
+        125.114
+      ],
+      "bounds_max": [
+        -31.0,
+        16.5,
+        134.5
+      ],
+      "dimensions": [
+        17.5,
+        4.5,
+        9.386
+      ],
+      "material": "aluminum"
+    },
+    {
+      "source": "Engine Block Bare White.obj",
+      "file": "engine-block-source.glb",
+      "vertices": 26303,
+      "faces": 52888,
+      "bounds_min": [
+        -48.498,
+        4.003,
+        125.0
+      ],
+      "bounds_max": [
+        -31.0,
+        12.001,
+        136.0
+      ],
+      "dimensions": [
+        17.498,
+        7.998,
+        11.0
+      ],
+      "material": "graphite"
+    },
+    {
+      "source": "Exhaust Manifold Gasket.obj",
+      "file": "exhaust-manifold-gasket.glb",
+      "vertices": 1878,
+      "faces": 3800,
+      "bounds_min": [
+        -47.0,
+        12.2,
+        133.475
+      ],
+      "bounds_max": [
+        -32.605,
+        14.598,
+        133.533
+      ],
+      "dimensions": [
+        14.395,
+        2.398,
+        0.058
+      ],
+      "material": "gasket"
+    },
+    {
+      "source": "Exhaust Manifold.obj",
+      "file": "exhaust-manifold.glb",
+      "vertices": 9024,
+      "faces": 18086,
+      "bounds_min": [
+        -46.998,
+        -0.25,
+        122.4
+      ],
+      "bounds_max": [
+        -32.603,
+        14.598,
+        133.5
+      ],
+      "dimensions": [
+        14.395,
+        14.848,
+        11.1
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Exhaust: Intake manifold?.obj",
+      "file": "intake-manifold.glb",
+      "vertices": 12140,
+      "faces": 24918,
+      "bounds_min": [
+        -47.395,
+        12.0,
+        133.501
+      ],
+      "bounds_max": [
+        -33.0,
+        16.9708,
+        139.334
+      ],
+      "dimensions": [
+        14.395,
+        4.9708,
+        5.833
+      ],
+      "material": "aluminum"
+    },
+    {
+      "source": "Flywheel.obj",
+      "file": "flywheel.glb",
+      "vertices": 18419,
+      "faces": 35471,
+      "bounds_min": [
+        -48.9,
+        1.5,
+        126.0
+      ],
+      "bounds_max": [
+        -48.1,
+        9.5,
+        134.0
+      ],
+      "dimensions": [
+        0.8,
+        8.0,
+        8.0
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Head Gasket.obj",
+      "file": "head-gasket-source.glb",
+      "vertices": 3795,
+      "faces": 7648,
+      "bounds_min": [
+        -48.0,
+        11.993,
+        127.0
+      ],
+      "bounds_max": [
+        -32.0,
+        12.043,
+        133.5
+      ],
+      "dimensions": [
+        16.0,
+        0.05,
+        6.5
+      ],
+      "material": "gasket"
+    },
+    {
+      "source": "Intake Manifold Gasket.obj",
+      "file": "intake-manifold-gasket.glb",
+      "vertices": 2513,
+      "faces": 5038,
+      "bounds_min": [
+        -47.0,
+        12.2,
+        126.95
+      ],
+      "bounds_max": [
+        -32.605,
+        14.598,
+        127.05
+      ],
+      "dimensions": [
+        14.395,
+        2.398,
+        0.1
+      ],
+      "material": "gasket"
+    },
+    {
+      "source": "Other Pulley.obj",
+      "file": "other-pulley.glb",
+      "vertices": 588,
+      "faces": 1172,
+      "bounds_min": [
+        -29.5,
+        10.0,
+        123.0
+      ],
+      "bounds_max": [
+        -28.0,
+        14.0,
+        127.0
+      ],
+      "dimensions": [
+        1.5,
+        4.0,
+        4.0
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Piston Head.obj",
+      "file": "piston-head.glb",
+      "vertices": 1889,
+      "faces": 3834,
+      "bounds_min": [
+        -43.25,
+        8.75,
+        128.5
+      ],
+      "bounds_max": [
+        -40.25,
+        10.75,
+        131.5
+      ],
+      "dimensions": [
+        3.0,
+        2.0,
+        3.0
+      ],
+      "material": "aluminum"
+    },
+    {
+      "source": "Pulley?.obj",
+      "file": "pulley-small.glb",
+      "vertices": 396,
+      "faces": 788,
+      "bounds_min": [
+        -29.5,
+        3.0,
+        135.5
+      ],
+      "bounds_max": [
+        -28.5,
+        6.0,
+        138.5
+      ],
+      "dimensions": [
+        1.0,
+        3.0,
+        3.0
+      ],
+      "material": "steel"
+    },
+    {
+      "source": "Pulley.obj",
+      "file": "crank-pulley.glb",
+      "vertices": 2240,
+      "faces": 3069,
+      "bounds_min": [
+        -49.0,
+        2.5,
+        127.0
+      ],
+      "bounds_max": [
+        -48.0,
+        8.5,
+        133.0
+      ],
+      "dimensions": [
+        1.0,
+        6.0,
+        6.0
+      ],
+      "material": "steel"
+    }
+  ]
+}
