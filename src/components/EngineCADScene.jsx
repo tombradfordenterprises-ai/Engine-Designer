@@ -207,6 +207,8 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered, visib
 function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile, showHotspots, engineRotating }) {
   const controlsRef = useRef(null);
   const engineGroupRef = useRef(null);
+  const engineContentRef = useRef(null);
+  const enginePivotReadyRef = useRef(false);
   const { camera } = useThree();
 
   // A one-shot camera transition is triggered by a new view or installation.
@@ -241,8 +243,21 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
   }, [view, camera]);
 
   useFrame((_, delta) => {
+    // Find the actual CAD assembly center once, then rotate around that point.
+    // The imported block/parts are not centered at world origin, so rotating
+    // the outer group directly sends the engine out of the camera view.
+    if (engineGroupRef.current && engineContentRef.current && !enginePivotReadyRef.current) {
+      engineContentRef.current.updateMatrixWorld(true);
+      const bounds = new THREE.Box3().setFromObject(engineContentRef.current);
+      if (!bounds.isEmpty()) {
+        const center = bounds.getCenter(new THREE.Vector3());
+        engineGroupRef.current.position.copy(center);
+        engineContentRef.current.position.sub(center);
+        enginePivotReadyRef.current = true;
+      }
+    }
     // Temporary whole-assembly spin: all installed and base geometry turns together.
-    if (engineGroupRef.current && engineRotating) {
+    if (engineGroupRef.current && enginePivotReadyRef.current && engineRotating) {
       engineGroupRef.current.rotation.y += delta * 0.45;
     }
 
@@ -271,7 +286,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
         {/* Fit the camera once on initial load. Do not auto-refit when each
             installed component mounts; that was overriding the user's orbit. */}
         <Bounds fit clip margin={1.35}>
-          <group ref={engineGroupRef} name="complete-engine-assembly">
+          <group ref={engineGroupRef} name="complete-engine-assembly-pivot">\n            <group ref={engineContentRef} name="complete-engine-assembly-content">
           <BareB16Block
             selected={selected === 'engineBlock'}
             onSelect={onSelect}
@@ -291,8 +306,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             setHovered={setHovered}
             visible={showHotspots}
           />
-          </group>
-        </Bounds>
+            </group>\n          </group>\n        </Bounds>
       </Suspense>
 
       <OrbitControls
