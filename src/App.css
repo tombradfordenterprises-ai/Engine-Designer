@@ -18,10 +18,10 @@ h1 span { color: #87919a; font-weight: 450; }
 .status-message { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); color: #879098; font-size: 11px; white-space: nowrap; pointer-events: none; }
 .view-label { position: absolute; right: 28px; top: 22px; color: #a0a7ad; font-size: 9px; font-weight: 750; letter-spacing: .13em; }
 
-/* [072] Styles the permanent gray toolbar and its six evenly sized icon controls. */
-.toolbar { height: 82px; flex: 0 0 82px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); align-items: stretch; background: #d9dcdf; border-top: 1px solid #cdd1d4; padding: 7px max(14px, calc((100% - 780px) / 2)); gap: 7px; z-index: 5; }
+/* [072] Styles the permanent gray toolbar as one straight row of evenly sized controls. */
+.toolbar { height: 82px; flex: 0 0 82px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: stretch; background: #d9dcdf; border-top: 1px solid #cdd1d4; padding: 7px max(14px, calc((100% - 780px) / 2)); gap: 7px; z-index: 5; }
 .tool-button { border: 0; border-radius: 8px; color: #424a50; background: transparent; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; cursor: pointer; transition: background .16s, color .16s; }
-.tool-button span { font-size: 9px; font-weight: 650; }
+.tool-button span { font-size: 9px; font-weight: 650; white-space: nowrap; }
 .tool-button:hover { background: #eef0f1; color: #1d5f8b; }
 .tool-button:active { transform: translateY(1px); }
 
