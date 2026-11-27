@@ -16,9 +16,9 @@
     "targets": [
       {
         "position": [
-          -39.8791,
-          13.55,
-          130.5
+          -40.0,
+          13.1,
+          129.8
         ],
         "radius": 1.15
       }
@@ -26,20 +26,20 @@
   },
   "hitbox": {
     "position": [
-      -39.6281,
-      22.87,
-      142.51
+      -39.75,
+      14.25,
+      129.807
     ],
     "size": [
       17.5,
-      5.7,
-      9.5
+      4.5,
+      9.386
     ]
   },
   "cameraFocus": [
-    -39.6281,
-    14.84,
-    130.51
+    -39.75,
+    14.25,
+    129.807
   ],
   "cameraDirection": [
     0.35,
@@ -49,21 +49,21 @@
   "guide": {
     "overview": "The B16 cylinder head is an aluminum-alloy DOHC, four-valve-per-cylinder casting. It forms the roof of each combustion chamber and contains the intake and exhaust ports, valve guides and seats, spark-plug wells, camshaft bearing supports, and oil and coolant passages.",
     "operation": "The intake and exhaust valves are actuated by the twin camshafts through the valvetrain. The intake ports feed the cylinders, combustion occurs between the head chambers and piston crowns, and exhaust ports route spent gases away. Coolant circulates through water jackets, while pressurized oil feeds the camshaft and valvetrain areas.",
-    "construction": "The visible cylinder-head casting is based on the user-provided GrabCAD VTEC-11_1 mesh. It preserves the imported polygon surfaces and approximate overall proportions. It is a converted visual mesh rather than an editable STEP/B-rep solid; the source mesh was reported non-watertight and its exact B16 variant and fit remain unverified.",
+    "construction": "This visual mesh is converted directly from the user-supplied Cylinder Head(1).obj. Its source bounds are 17.5 units long and align with the supplied bare-block OBJ's 17.498-unit length; its lower deck begins at scene Y=12.0, matching the block deck. It is a polygon mesh, not an editable STEP/B-rep solid, and its exact B16 variant and factory fit remain unverified.",
     "specifications": "Exact B16 variant-specific casting dimensions, cam journal sizes, material data, torque values, and service limits remain unverified and are not represented as factory specifications.",
     "inspection": "Inspect the camshaft bearing saddles and cap locations for scoring, damage, and correct alignment; check oil-feed passages for blockage; inspect spark-plug tube areas and the head surface for cracks or damage. Use the service manual for measurement limits and procedures.",
     "failureModes": "Placeholder: common failure modes, symptoms, causes, and diagnostic checks will be researched and documented."
   },
   "installedHitbox": {
     "position": [
-      -39.6281,
-      14.84,
-      130.51
+      -39.75,
+      14.25,
+      129.807
     ],
     "size": [
       17.5,
-      5.7,
-      9.5
+      4.5,
+      9.386
     ]
   }
 }
