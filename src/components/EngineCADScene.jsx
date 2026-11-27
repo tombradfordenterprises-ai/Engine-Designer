@@ -204,7 +204,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered, visib
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile, showHotspots }) {
+function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile, showHotspots, engineRotating }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -275,6 +275,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             selectedPart={selected}
             onInstallPart={onInstallPart}
             onSelectPart={onSelect}
+            engineRotating={engineRotating}
           />
           <InstallationHotspots
             installed={installed}
