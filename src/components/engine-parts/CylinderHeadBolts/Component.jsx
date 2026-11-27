@@ -46,15 +46,15 @@ function HeadBolt({ x, z, order, installed }) {
     );
     const eased = staggered * staggered * (3 - 2 * staggered);
     group.current.position.set(
-      x,
-      THREE.MathUtils.lerp(8, 0, eased),
-      THREE.MathUtils.lerp(z + 10, z, eased)
+      -40 + x,
+      INSTALLED_Y + THREE.MathUtils.lerp(8, 0, eased),
+      130 + THREE.MathUtils.lerp(z + 10, z, eased)
     );
     group.current.rotation.y = Math.PI * 4 * eased;
   });
 
   return (
-    <group ref={group} position={[x, 8, z + 10]}>
+    <group ref={group} position={[-40 + x, INSTALLED_Y + 8, 130 + z + 10]}>
       {/* Shank extends through the head and down into the block. */}
       <mesh position={[0, -1.55, 0]} material={boltMaterial} castShadow>
         <cylinderGeometry args={[0.22, 0.22, 5.3, 16]} />
