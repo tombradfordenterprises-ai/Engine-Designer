@@ -2,20 +2,20 @@
   "id": "camshafts",
   "name": "Intake and exhaust camshafts",
   "group": "Valvetrain",
-  "what": "The B16 DOHC cylinder head uses two camshafts. Their lobes press the valvetrain to open the intake and exhaust valves at the correct points in the four-stroke cycle.",
+  "what": "The B16 DOHC cylinder head uses two complete camshafts. Each shaft assembly is built from the supplied Camshaft 1, Camshaft 2, and Camshaft Lobes meshes.",
   "why": "The camshaft profiles control valve lift, duration, and timing, allowing the cylinders to breathe and supporting the engine's VTEC operation.",
-  "where": "Both camshafts sit in the upper camshaft galleries of the cylinder head, above the valve springs and retainers.",
+  "where": "Both complete camshaft assemblies sit in the two parallel upper camshaft galleries of the cylinder head, above the valve springs and retainers.",
   "requires": ["valvesSprings"],
   "asset": "/models/engines/B16/parts/camshafts.glb",
   "assetStatus": "model",
   "installable": true,
   "sequence": 13,
   "recommendedOrder": 13,
-  "installationReason": "Lower the intake and exhaust camshafts into their bearing saddles in the cylinder head. The supplied source meshes are used at their original scene coordinates; their exact variant-specific fit has not been independently measured.",
+  "installationReason": "Each camshaft is assembled from all three supplied source meshes. The complete assembly is duplicated for the second camshaft gallery, using the 4-unit separation visible in the supplied assembled OBJ.",
   "guide": {
     "overview": "The B16 uses dual overhead camshafts: one operates the intake valves and the other operates the exhaust valves.",
     "operation": "As the crankshaft turns, the timing belt drives the camshafts. Each lobe pushes the valve mechanism to open a valve; the valve spring returns it toward its seat as the lobe rotates away. VTEC changes the effective valve-lift and timing behavior by engaging a different rocker profile under the required operating conditions.",
-    "construction": "This component uses the two supplied CAD meshes converted from Camshaft 1.obj and Camshaft 2.obj. The original mesh coordinates are preserved rather than repositioning the shafts by guesswork.",
+    "construction": "Each of the two camshafts is represented by the combined Camshaft 1, Camshaft 2, and Camshaft Lobes source meshes. The complete three-piece assembly is duplicated for the second camshaft gallery.",
     "specifications": "Exact B16 engine-code-specific cam lift, duration, journal dimensions, timing marks, and service limits are not asserted here. These values should be taken from the matching Honda service information.",
     "inspection": "Inspect cam lobes and journals for scoring, pitting, discoloration, and abnormal wear. Check oil passages and measure journal diameters and lobe heights against the correct B16 service specifications.",
     "failureModes": "Possible issues include worn or scored lobes, damaged journals, oil-starvation damage, incorrect cam timing, and blocked oil feeds. Symptoms and limits depend on the exact B16 variant."
@@ -23,18 +23,18 @@
   "hotspot": {
     "label": "Intake and exhaust camshafts",
     "targets": [
-      { "position": [-40.0, 17.0, 131.9], "radius": 0.7 },
-      { "position": [-40.0, 17.0, 132.1], "radius": 0.7 }
+      { "position": [-40.0, 17.0, 132.0], "radius": 0.9 },
+      { "position": [-40.0, 17.0, 128.0], "radius": 0.9 }
     ]
   },
   "hitbox": {
-    "position": [-39.75, 17.0, 132.0],
-    "size": [19.0, 2.2, 3.0]
+    "position": [-39.75, 17.0, 130.0],
+    "size": [19.0, 2.8, 6.0]
   },
-  "cameraFocus": [-39.75, 17.0, 132.0],
+  "cameraFocus": [-39.75, 17.0, 130.0],
   "cameraDirection": [0.2, 1.0, 1.0],
   "installedHitbox": {
-    "position": [-39.75, 17.0, 132.0],
-    "size": [19.0, 2.2, 3.0]
+    "position": [-39.75, 17.0, 130.0],
+    "size": [19.0, 2.8, 6.0]
   }
 }
