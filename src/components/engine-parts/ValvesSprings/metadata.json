@@ -1,0 +1,130 @@
+{
+  "id": "valvesSprings",
+  "name": "Valves and valve springs",
+  "group": "Cylinder head",
+  "what": "Sixteen poppet valves—two intake and two exhaust per cylinder—control the flow into and out of the four combustion chambers. Springs return each valve to its seat.",
+  "why": "The valves seal the combustion chambers between intake and exhaust events. The springs keep the valves following the camshaft-driven valvetrain.",
+  "where": "The valves fit into guides in the cylinder head, with their heads facing the combustion chambers and their stems, springs, retainers, and keepers on the upper valvetrain side.",
+  "requires": [
+    "cylinderHead"
+  ],
+  "asset": "/models/engines/B16/parts/valvesSprings.glb",
+  "assetStatus": "procedural-model",
+  "installable": true,
+  "sequence": 12,
+  "recommendedOrder": 12,
+  "installationReason": "Install the sixteen valves into their guides, then fit the springs, retainers, and keepers. The procedural model is an educational layout; exact B16 valve geometry and clearances are not yet verified.",
+  "placeholderFile": true,
+  "fallbackRenderer": "procedural",
+  "guide": {
+    "overview": "The B16 cylinder head uses four valves per cylinder: two intake valves and two exhaust valves. Each valve is returned to its seat by a coil spring.",
+    "operation": "The camshaft and valvetrain open the valves at the correct points in the four-stroke cycle. The valve springs close them when the opening force is removed.",
+    "construction": "This is a procedural educational representation with sixteen valve assemblies. It shows valve heads, stems, coil springs, retainers, and keepers as separate visible features. It is not a factory CAD model.",
+    "specifications": "Exact B16 variant-specific valve diameters, stem sizes, spring rates, installed heights, seat pressures, and service limits have not been verified and are intentionally omitted.",
+    "inspection": "Check valve stems, faces, guides, seats, springs, and retainers for wear or damage. Use the correct B16 service manual for stem clearance, spring free length, installed height, and pressure limits.",
+    "failureModes": "Possible issues include burned or bent valves, worn guides, weak or broken springs, damaged retainers, and poor valve seating. Symptoms and limits depend on the exact B16 variant."
+  },
+  "hotspot": {
+    "label": "Valves and valve springs",
+    "targets": [
+      {
+        "position": [
+          -45.5,
+          17,
+          127.5
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -41.5,
+          17,
+          127.5
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -37.5,
+          17,
+          127.5
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -33.5,
+          17,
+          127.5
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -45.5,
+          17,
+          132
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -41.5,
+          17,
+          132
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -37.5,
+          17,
+          132
+        ],
+        "radius": 0.45
+      },
+      {
+        "position": [
+          -33.5,
+          17,
+          132
+        ],
+        "radius": 0.45
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -39.5,
+      17,
+      129.75
+    ],
+    "size": [
+      15.5,
+      2.4,
+      6
+    ]
+  },
+  "cameraFocus": [
+    -39.5,
+    17,
+    129.75
+  ],
+  "cameraDirection": [
+    0.25,
+    0.95,
+    1
+  ],
+  "installedHitbox": {
+    "position": [
+      -39.5,
+      17,
+      129.75
+    ],
+    "size": [
+      15.5,
+      2.4,
+      6
+    ]
+  }
+}
