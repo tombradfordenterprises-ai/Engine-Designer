@@ -2,18 +2,18 @@
   "id": "rockerVtec",
   "name": "Rocker arms and VTEC assembly",
   "group": "Valvetrain",
-  "what": "The B16 VTEC valvetrain uses rocker arms to transfer cam-lobe motion to the valves. The VTEC mechanism hydraulically locks selected rocker arms together so the high-lift cam profile can control valve motion.",
+  "what": "The B16 VTEC valvetrain uses rocker arms to transfer cam-lobe motion to the valves. This component uses the supplied individual rocker-arm GLB repeated across the intake and exhaust rocker banks.",
   "why": "The rocker arms transmit camshaft movement to the valves. VTEC changes which rocker profile controls the valves, allowing the engine to use a different lift and duration behavior when operating conditions call for it.",
   "where": "The rocker assemblies sit in the cylinder head between the camshaft lobes and the valve stems, with separate intake and exhaust rocker groups.",
-  "requires": ["camshafts"],
-  "asset": "/models/engines/B16/parts/rockerVtec.glb",
-  "assetStatus": "procedural-model",
+  "requires": [
+    "camshafts"
+  ],
+  "asset": "/models/engines/B16/parts/B16%20Rocker%20arm%20IMG.glb",
+  "assetStatus": "model",
   "installable": true,
   "sequence": 14,
   "recommendedOrder": 14,
-  "installationReason": "Fit the rocker assemblies after the camshafts are in position. The model shows three rocker fingers per cylinder on each camshaft row, representing the primary, secondary, and center high-lift rocker arrangement.",
-  "placeholderFile": true,
-  "fallbackRenderer": "procedural",
+  "installationReason": "Install the rocker arms after the camshafts. The supplied individual rocker mesh is repeated across the four cylinders and both intake and exhaust banks.",
   "guide": {
     "overview": "The B16 VTEC system uses a set of rocker arms for the intake and exhaust valve groups. The center rocker follows the high-lift cam lobe; the VTEC locking mechanism can couple the rocker group so the high-lift profile controls valve motion.",
     "operation": "At lower engine speeds, the primary and secondary rocker fingers follow their respective cam profiles. When the engine management system commands VTEC and sufficient oil pressure is available, a hydraulic pin slides to couple the rocker fingers. The linked group then follows the high-lift cam profile. The exact engagement strategy depends on the B16 variant.",
@@ -25,24 +25,105 @@
   "hotspot": {
     "label": "Rocker arms and VTEC assembly",
     "targets": [
-      { "position": [-45.5, 17.4, 127.5], "radius": 0.7 },
-      { "position": [-41.5, 17.4, 127.5], "radius": 0.7 },
-      { "position": [-37.5, 17.4, 127.5], "radius": 0.7 },
-      { "position": [-33.5, 17.4, 127.5], "radius": 0.7 },
-      { "position": [-45.5, 17.4, 132.0], "radius": 0.7 },
-      { "position": [-41.5, 17.4, 132.0], "radius": 0.7 },
-      { "position": [-37.5, 17.4, 132.0], "radius": 0.7 },
-      { "position": [-33.5, 17.4, 132.0], "radius": 0.7 }
+      {
+        "position": [
+          -45.5,
+          17.4,
+          127.5
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -41.5,
+          17.4,
+          127.5
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -37.5,
+          17.4,
+          127.5
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -33.5,
+          17.4,
+          127.5
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -45.5,
+          17.4,
+          132
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -41.5,
+          17.4,
+          132
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -37.5,
+          17.4,
+          132
+        ],
+        "radius": 0.7
+      },
+      {
+        "position": [
+          -33.5,
+          17.4,
+          132
+        ],
+        "radius": 0.7
+      }
     ]
   },
   "hitbox": {
-    "position": [-39.5, 17.45, 129.75],
-    "size": [15.8, 1.4, 6.8]
+    "position": [
+      -39.5,
+      17.45,
+      129.75
+    ],
+    "size": [
+      15.8,
+      1.4,
+      6.8
+    ]
   },
-  "cameraFocus": [-39.5, 17.45, 129.75],
-  "cameraDirection": [0.2, 1.0, 1.0],
+  "cameraFocus": [
+    -39.5,
+    17.45,
+    129.75
+  ],
+  "cameraDirection": [
+    0.2,
+    1,
+    1
+  ],
   "installedHitbox": {
-    "position": [-39.5, 17.45, 129.75],
-    "size": [15.8, 1.4, 6.8]
-  }
+    "position": [
+      -39.5,
+      17.45,
+      129.75
+    ],
+    "size": [
+      15.8,
+      1.4,
+      6.8
+    ]
+  },
+  "construction": "The supplied individual rocker-arm mesh is duplicated across four cylinder stations and two valve banks, with three rocker positions represented per cylinder and bank. The VTEC locking-pin mechanism is not included in this individual rocker mesh."
 }
