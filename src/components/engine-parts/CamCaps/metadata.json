@@ -1,0 +1,143 @@
+{
+  "id": "camCaps",
+  "name": "Camshaft caps",
+  "group": "Valvetrain",
+  "what": "The camshaft caps clamp the camshaft journals into the cylinder head's machined bearing saddles.",
+  "why": "They retain the camshafts in alignment while allowing the journals to rotate on a controlled oil film.",
+  "where": "Five cap stations are shown along each of the two camshaft galleries, above the camshaft journals.",
+  "requires": [
+    "camshafts"
+  ],
+  "assetStatus": "procedural-model",
+  "installable": true,
+  "sequence": 15,
+  "recommendedOrder": 15,
+  "installationReason": "Install the camshaft caps after both camshafts are seated in the cylinder-head bearing saddles. The model represents five cap stations on each camshaft.",
+  "guide": {
+    "overview": "The camshaft caps secure the camshafts in the cylinder head.",
+    "operation": "The caps clamp the camshaft journals into the matching bearing saddles. A thin oil film separates the rotating journals from the bearing surfaces during operation.",
+    "construction": "This educational model shows ten cap bridges, five per camshaft gallery, with bearing-contact details and fasteners. It is a simplified visual representation rather than a factory CAD reproduction.",
+    "specifications": "Cap locations, dimensions, bolt torque, tightening sequence, and journal clearances vary by B16 variant and must be taken from the matching Honda service manual. Do not use this model for machining or assembly measurements.",
+    "inspection": "Inspect each cap and its matching cylinder-head saddle for scoring, cracks, damage, and blocked oil feeds. Keep caps in their original numbered positions and orientation.",
+    "failureModes": "Incorrect cap position, damaged threads, uneven tightening, or poor oil supply can cause camshaft binding and journal damage."
+  },
+  "hotspot": {
+    "label": "Camshaft caps",
+    "targets": [
+      {
+        "position": [
+          -47.5,
+          17.85,
+          132
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -43.5,
+          17.85,
+          132
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -39.5,
+          17.85,
+          132
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -35.5,
+          17.85,
+          132
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -31.5,
+          17.85,
+          132
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -47.5,
+          17.85,
+          128
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -43.5,
+          17.85,
+          128
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -39.5,
+          17.85,
+          128
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -35.5,
+          17.85,
+          128
+        ],
+        "radius": 0.72
+      },
+      {
+        "position": [
+          -31.5,
+          17.85,
+          128
+        ],
+        "radius": 0.72
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -39.5,
+      17.85,
+      130
+    ],
+    "size": [
+      19.2,
+      1.5,
+      6.8
+    ]
+  },
+  "cameraFocus": [
+    -39.5,
+    17.85,
+    130
+  ],
+  "cameraDirection": [
+    0.2,
+    1,
+    1
+  ],
+  "installedHitbox": {
+    "position": [
+      -39.5,
+      17.85,
+      130
+    ],
+    "size": [
+      19.2,
+      1.5,
+      6.8
+    ]
+  }
+}
