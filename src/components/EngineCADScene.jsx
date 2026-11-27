@@ -136,7 +136,8 @@ function PulsingTarget({ target, color, unlocked, active, onSelect, setHovered }
   );
 }
 
-function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
+function InstallationHotspots({ installed, selected, onSelect, setHovered, visible = true }) {
+  if (!visible) return null;
   // Keep the scene visually clear: show one installation label at a time,
   // following the next available part in the recommended assembly order.
   const nextSpot = HOTSPOTS
@@ -203,7 +204,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered }) {
   );
 }
 
-function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile }) {
+function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile, showHotspots }) {
   const controlsRef = useRef(null);
   const { camera } = useThree();
 
@@ -280,6 +281,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             selected={selected}
             onSelect={onSelect}
             setHovered={setHovered}
+            visible={showHotspots}
           />
         </Bounds>
       </Suspense>
@@ -313,6 +315,7 @@ export default function EngineCADScene({
   onSelect,
   view = 'isometric',
   onInstallPart = () => {},
+  showHotspots = true,
 }) {
   const [hovered, setHovered] = useState(false);
   // Mobile browsers can lose the WebGL context when high-DPI rendering,
@@ -357,6 +360,7 @@ export default function EngineCADScene({
         view={view}
         onInstallPart={onInstallPart}
         isMobile={isMobile}
+        showHotspots={showHotspots}
       />
     </Canvas>
   );
