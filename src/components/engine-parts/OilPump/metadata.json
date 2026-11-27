@@ -4,7 +4,7 @@
   "group": "Lubrication",
   "what": "The oil pump draws oil from the sump and pressurizes it so oil can circulate through the engine.",
   "why": "A steady supply of pressurized oil lubricates the crankshaft bearings and other moving parts.",
-  "where": "In this simulator, the pump is mounted at the opposite longitudinal end of the block, around the crankshaft axis beside the short protruding end feature.",
+  "where": "At the timing-belt end of the B-series block, around the front of the crankshaft.",
   "installable": true,
   "recommendedOrder": 4,
   "requires": [
@@ -12,15 +12,15 @@
     "mainBearingCaps",
     "pistonsRods"
   ],
-  "installationReason": "Install the rotating assembly first. The pump mounts at the opposite end of the engine block, concentric with the crankshaft axis.",
+  "installationReason": "Install the rotating assembly first. The pump mounts at the timing-belt end of the engine around the crankshaft nose.",
   "hotspot": {
     "label": "Oil pump assembly",
     "targets": [
       {
         "position": [
-          -48.0,
+          -31.5,
           5.5,
-          130.0
+          130
         ],
         "radius": 0.82
       }
@@ -28,9 +28,9 @@
   },
   "hitbox": {
     "position": [
-      -48.0,
+      -31.5,
       5.5,
-      130.0
+      130
     ],
     "size": [
       5,
@@ -39,12 +39,12 @@
     ]
   },
   "cameraFocus": [
-    -48.0,
+    -31.5,
     5.5,
-    130.0
+    130
   ],
   "cameraDirection": [
-    -1.0,
+    1,
     0.5,
     0.9
   ],
