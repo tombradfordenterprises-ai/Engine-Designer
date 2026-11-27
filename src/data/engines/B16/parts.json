@@ -316,18 +316,20 @@
         "valvesSprings"
       ],
       "asset": "/models/engines/B16/parts/camshafts.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "model",
+      "installable": true,
       "sequence": 13,
-      "placeholderFile": true,
+      "placeholderFile": false,
       "guide": {
-        "overview": "The two overhead camshafts operate the intake and exhaust valves.",
-        "operation": "Detailed operating principle and step-by-step operation of the intake and exhaust camshafts in the Honda B16 engine will be researched and added here.",
-        "construction": "Materials, manufacturing methods, subcomponents, and design features of the intake and exhaust camshafts will be documented here.",
-        "specifications": "Placeholder: verified Honda B16 factory dimensions, tolerances, clearances, torque values, and service limits will be added after source verification.",
-        "inspection": "Inspection procedure, measuring points, wear limits, and service checks for the intake and exhaust camshafts will be documented here.",
-        "failureModes": "Common intake and exhaust camshafts failure modes, symptoms, causes, and diagnostic checks will be researched and added here."
-      }
+        "overview": "The B16 uses dual overhead camshafts: one operates the intake valves and the other operates the exhaust valves.",
+        "operation": "As the crankshaft turns, the timing belt drives the camshafts. Each lobe pushes the valve mechanism to open a valve; the valve spring returns it toward its seat as the lobe rotates away. VTEC changes the effective valve-lift and timing behavior by engaging a different rocker profile under the required operating conditions.",
+        "construction": "This component uses the two supplied CAD meshes converted from Camshaft 1.obj and Camshaft 2.obj. The original mesh coordinates are preserved rather than repositioning the shafts by guesswork.",
+        "specifications": "Exact B16 engine-code-specific cam lift, duration, journal dimensions, timing marks, and service limits are not asserted here. These values should be taken from the matching Honda service information.",
+        "inspection": "Inspect cam lobes and journals for scoring, pitting, discoloration, and abnormal wear. Check oil passages and measure journal diameters and lobe heights against the correct B16 service specifications.",
+        "failureModes": "Possible issues include worn or scored lobes, damaged journals, oil-starvation damage, incorrect cam timing, and blocked oil feeds. Symptoms and limits depend on the exact B16 variant."
+      },
+      "recommendedOrder": 13,
+      "installationReason": "Lower the intake and exhaust camshafts into their bearing saddles in the cylinder head. The supplied source meshes are used at their original scene coordinates; their exact variant-specific fit has not been independently measured."
     },
     {
       "id": "rockerVtec",
