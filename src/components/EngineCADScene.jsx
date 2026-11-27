@@ -206,6 +206,7 @@ function InstallationHotspots({ installed, selected, onSelect, setHovered, visib
 
 function SceneContents({ selected, onSelect, setHovered, installed, view, onInstallPart, isMobile, showHotspots, engineRotating }) {
   const controlsRef = useRef(null);
+  const engineGroupRef = useRef(null);
   const { camera } = useThree();
 
   // A one-shot camera transition is triggered by a new view or installation.
@@ -240,6 +241,11 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
   }, [view, camera]);
 
   useFrame((_, delta) => {
+    // Temporary whole-assembly spin: all installed and base geometry turns together.
+    if (engineGroupRef.current && engineRotating) {
+      engineGroupRef.current.rotation.y += delta * 0.45;
+    }
+
     const transition = cameraTransitionRef.current;
     if (!transition || !controlsRef.current) return;
     const blend = 1 - Math.exp(-delta * 2.4);
@@ -265,6 +271,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
         {/* Fit the camera once on initial load. Do not auto-refit when each
             installed component mounts; that was overriding the user's orbit. */}
         <Bounds fit clip margin={1.35}>
+          <group ref={engineGroupRef} name="complete-engine-assembly">
           <BareB16Block
             selected={selected === 'engineBlock'}
             onSelect={onSelect}
@@ -275,7 +282,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             selectedPart={selected}
             onInstallPart={onInstallPart}
             onSelectPart={onSelect}
-            engineRotating={engineRotating}
+            engineRotating={false}
           />
           <InstallationHotspots
             installed={installed}
@@ -284,6 +291,7 @@ function SceneContents({ selected, onSelect, setHovered, installed, view, onInst
             setHovered={setHovered}
             visible={showHotspots}
           />
+          </group>
         </Bounds>
       </Suspense>
 
@@ -317,6 +325,7 @@ export default function EngineCADScene({
   view = 'isometric',
   onInstallPart = () => {},
   showHotspots = true,
+  engineRotating = false,
 }) {
   const [hovered, setHovered] = useState(false);
   // Mobile browsers can lose the WebGL context when high-DPI rendering,
@@ -362,6 +371,7 @@ export default function EngineCADScene({
         onInstallPart={onInstallPart}
         isMobile={isMobile}
         showHotspots={showHotspots}
+        engineRotating={engineRotating}
       />
     </Canvas>
   );
