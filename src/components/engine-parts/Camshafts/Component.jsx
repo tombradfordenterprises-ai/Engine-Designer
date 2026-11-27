@@ -26,12 +26,14 @@ function CamshaftMesh({ url }) {
       if (Array.isArray(node.material)) {
         node.material = node.material.map((material) => {
           const cloned = material.clone();
+          if (cloned.color) cloned.color.set('#8b949e');
           if ('metalness' in cloned) cloned.metalness = Math.max(cloned.metalness ?? 0, 0.82);
           if ('roughness' in cloned) cloned.roughness = Math.max(cloned.roughness ?? 0.24, 0.28);
           return cloned;
         });
       } else if (node.material) {
         node.material = node.material.clone();
+        if (node.material.color) node.material.color.set('#8b949e');
         if ('metalness' in node.material) node.material.metalness = Math.max(node.material.metalness ?? 0, 0.82);
         if ('roughness' in node.material) node.material.roughness = Math.max(node.material.roughness ?? 0.24, 0.28);
       }
