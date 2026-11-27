@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rotate3D, Wrench, MousePointer2, BookOpen, Undo2, ArrowLeft } from 'lucide-react';
+import { Rotate3D, Wrench, MousePointer2, BookOpen, Undo2, ArrowLeft, EyeOff, Eye } from 'lucide-react';
 
 // [040] Fixed toolbar. Every control invokes an application action and gives the user clear feedback.
 export default function Toolbar({
@@ -10,7 +10,9 @@ export default function Toolbar({
   onExplain,
   onView,
   onUndo,
-  onBack
+  onBack,
+  showHotspots = true,
+  onToggleHotspots
 }) {
   const isAlreadyInstalled = installed.includes(selected);
   const installTitle = selected === 'engineBlock'
@@ -25,7 +27,8 @@ export default function Toolbar({
     { label: 'How to', icon: MousePointer2, click: onGuide, title: 'Show the suggested assembly order' },
     { label: 'Explain part', icon: BookOpen, click: onExplain, title: 'Explain the selected component' },
     { label: 'Undo', icon: Undo2, click: onUndo, title: 'Undo the most recently installed component' },
-    { label: 'Back', icon: ArrowLeft, click: onBack, title: 'Return to the engine overview' }
+    { label: 'Back', icon: ArrowLeft, click: onBack, title: 'Return to the engine overview' },
+    { label: showHotspots ? 'Hide all' : 'Show all', icon: showHotspots ? EyeOff : Eye, click: onToggleHotspots, title: showHotspots ? 'Hide all blue installation markers and instruction labels' : 'Show installation markers and instruction labels' }
   ];
 
   return (
