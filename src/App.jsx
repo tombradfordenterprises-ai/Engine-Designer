@@ -176,6 +176,7 @@ export default function App() {
           view={view}
           onInstallPart={installPart}
           showHotspots={showHotspots}
+          engineRotating={engineRotating}
         />
         <div className="status-message" role="status" aria-live="polite">{message}</div>
         <div className="view-label">{view.startsWith('install:') ? 'INSTALLATION VIEW' : `${view.toUpperCase()} VIEW`}</div>
