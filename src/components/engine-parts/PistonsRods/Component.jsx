@@ -56,7 +56,7 @@ function PistonRodUnit({ index, installed, rotating }) {
     groupRef.current.position.lerpVectors(preview, target, eased);
     if (installed && rotating) {
       // Paired-cylinder reciprocation, synchronized to the crankshaft phase.
-      const crankPhase = state.clock.elapsedTime * 0.72 + [0, Math.PI, Math.PI, 0][index];
+      const crankPhase = state.clock.elapsedTime * 4.0 + [0, Math.PI, Math.PI, 0][index];
       groupRef.current.position.y += Math.cos(crankPhase) * 1.35;
     }
   });
