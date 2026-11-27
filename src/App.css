@@ -273,3 +273,8 @@ h1 span { color: #87919a; font-weight: 450; }
   .workspace { min-height: 0; }
   .status-message { max-width: calc(100% - 28px); white-space: normal; text-align: center; }
 }
+
+/* Rotate-engine toolbar availability and active state. */
+.tool-button.is-disabled { opacity: .38; cursor: not-allowed; }
+.tool-button.is-disabled:hover { background: transparent; color: #424a50; }
+.tool-button.is-active { background: #eef0f1; color: #1d5f8b; }
