@@ -30,7 +30,7 @@ const pinMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.2,
 });
 
-function PistonRodUnit({ index, installed }) {
+function PistonRodUnit({ index, installed, rotating }) {
   const groupRef = useRef(null);
   const progressRef = useRef(0);
   const elapsedRef = useRef(0);
@@ -38,7 +38,7 @@ function PistonRodUnit({ index, installed }) {
   const target = new THREE.Vector3(CYLINDER_X[index], INSTALLED_Y, CENTER_Z);
   const preview = target.clone().add(PREVIEW_OFFSET);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!groupRef.current) return;
 
     if (installed) {
@@ -54,6 +54,11 @@ function PistonRodUnit({ index, installed }) {
     const t = progressRef.current;
     const eased = t * t * (3 - 2 * t);
     groupRef.current.position.lerpVectors(preview, target, eased);
+    if (installed && rotating) {
+      // Paired-cylinder reciprocation, synchronized to the crankshaft phase.
+      const crankPhase = state.clock.elapsedTime * 0.72 + [0, Math.PI, Math.PI, 0][index];
+      groupRef.current.position.y += Math.cos(crankPhase) * 1.35;
+    }
   });
 
   return (
@@ -127,7 +132,7 @@ function PistonRodUnit({ index, installed }) {
   );
 }
 
-export default function PistonsRods({ installed = false }) {
+export default function PistonsRods({ installed = false, rotating = false }) {
   return (
     <group name="four-piston-connecting-rod-assembly">
       {CYLINDER_X.map((_, index) => (
@@ -135,6 +140,7 @@ export default function PistonsRods({ installed = false }) {
           key={index}
           index={index}
           installed={installed}
+          rotating={rotating}
         />
       ))}
     </group>
