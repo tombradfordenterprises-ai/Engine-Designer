@@ -65,6 +65,19 @@ export default function Crankshaft({ installed = false, rotating = false }) {
   return (
     <group ref={groupRef} position={PREVIEW_POSITION.toArray()} name="b16-crankshaft-assembly">
       <primitive object={model} dispose={null} />
+      {/* A visible socket engages the timing-belt-end crank nose while rotation mode is active. */}
+      {installed && rotating && (
+        <group position={[15.55, 0, 0]}>
+          <mesh rotation={[0, 0, Math.PI / 2]} position={[2.0, 0, 0]}>
+            <cylinderGeometry args={[0.72, 0.72, 4.0, 6]} />
+            <meshStandardMaterial color="#737d86" metalness={0.92} roughness={0.22} />
+          </mesh>
+          <mesh rotation={[0, 0, Math.PI / 2]} position={[0, 0, 0]}>
+            <cylinderGeometry args={[0.48, 0.48, 0.55, 6]} />
+            <meshStandardMaterial color="#aeb8bf" metalness={0.94} roughness={0.18} />
+          </mesh>
+        </group>
+      )}
     </group>
   );
 }
