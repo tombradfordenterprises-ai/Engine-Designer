@@ -54,7 +54,7 @@ export default function Crankshaft({ installed = false, rotating = false }) {
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
-    groupRef.current.rotation.x = rotating && installed ? state.clock.elapsedTime * 0.72 : 0;
+    groupRef.current.rotation.x = rotating && installed ? state.clock.elapsedTime * 4.0 : 0;
     const target = installed ? 1 : 0;
     progressRef.current += (target - progressRef.current) * Math.min(1, delta * 2.8);
     const t = progressRef.current;
