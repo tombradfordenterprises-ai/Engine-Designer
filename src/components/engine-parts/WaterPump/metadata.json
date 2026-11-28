@@ -1,13 +1,72 @@
 {
-  "id":"waterPump","name":"Water pump","group":"Cooling system",
-  "what":"The water pump circulates coolant through the engine and cooling system.",
-  "why":"Coolant flow carries heat away from the cylinder block and head to help maintain operating temperature.",
-  "where":"The pump mounts at the timing-belt end of the B-series engine and is driven by the timing belt.",
-  "requires":["crankshaft"],"assetStatus":"procedural-model","installable":true,"sequence":17,"recommendedOrder":17,
-  "installationReason":"The pump mounts on the timing-belt end of the block. Its pulley is driven by the timing belt; the exact mounting and sealing details vary by B16 version.",
-  "placeholderFile":true,
-  "guide":{"overview":"The water pump circulates coolant through the block, cylinder head, and radiator circuit.","operation":"The timing belt drives the pump impeller. The rotating impeller moves coolant through the engine's water jackets and onward through the cooling system.","construction":"This educational model shows a cast pump housing, circular mounting flange, central shaft hub, and pulley face. It is a simplified procedural representation, not factory CAD.","specifications":"Pump dimensions, pulley details, gasket specification, fastener torque, and coolant flow data are not asserted. Verify against the exact B16 variant's service information.","inspection":"Check the housing for cracks or corrosion, inspect the shaft for play or leakage, and check the sealing surface and gasket. Follow the specified replacement procedure.","failureModes":"Bearing wear, seal leakage, corrosion, or impeller damage can reduce coolant circulation and lead to overheating."},
-  "hotspot":{"label":"Water pump","targets":[{"position":[-29.5,10.2,130],"radius":0.85}]},
-  "hitbox":{"position":[-29.5,10.2,130],"size":[3.2,4.4,4.4]},"cameraFocus":[-29.5,10.2,130],"cameraDirection":[1,0.7,1],
-  "installedHitbox":{"position":[-29.5,10.2,130],"size":[3.2,4.4,4.4]}
+  "id": "waterPump",
+  "name": "Water pump",
+  "group": "Cooling system",
+  "what": "The water pump circulates coolant through the engine and cooling system.",
+  "why": "Coolant flow carries heat away from the cylinder block and head to help maintain operating temperature.",
+  "where": "The pump mounts at the timing-belt end of the B-series engine and is driven by the timing belt.",
+  "requires": [
+    "crankshaft"
+  ],
+  "assetStatus": "procedural-model",
+  "installable": true,
+  "sequence": 17,
+  "recommendedOrder": 17,
+  "installationReason": "The pump mounts on the timing-belt end of the block. Its pulley is driven by the timing belt; the exact mounting and sealing details vary by B16 version.",
+  "placeholderFile": true,
+  "guide": {
+    "overview": "The water pump circulates coolant through the block, cylinder head, and radiator circuit.",
+    "operation": "The timing belt drives the pump impeller. The rotating impeller moves coolant through the engine's water jackets and onward through the cooling system.",
+    "construction": "This educational model shows a cast pump housing, circular mounting flange, central shaft hub, and pulley face. It is a simplified procedural representation, not factory CAD.",
+    "specifications": "Pump dimensions, pulley details, gasket specification, fastener torque, and coolant flow data are not asserted. Verify against the exact B16 variant's service information.",
+    "inspection": "Check the housing for cracks or corrosion, inspect the shaft for play or leakage, and check the sealing surface and gasket. Follow the specified replacement procedure.",
+    "failureModes": "Bearing wear, seal leakage, corrosion, or impeller damage can reduce coolant circulation and lead to overheating."
+  },
+  "hotspot": {
+    "label": "Water pump",
+    "targets": [
+      {
+        "position": [
+          -30,
+          10.2,
+          126
+        ],
+        "radius": 0.85
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -30,
+      10.2,
+      126
+    ],
+    "size": [
+      3.2,
+      4.4,
+      4.4
+    ]
+  },
+  "cameraFocus": [
+    -30,
+    10.2,
+    126
+  ],
+  "cameraDirection": [
+    1,
+    0.7,
+    1
+  ],
+  "installedHitbox": {
+    "position": [
+      -30,
+      10.2,
+      126
+    ],
+    "size": [
+      3.2,
+      4.4,
+      4.4
+    ]
+  }
 }
