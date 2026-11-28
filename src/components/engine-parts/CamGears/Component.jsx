@@ -17,6 +17,7 @@ const hubMetal = new THREE.MeshStandardMaterial({ color: '#56636d', metalness: 0
 const markMetal = new THREE.MeshStandardMaterial({ color: '#e0b75b', metalness: 0.72, roughness: 0.3 });
 
 function Sprocket({ x, z, index }) {
+  useFrame((_, delta) => { if (spin.current && rotating) spin.current.rotation.x += delta * 2.0; });
   return (
     <group position={[x, CENTER_Y, z]} name={`camshaft-sprocket-${index + 1}`}>
       {/* Cylinder axis is X, matching the supplied camshaft shaft axis. */}
