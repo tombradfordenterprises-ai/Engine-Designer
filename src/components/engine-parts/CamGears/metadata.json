@@ -1,0 +1,80 @@
+{
+  "id": "camGears",
+  "name": "Intake and exhaust camshaft gears",
+  "group": "Timing drive",
+  "what": "Two toothed sprockets attach to the ends of the intake and exhaust camshafts.",
+  "why": "The camshaft gears transfer timing-belt motion to both camshafts and keep their rotation synchronized with the crankshaft.",
+  "where": "One gear mounts to the exposed end of each overhead camshaft at the timing-belt end of the cylinder head.",
+  "requires": [
+    "camshafts"
+  ],
+  "assetStatus": "procedural-model",
+  "installable": true,
+  "sequence": 16,
+  "recommendedOrder": 16,
+  "installationReason": "Fit one sprocket to each camshaft nose. Their teeth engage the timing belt; the alignment marks must be set using the correct B16 service procedure.",
+  "placeholderFile": true,
+  "guide": {
+    "overview": "The two camshaft gears drive the intake and exhaust camshafts from the timing belt.",
+    "operation": "The crankshaft drives the timing belt, which turns both camshaft sprockets. Correct alignment keeps valve events synchronized with piston position.",
+    "construction": "This educational procedural model shows two toothed steel sprockets with central mounting hubs and timing-mark details. It is not a factory CAD reproduction.",
+    "specifications": "Exact sprocket tooth count, diameter, bolt torque, timing-mark positions, and timing procedure depend on the specific B16 variant and must be verified against its service information.",
+    "inspection": "Check teeth for wear or damage, inspect the mounting faces and locating features, and verify timing marks and belt alignment using the matching service manual.",
+    "failureModes": "Damaged teeth, loose fasteners, incorrect timing, or a slipping belt can cause loss of valve timing and potentially severe engine damage."
+  },
+  "hotspot": {
+    "label": "Camshaft gears",
+    "targets": [
+      {
+        "position": [
+          -29.5,
+          17.2,
+          128
+        ],
+        "radius": 0.8
+      },
+      {
+        "position": [
+          -29.5,
+          17.2,
+          132
+        ],
+        "radius": 0.8
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -29.5,
+      17.2,
+      130
+    ],
+    "size": [
+      2.2,
+      4.8,
+      8.5
+    ]
+  },
+  "cameraFocus": [
+    -29.5,
+    17.2,
+    130
+  ],
+  "cameraDirection": [
+    1,
+    0.8,
+    1
+  ],
+  "installedHitbox": {
+    "position": [
+      -29.5,
+      17.2,
+      130
+    ],
+    "size": [
+      2.2,
+      4.8,
+      8.5
+    ]
+  }
+}
