@@ -20,7 +20,7 @@ function Sprocket({ x, z, index, rotating }) {
   useFrame((_, delta) => {
     if (spin.current && rotating) {
       // The sprocket's shaft axis is X, so rotate around its local X axis.
-      spin.current.rotation.x += delta * 2.0;
+      spin.current.rotation.x -= delta * 2.0;
     }
   });
 

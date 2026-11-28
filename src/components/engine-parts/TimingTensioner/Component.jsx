@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 
 // Simplified tensioner mounted on the timing-drive face. Only the pulley
 // rotates; the mounting arm and adjustment hardware remain stationary.
-const INSTALLED = new THREE.Vector3(-30.0, 13.0, 129.0);
+const INSTALLED = new THREE.Vector3(-30.39, 13.0, 129.0);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 const steel = new THREE.MeshStandardMaterial({ color: '#77848e', metalness: 0.9, roughness: 0.24 });
 const dark = new THREE.MeshStandardMaterial({ color: '#3f4a52', metalness: 0.84, roughness: 0.28 });
