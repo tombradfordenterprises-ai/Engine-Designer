@@ -1,0 +1,73 @@
+{
+  "id": "timingTensioner",
+  "name": "Timing belt tensioner",
+  "group": "Timing drive",
+  "what": "The timing belt tensioner maintains the correct tension in the timing belt.",
+  "why": "Correct belt tension helps prevent the belt from jumping teeth or running off its sprockets.",
+  "where": "It mounts near the timing-belt path on the timing-belt end of the engine.",
+  "requires": [
+    "waterPump",
+    "camGears"
+  ],
+  "assetStatus": "procedural-model",
+  "installable": true,
+  "sequence": 18,
+  "recommendedOrder": 18,
+  "installationReason": "Install the tensioner after the water pump and camshaft gears are in place. Its final adjustment must follow the correct B16 belt-tensioning procedure.",
+  "placeholderFile": true,
+  "guide": {
+    "overview": "The timing belt tensioner controls slack in the belt that synchronizes the crankshaft and camshafts.",
+    "operation": "The tensioner pulley applies controlled force to the belt span. Correct tension helps maintain timing and limits belt vibration.",
+    "construction": "This educational procedural model shows a tensioner pulley, central bearing hub, mounting arm, and adjustment feature. It is not a factory CAD reproduction.",
+    "specifications": "Exact pulley diameter, spring force, adjustment position, belt deflection, and fastener torque depend on the specific B16 variant and service procedure.",
+    "inspection": "Inspect the pulley bearing for roughness or play and check the tensioner arm and spring for damage. Set belt tension using the matching Honda service manual.",
+    "failureModes": "A seized pulley, weak spring, incorrect adjustment, or worn bearing can cause belt noise, loss of tension, or timing-belt failure."
+  },
+  "hotspot": {
+    "label": "Timing belt tensioner",
+    "targets": [
+      {
+        "position": [
+          -26.5,
+          13.5,
+          130
+        ],
+        "radius": 0.78
+      }
+    ]
+  },
+  "hitbox": {
+    "position": [
+      -26.5,
+      13.5,
+      130
+    ],
+    "size": [
+      2.8,
+      4,
+      4
+    ]
+  },
+  "cameraFocus": [
+    -26.5,
+    13.5,
+    130
+  ],
+  "cameraDirection": [
+    1,
+    0.7,
+    1
+  ],
+  "installedHitbox": {
+    "position": [
+      -26.5,
+      13.5,
+      130
+    ],
+    "size": [
+      2.8,
+      4,
+      4
+    ]
+  }
+}
