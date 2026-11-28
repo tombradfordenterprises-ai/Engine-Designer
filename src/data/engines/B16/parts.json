@@ -394,8 +394,8 @@
         "camshafts"
       ],
       "asset": "/models/engines/B16/parts/camGears.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 16,
       "placeholderFile": true,
       "guide": {
@@ -418,8 +418,8 @@
         "crankshaft"
       ],
       "asset": "/models/engines/B16/parts/waterPump.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 17,
       "placeholderFile": true,
       "guide": {
@@ -443,8 +443,8 @@
         "camGears"
       ],
       "asset": "/models/engines/B16/parts/timingTensioner.glb",
-      "assetStatus": "placeholder",
-      "installable": false,
+      "assetStatus": "procedural-model",
+      "installable": true,
       "sequence": 18,
       "placeholderFile": true,
       "guide": {
