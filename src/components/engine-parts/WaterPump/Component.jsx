@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 
 // Educational procedural model. The assembly sits on the timing-drive face;
 // the pulley is a separate sub-group so only the rotating element spins.
-const INSTALLED = new THREE.Vector3(-30.0, 10.2, 126.0);
+const INSTALLED = new THREE.Vector3(-30.61, 10.2, 126.0);
 const PREVIEW = INSTALLED.clone().add(new THREE.Vector3(0, 8, 10));
 const housing = new THREE.MeshStandardMaterial({ color: '#687681', metalness: 0.82, roughness: 0.3 });
 const machined = new THREE.MeshStandardMaterial({ color: '#aeb8bf', metalness: 0.9, roughness: 0.22 });
