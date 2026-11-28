@@ -2,12 +2,12 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 
-// The supplied B16 source asset index records these camshaft bounds in the
-// shared engine coordinate system. The gear centers are placed at the
-// measured negative-X ends of the two shafts (no arbitrary common X offset).
+// Both camshafts extend toward the timing-drive end at the positive-X
+// end of their measured source bounds. The two camshaft rows are separated
+// along Z by 4 units in the installed assembly.
 const CAMSHAFT_ENDS = [
-  { x: -46.5, z: 132.0 }, // Camshaft 1: X -46.5 to -33.5
-  { x: -48.5, z: 128.0 }, // Camshaft 2: X -48.5 to -30.0, second row offset -4
+  { x: -30.0, z: 132.0 },
+  { x: -30.0, z: 128.0 },
 ];
 const CENTER_Y = 16.5;
 const PREVIEW = new THREE.Vector3(0, 8, 10);
